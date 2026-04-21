@@ -1,0 +1,650 @@
+{
+  "Uuid": "eb9ad913-c2d2-4314-a5d0-419cc429416e",
+  "IsCustomNode": false,
+  "Description": "Analisis de pendientes E-W del terreno original para trackers 1P rigidos. Empareja cada tracker con su vecino Este y densifica 3 veces (9 puntos).",
+  "Name": "Slope_Analysis_EW",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "f7c1ae10cd6445c2b60cf2ec4ff0e2c2",
+      "Name": "Superficie a analizar",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Trackers_Proyecto",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "872a5a2447704069a818f0675d5bfc11",
+      "Name": "Capa de contorno",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_Contornos",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "899a6669659648cb8f79c140559856a5",
+      "Name": "Capa de trackers",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_Lineas_Rotura",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "7ac02558fef141f18e5a49ed6207119f",
+      "Name": "Pitch minimo (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "3",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "497f378bcc574258b3391ae86ac6b121",
+      "Name": "Pitch maximo (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "15",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a487ede75f3b4a65b30187f8840cfcd0",
+      "Name": "Pendiente maxima admisible (%)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "7",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "8e973865c2054ba9a9749f0fff3bab4a",
+      "Name": "Pendiente de aviso (%)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "5",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "be509b92e8624aa482e37f3ca02a3ae3",
+      "Name": "Nombre de la nueva superficie",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Slope_Analysis_E-W",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "5b36e57884d74152a8e0b95cdfc1866a",
+      "Name": "Iteraciones de subdivision",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "3",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "3f3c43199a764b0e8437d7e6c5a2a3f4",
+      "Name": "Log",
+      "Type": "string",
+      "InitialValue": "Contornos encontrados: 2\nTrackers encontrados:  228\nAVISO: no se pudo configurar max triangle side por API (property is read-only). Configuralo a mano en Surface Properties -> Definition -> Build -> Use maximum triangle length = 22.50 m.\n\n=== RESUMEN E-W ===\nRango de pitch: [3.0 m, 15.0 m]\nTrackers fuera del contorno:     0\nTrackers sin vecino al Este:     8\nParejas analizadas:              220\nPuntos calculados (9 por pareja):1980\n  Verde   (|p| <= 5.0 %):         958\n  Amarillo(5.0 - 7.0 %):           1004\n  Rojo    (|p| > 7.0 %):          18\nPuntos con error de muestreo:    0\nEtiquetas creadas:               1980\nSuperficie creada:               Slope_Analysis_E-W",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "f7c1ae10cd6445c2b60cf2ec4ff0e2c2",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f0ca143b77f843258081dca518e2825a",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers_Proyecto"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "872a5a2447704069a818f0675d5bfc11",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b468e8ad4ffe4cd389de516eeb0528a7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_Contornos"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "899a6669659648cb8f79c140559856a5",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "62775d742ac8430eb078fcbdd18aedf9",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_Lineas_Rotura"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "7ac02558fef141f18e5a49ed6207119f",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "28151898ff984ab09b86e9221c934ee0",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 3.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "497f378bcc574258b3391ae86ac6b121",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2bc409d364b54774bc8ec7e435017f42",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 15.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a487ede75f3b4a65b30187f8840cfcd0",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "10a6b1a72b2e430580ef7ce6974d55b4",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 7.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "8e973865c2054ba9a9749f0fff3bab4a",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "12f87fd6d02144f5b221fcfe614a6888",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 5.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "be509b92e8624aa482e37f3ca02a3ae3",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "af43496bc6614be8b70a91a982735488",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Slope_Analysis_E-W"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "5b36e57884d74152a8e0b95cdfc1866a",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f853db8542c543a4b87e88d884b74c07",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 3.0
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\r\n# =============================================================================\r\n# Slope_Analysis_EW.dyn  -  Nodo Python principal\r\n# Civil 3D 2024 / Dynamo / CPython3\r\n#\r\n# Entradas (puertos IN[0..8]):\r\n#   IN[0] : str    nombre del MDT\r\n#   IN[1] : str    nombre de capa del contorno\r\n#   IN[2] : str    nombre de capa de los trackers\r\n#   IN[3] : float  pitch minimo (m)\r\n#   IN[4] : float  pitch maximo (m)\r\n#   IN[5] : float  pendiente maxima admisible (%)\r\n#   IN[6] : float  pendiente de aviso (%)\r\n#   IN[7] : str    nombre de la nueva superficie TIN\r\n#   IN[8] : int    iteraciones de subdivision (n -> 2^n+1 puntos por tracker)\r\n#                  0 = solo extremos (2 pts), 1 = 3, 2 = 5, 3 = 9, 4 = 17\r\n#\r\n# Salida:\r\n#   OUT   : str    log con el resumen del analisis\r\n# =============================================================================\r\n\r\nimport clr\r\nimport math\r\nimport traceback\r\n\r\nclr.AddReference('AcMgd')\r\nclr.AddReference('AcCoreMgd')\r\nclr.AddReference('AcDbMgd')\r\nclr.AddReference('AecBaseMgd')\r\nclr.AddReference('AeccDbMgd')\r\n\r\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\r\nfrom Autodesk.AutoCAD.DatabaseServices import (\r\n    Transaction, OpenMode, BlockTable, BlockTableRecord,\r\n    Polyline, SymbolUtilityServices\r\n)\r\nfrom Autodesk.AutoCAD.Geometry import Point2d, Point3d, Point3dCollection\r\nfrom Autodesk.Civil import SurfaceBoundaryType\r\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\r\nfrom Autodesk.Civil.DatabaseServices import (\r\n    TinSurface, SurfaceAnalysisElevationData, SurfaceSlopeLabel\r\n)\r\n\r\nimport System\r\nfrom System import Array\r\nfrom System.Drawing import Color\r\n\r\n# --------------------------------------------------------------------------- #\r\n# Inputs\r\n# --------------------------------------------------------------------------- #\r\nmdt_name       = str(IN[0])\r\ncontour_layer  = str(IN[1])\r\ntracker_layer  = str(IN[2])\r\npitch_min      = float(IN[3])\r\npitch_max      = float(IN[4])\r\nmax_slope_pct  = float(IN[5])\r\nwarn_slope_pct = float(IN[6])\r\nout_surf_name  = str(IN[7])\r\nn_iter         = int(IN[8]) if len(IN) > 8 and IN[8] is not None else 3\r\n\r\nlog = []\r\n\r\ndef pip(px, py, poly):\r\n    \"\"\"Ray-casting point-in-polygon.\"\"\"\r\n    inside = False\r\n    n = len(poly)\r\n    if n < 3:\r\n        return False\r\n    j = n - 1\r\n    for i in range(n):\r\n        xi, yi = poly[i]\r\n        xj, yj = poly[j]\r\n        if ((yi > py) != (yj > py)) and \\\r\n           (px < (xj - xi) * (py - yi) / ((yj - yi) if (yj - yi) != 0 else 1e-12) + xi):\r\n            inside = not inside\r\n        j = i\r\n    return inside\r\n\r\ntry:\r\n    doc  = AcadApp.DocumentManager.MdiActiveDocument\r\n    db   = doc.Database\r\n    cdoc = CivilApplication.ActiveDocument\r\n\r\n    dlock = doc.LockDocument()\r\n    try:\r\n        tr = db.TransactionManager.StartTransaction()\r\n        try:\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 1. MDT\r\n            # ---------------------------------------------------------------- #\r\n            mdt_surf = None\r\n            mdt_surf_id = None\r\n            for sid in cdoc.GetSurfaceIds():\r\n                s = tr.GetObject(sid, OpenMode.ForRead)\r\n                if s.Name == mdt_name:\r\n                    mdt_surf = s\r\n                    mdt_surf_id = sid\r\n                    break\r\n            if mdt_surf is None:\r\n                raise Exception(\"No se ha encontrado el MDT '{}'.\".format(mdt_name))\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 2. Recorrer ModelSpace\r\n            # ---------------------------------------------------------------- #\r\n            bt  = tr.GetObject(db.BlockTableId, OpenMode.ForRead)\r\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\r\n            btr = tr.GetObject(ms_id, OpenMode.ForRead)\r\n\r\n            contours = []\r\n            trackers = []   # lista de dicts con vertices A(N) y B(S)\r\n\r\n            for oid in btr:\r\n                obj = tr.GetObject(oid, OpenMode.ForRead)\r\n                if not isinstance(obj, Polyline):\r\n                    continue\r\n                lay = obj.Layer\r\n                n = obj.NumberOfVertices\r\n                if lay == contour_layer and n >= 3:\r\n                    pts = []\r\n                    for i in range(n):\r\n                        p = obj.GetPoint2dAt(i)\r\n                        pts.append((p.X, p.Y))\r\n                    contours.append(pts)\r\n                elif lay == tracker_layer and n >= 2:\r\n                    p1 = obj.GetPoint2dAt(0)\r\n                    p2 = obj.GetPoint2dAt(n - 1)\r\n                    # Forzar A = Norte (mayor Y)\r\n                    if p1.Y >= p2.Y:\r\n                        ax, ay, bx, by = p1.X, p1.Y, p2.X, p2.Y\r\n                    else:\r\n                        ax, ay, bx, by = p2.X, p2.Y, p1.X, p1.Y\r\n                    trackers.append({\r\n                        \"ax\": ax, \"ay\": ay,\r\n                        \"bx\": bx, \"by\": by,\r\n                        \"xmid\": (ax + bx) / 2.0,\r\n                        \"ymin\": min(ay, by),\r\n                        \"ymax\": max(ay, by),\r\n                        \"handle\": str(obj.Handle)\r\n                    })\r\n\r\n            if not contours:\r\n                raise Exception(\"No hay polilineas en la capa de contorno '{}'.\".format(contour_layer))\r\n            if not trackers:\r\n                raise Exception(\"No hay polilineas en la capa de trackers '{}'.\".format(tracker_layer))\r\n\r\n            log.append(\"Contornos encontrados: {}\".format(len(contours)))\r\n            log.append(\"Trackers encontrados:  {}\".format(len(trackers)))\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 3. Filtrar trackers con ambos vertices dentro del contorno\r\n            # ---------------------------------------------------------------- #\r\n            inside_trackers = []\r\n            n_out = 0\r\n            for t in trackers:\r\n                inA = any(pip(t[\"ax\"], t[\"ay\"], c) for c in contours)\r\n                inB = any(pip(t[\"bx\"], t[\"by\"], c) for c in contours)\r\n                if inA and inB:\r\n                    inside_trackers.append(t)\r\n                else:\r\n                    n_out += 1\r\n\r\n            if not inside_trackers:\r\n                raise Exception(\"Ningun tracker dentro del contorno.\")\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 4. Emparejamiento con vecino Este\r\n            # ---------------------------------------------------------------- #\r\n            def find_east_neighbor(T, pool, pmin, pmax):\r\n                candidates = []\r\n                for U in pool:\r\n                    if U is T:\r\n                        continue\r\n                    dx = U[\"xmid\"] - T[\"xmid\"]\r\n                    if dx <= 1e-6:\r\n                        continue\r\n                    if dx < pmin or dx > pmax:\r\n                        continue\r\n                    # Solape en Y\r\n                    if min(T[\"ymax\"], U[\"ymax\"]) <= max(T[\"ymin\"], U[\"ymin\"]):\r\n                        continue\r\n                    candidates.append((dx, U))\r\n                if not candidates:\r\n                    return None\r\n                candidates.sort(key=lambda c: c[0])   # mas cercano dentro del rango\r\n                return candidates[0][1]\r\n\r\n            pairs = []\r\n            n_no_neighbor = 0\r\n            for T in inside_trackers:\r\n                N = find_east_neighbor(T, inside_trackers, pitch_min, pitch_max)\r\n                if N is None:\r\n                    n_no_neighbor += 1\r\n                    continue\r\n                pairs.append((T, N))\r\n\r\n            if not pairs:\r\n                raise Exception(\"Ningun tracker tiene vecino al Este. \"\r\n                                \"Revisa el pitch o la geometria.\")\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 5. Densificar y calcular pendientes por pareja\r\n            # ---------------------------------------------------------------- #\r\n            # n_iter iteraciones de insercion de punto medio -> 2^n+1 puntos\r\n            n_pts = (1 << max(0, n_iter)) + 1   # 2^n + 1\r\n            if n_pts < 2:\r\n                n_pts = 2\r\n            denom = float(n_pts - 1)\r\n            t_params = [i / denom for i in range(n_pts)]\r\n\r\n            # Para cada pareja guardamos (T, N, [(pT_xy, pN_xy, slope), ...])\r\n            pair_data = []\r\n            label_pairs = []   # n_pts etiquetas por pareja (1 por vertice densificado)\r\n            n_ok = n_warn = n_ko = n_err = 0\r\n\r\n            # Tolerancia para considerar horizontal un tracker (en metros)\r\n            HORIZ_TOL = 0.1\r\n\r\n            for T, N in pairs:\r\n                Tax, Tay, Tbx, Tby = T[\"ax\"], T[\"ay\"], T[\"bx\"], T[\"by\"]\r\n                Nax, Nay, Nbx, Nby = N[\"ax\"], N[\"ay\"], N[\"bx\"], N[\"by\"]\r\n\r\n                pair_points = []\r\n\r\n                for tp in t_params:\r\n                    # Punto sobre T (equiespaciado)\r\n                    px = Tax + tp * (Tbx - Tax)\r\n                    py = Tay + tp * (Tby - Tay)\r\n\r\n                    # ---------------------------------------------------------\r\n                    # Proyección EXACTA horizontal sobre la recta del vecino N\r\n                    # (extrapolando si es necesario)\r\n                    # ---------------------------------------------------------\r\n                    if abs(Nay - Nby) < 1e-9:\r\n                        # N es horizontal: solo hay proyección si py está cerca de Nay\r\n                        if abs(py - Nay) > HORIZ_TOL:\r\n                            n_err += 1\r\n                            continue\r\n                        nx = px\r\n                        ny = Nay\r\n                    else:\r\n                        # N no horizontal: resolver t_n tal que y = py\r\n                        t_n = (py - Nay) / (Nby - Nay)\r\n                        nx = Nax + t_n * (Nbx - Nax)\r\n                        ny = py\r\n\r\n                    # Distancia horizontal (dy = 0)\r\n                    L = abs(nx - px)\r\n                    if L < 1e-6:\r\n                        n_err += 1\r\n                        continue\r\n\r\n                    try:\r\n                        zT = mdt_surf.FindElevationAtXY(px, py)\r\n                        zN = mdt_surf.FindElevationAtXY(nx, ny)\r\n                    except:\r\n                        n_err += 1\r\n                        continue\r\n\r\n                    slope_pct = (zN - zT) / L * 100.0\r\n\r\n                    if abs(slope_pct) > max_slope_pct:\r\n                        n_ko += 1\r\n                    elif abs(slope_pct) > warn_slope_pct:\r\n                        n_warn += 1\r\n                    else:\r\n                        n_ok += 1\r\n\r\n                    pair_points.append(((px, py), (nx, ny), slope_pct))\r\n\r\n                    # ---------------------------------------------------------\r\n                    # Etiqueta solo si AMBOS puntos están dentro de ALGÚN contorno\r\n                    # ---------------------------------------------------------\r\n                    if contours:\r\n                        inside_any = False\r\n                        for c in contours:\r\n                            if pip(px, py, c) and pip(nx, ny, c):\r\n                                inside_any = True\r\n                                break\r\n                        if inside_any:\r\n                            label_pairs.append((Point2d(px, py), Point2d(nx, ny)))\r\n\r\n                pair_data.append((T, N, pair_points))\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 5b. Construir puntos de la superficie\r\n            # ---------------------------------------------------------------- #\r\n            surf_points = []\r\n            for T, N, pp in pair_data:\r\n                for (px, py), (nx, ny), sl in pp:\r\n                    # Ambos puntos tienen la misma Y (horizontalidad garantizada)\r\n                    surf_points.append(Point3d(px, py, sl))\r\n                    surf_points.append(Point3d(nx, ny, sl))\r\n\r\n            if not surf_points:\r\n                raise Exception(\"No se han podido calcular pendientes.\")\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 6. Crear superficie TIN\r\n            # ---------------------------------------------------------------- #\r\n            existing_id = None\r\n            for sid in cdoc.GetSurfaceIds():\r\n                s = tr.GetObject(sid, OpenMode.ForRead)\r\n                if s.Name == out_surf_name:\r\n                    existing_id = sid\r\n                    break\r\n            if existing_id is not None:\r\n                sx = tr.GetObject(existing_id, OpenMode.ForWrite)\r\n                sx.Erase()\r\n\r\n            new_surf_id = TinSurface.Create(db, out_surf_name)\r\n            new_surf    = tr.GetObject(new_surf_id, OpenMode.ForWrite)\r\n\r\n            # Limitar longitud maxima de lado de triangulo\r\n            max_tri_side = pitch_max * 1.5\r\n            try:\r\n                bops = new_surf.BuildOptions\r\n                bops.UseMaximumTriangleLength = True\r\n                bops.MaximumTriangleLength = max_tri_side\r\n                new_surf.BuildOptions = bops\r\n                log.append(\"Max triangle side: {:.2f} m\".format(max_tri_side))\r\n            except Exception as ex_bo:\r\n                log.append(\"AVISO: no se pudo configurar max triangle side por API \"\r\n                           \"({}). Configuralo a mano en Surface Properties -> \"\r\n                           \"Definition -> Build -> Use maximum triangle length = \"\r\n                           \"{:.2f} m.\".format(ex_bo, max_tri_side))\r\n\r\n            for p in surf_points:\r\n                new_surf.AddVertex(p)\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 7. Contornos\r\n            # ---------------------------------------------------------------- #\r\n            first = True\r\n            for c in contours:\r\n                pc = Point3dCollection()\r\n                for (x, y) in c:\r\n                    pc.Add(Point3d(x, y, 0.0))\r\n                if (c[0][0], c[0][1]) != (c[-1][0], c[-1][1]):\r\n                    pc.Add(Point3d(c[0][0], c[0][1], 0.0))\r\n                btype = SurfaceBoundaryType.Outer if first else SurfaceBoundaryType.Show\r\n                new_surf.BoundariesDefinition.AddBoundaries(pc, 1.0, btype, True)\r\n                first = False\r\n\r\n            # ---------------------------------------------------------------- #\r\n            # 8. Etiquetas de pendiente \"Two points\" sobre el MDT\r\n            # ---------------------------------------------------------------- #\r\n            slope_style_id = None\r\n            try:\r\n                lss = cdoc.Styles.LabelStyles.SurfaceLabelStyles.SlopeLabelStyles\r\n                for stid in lss:\r\n                    slope_style_id = stid\r\n                    break\r\n            except Exception as ex_ss:\r\n                log.append(\"AVISO: no se pudo leer SlopeLabelStyles: {}\".format(ex_ss))\r\n\r\n            n_labels = 0\r\n            n_label_err = 0\r\n            first_err = None\r\n            for pA, pB in label_pairs:\r\n                try:\r\n                    if slope_style_id is not None:\r\n                        SurfaceSlopeLabel.Create(mdt_surf_id, pA, pB, slope_style_id)\r\n                    else:\r\n                        SurfaceSlopeLabel.Create(mdt_surf_id, pA, pB)\r\n                    n_labels += 1\r\n                except Exception as ex_lb:\r\n                    n_label_err += 1\r\n                    if first_err is None:\r\n                        first_err = str(ex_lb)\r\n\r\n            tr.Commit()\r\n        finally:\r\n            tr.Dispose()\r\n    finally:\r\n        dlock.Dispose()\r\n\r\n    log.append(\"\")\r\n    log.append(\"=== RESUMEN E-W ===\")\r\n    log.append(\"Rango de pitch: [{} m, {} m]\".format(pitch_min, pitch_max))\r\n    log.append(\"Trackers fuera del contorno:     {}\".format(n_out))\r\n    log.append(\"Trackers sin vecino al Este:     {}\".format(n_no_neighbor))\r\n    log.append(\"Parejas analizadas:              {}\".format(len(pairs)))\r\n    log.append(\"Puntos calculados ({} por pareja):{}\".format(n_pts, n_ok + n_warn + n_ko))\r\n    log.append(\"  Verde   (|p| <= {} %):         {}\".format(warn_slope_pct, n_ok))\r\n    log.append(\"  Amarillo({} - {} %):           {}\".format(warn_slope_pct, max_slope_pct, n_warn))\r\n    log.append(\"  Rojo    (|p| > {} %):          {}\".format(max_slope_pct, n_ko))\r\n    log.append(\"Puntos con error de muestreo:    {}\".format(n_err))\r\n    log.append(\"Etiquetas creadas:               {}\".format(n_labels))\r\n    if n_label_err > 0:\r\n        log.append(\"Etiquetas con error:             {}\".format(n_label_err))\r\n        log.append(\"Primer error: {}\".format(first_err))\r\n    log.append(\"Superficie creada:               {}\".format(out_surf_name))\r\n\r\n    OUT = \"\\n\".join(log)\r\n\r\nexcept Exception as ex:\r\n    OUT = \"ERROR:\\n\" + str(ex) + \"\\n\\n\" + traceback.format_exc()",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "e9a3caaccb984ecba7d88e777ae0a22c",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b078bdbc08724225af18fccfb5a8ef83",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6f0cfc7ef0ee425b9107334e39ca3b39",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "589751eb8c5847af80ec550a2bae70a2",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ca32475174f74b8f8cca57dc1a59b6c2",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2fee058e3b1a4b94a751cc25a2dbf7ae",
+          "Name": "IN[4]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dd36b477022a4b63a5911f23c7e83ce4",
+          "Name": "IN[5]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "451d65b4300642b093f2ed0ea4daa145",
+          "Name": "IN[6]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b8356ac6dad64c0ab78a2f586dd8d858",
+          "Name": "IN[7]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "137e3e52a7a34df6ae8a2ac9dac05fda",
+          "Name": "IN[8]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f02803f20fac49b29915d95f7650bebf",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "3f3c43199a764b0e8437d7e6c5a2a3f4",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "3f3eed0d3b6b4a389614e2bb57756f38",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3e18f70dbdba422488526336ad52c584",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f0ca143b77f843258081dca518e2825a",
+      "End": "b078bdbc08724225af18fccfb5a8ef83",
+      "Id": "9d56a52a769a47a1a5d18f1ae4d3aa97",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b468e8ad4ffe4cd389de516eeb0528a7",
+      "End": "6f0cfc7ef0ee425b9107334e39ca3b39",
+      "Id": "1e4d0ca7d5974b549f74cce1963e06f1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "62775d742ac8430eb078fcbdd18aedf9",
+      "End": "589751eb8c5847af80ec550a2bae70a2",
+      "Id": "c1f27b0d23564c8dadbac5008a9ef2f9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "28151898ff984ab09b86e9221c934ee0",
+      "End": "ca32475174f74b8f8cca57dc1a59b6c2",
+      "Id": "24743755702147ed8e91ca9fe6f307a5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2bc409d364b54774bc8ec7e435017f42",
+      "End": "2fee058e3b1a4b94a751cc25a2dbf7ae",
+      "Id": "08f992e4ca094ef9ae5b16bffd7e7f75",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "10a6b1a72b2e430580ef7ce6974d55b4",
+      "End": "dd36b477022a4b63a5911f23c7e83ce4",
+      "Id": "0aa03a7f7ef7408cb315f7a861a0b8fb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "12f87fd6d02144f5b221fcfe614a6888",
+      "End": "451d65b4300642b093f2ed0ea4daa145",
+      "Id": "4766981a98704f0a9f22f51965fa9544",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "af43496bc6614be8b70a91a982735488",
+      "End": "b8356ac6dad64c0ab78a2f586dd8d858",
+      "Id": "011809b9d6e2424387ac958f94abb8e4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f853db8542c543a4b87e88d884b74c07",
+      "End": "137e3e52a7a34df6ae8a2ac9dac05fda",
+      "Id": "6d9411809e2f40ff8945b68070c72299",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f02803f20fac49b29915d95f7650bebf",
+      "End": "3f3eed0d3b6b4a389614e2bb57756f38",
+      "Id": "bcb5707eaec548aeb024dd7bed38af17",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "f7c1ae10cd6445c2b60cf2ec4ff0e2c2",
+        "Name": "Superficie a analizar",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "872a5a2447704069a818f0675d5bfc11",
+        "Name": "Capa de contorno",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 90.0
+      },
+      {
+        "Id": "899a6669659648cb8f79c140559856a5",
+        "Name": "Capa de trackers",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 180.0
+      },
+      {
+        "Id": "7ac02558fef141f18e5a49ed6207119f",
+        "Name": "Pitch minimo (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 270.0
+      },
+      {
+        "Id": "497f378bcc574258b3391ae86ac6b121",
+        "Name": "Pitch maximo (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 360.0
+      },
+      {
+        "Id": "a487ede75f3b4a65b30187f8840cfcd0",
+        "Name": "Pendiente maxima admisible (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "8e973865c2054ba9a9749f0fff3bab4a",
+        "Name": "Pendiente de aviso (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 540.0
+      },
+      {
+        "Id": "be509b92e8624aa482e37f3ca02a3ae3",
+        "Name": "Nombre de la nueva superficie",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -3.7344944097281996,
+        "Y": 647.42764057873137
+      },
+      {
+        "Id": "5b36e57884d74152a8e0b95cdfc1866a",
+        "Name": "Iteraciones de subdivision",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -8.7138202893656853,
+        "Y": 785.97606790519785
+      },
+      {
+        "Id": "e9a3caaccb984ecba7d88e777ae0a22c",
+        "Name": "Slope_Analysis_E-W",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 522.0,
+        "Y": 315.0
+      },
+      {
+        "Id": "3f3c43199a764b0e8437d7e6c5a2a3f4",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1100.0,
+        "Y": 315.0
+      }
+    ],
+    "Annotations": [],
+    "X": 20.072199463444846,
+    "Y": 70.02607025626456,
+    "Zoom": 0.888789228297156
+  }
+}

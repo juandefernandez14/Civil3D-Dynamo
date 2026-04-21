@@ -1,0 +1,280 @@
+{
+  "Uuid": "14ab34ae35f84c60ab37579a167f3582",
+  "IsCustomNode": false,
+  "Description": "Por cada contorno cerrado en la capa indicada crea: Trackers_ZonaXX (paste superficie trackers + outer boundary), Desmonte_ZonaXX (paste Trackers_ZonaXX), Terraplen_ZonaXX (paste Trackers_ZonaXX). Estilo _No Display. Numeracion por min_x (compatible con Volumen_MDT).",
+  "Name": "Superficies_Zonas",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "cc496d5721ba45da8a5c17dc7a3196d2",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6d4e7f9ba2ba4f1a996e2e587a20d0cc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers_Apamate_E"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "e91dfbbfa6ad4c74934a505f22253c6a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "115afab0fe784830aa500ac2c985cb5d",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MdT_Apamate_Topografia_E"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "589912fcd1bf41ae8a52e786778f681c",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "10d7d70e98ce4daf947d4b9898169cc7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos offset"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Superficies_Zonas.dyn  v4.3\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# Por cada contorno cerrado en la capa indicada (ordenado por min_x asc,\n# igual que Volumen_MDT.dyn para mantener la misma numeracion de zonas):\n#\n#   FASE 1 (por zona):\n#     - Trackers_ZonaXX  : TinSurface vacia -> Paste(<tracker_surf>) ->\n#                          Outer Boundary = contorno de la zona\n#     - Desmonte_ZonaXX  : TinSurface vacia -> Paste(Trackers_ZonaXX)\n#                          -> Raise(+min del intervalo positivo del Volumen)\n#     - Terraplen_ZonaXX : TinSurface vacia -> Paste(Trackers_ZonaXX)\n#                          -> Raise(max del intervalo negativo)   (baja)\n#\n#   FASE 2 (por zona): MANCHAS + BOUNDARIES\n#     Para Desmonte y Terraplen:\n#       a) Crear TinVolumeSurface temporal __tmp_vol_<tipo>_ZonaXX con\n#          Base=<tipo>_ZonaXX, Comparison=MDT.\n#       b) ExtractContoursAt(0.0) -> polylines en ModelSpace donde las dos\n#          superficies se cruzan (las \"manchas\").\n#       c) Mover esas polylines a la capa:\n#            _Contornos_desmonte_ZonaXX  (color rojo, index 1)\n#            _Contornos_terraplen_ZonaXX (color verde, index 3)\n#          Crear la capa si no existe.\n#       d) Anyadir las polylines como boundary de <tipo>_ZonaXX:\n#          la primera como Outer, el resto como Show.\n#       e) Borrar la TinVolumeSurface temporal.\n#\n# Las 3 superficies Trackers/Desmonte/Terraplen se crean con estilo\n# '_No Display'. El MDT se pide como input para la comparacion de volumen\n# y para validacion (typo-check).\n#\n# Re-ejecutable: superficies y capas previas con los prefijos del script\n# se borran (o vacian) antes de recrearse.\n#\n# NOTA: Carpetas del Prospector (Zona01, ...) se crean a mano.\n#\n# IN[0] : str   nombre superficie de trackers general\n# IN[1] : str   nombre superficie MDT original\n# IN[2] : str   nombre capa de contornos de zonas\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, SymbolUtilityServices,\n    LayerTable, LayerTableRecord, ObjectIdCollection\n)\nfrom Autodesk.AutoCAD.Geometry import Point3d, Point3dCollection\nfrom Autodesk.AutoCAD.Colors import Color as AcadColor, ColorMethod\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    TinSurface, TinVolumeSurface\n)\n# ITerrainSurface puede no estar expuesto en el modulo raiz en algunas\n# versiones; lo importamos aparte de forma tolerante.\ntry:\n    from Autodesk.Civil.DatabaseServices import ITerrainSurface\n    _HAS_ITERRAINSURFACE = True\nexcept Exception:\n    ITerrainSurface = None\n    _HAS_ITERRAINSURFACE = False\n\nfrom Autodesk.Civil import SurfaceBoundaryType\n\n# Reflection para invocar metodos de interfaz explicita (pythonnet no\n# expone ExtractContoursAt directamente en TinVolumeSurface porque la\n# interfaz ITerrainSurface esta implementada explicitamente).\nfrom System import Array, Double, Object\nfrom System.Reflection import BindingFlags\n\nVOLUME_PREFIX    = \"Volumen_MDT\"    # Volumen_MDT_ZonaXX\nTMP_VOL_PREFIX   = \"__tmp_vol_\"     # para volumenes temporales de manchas\nDES_LAYER_FMT    = \"_Contornos_desmonte_Zona{:02d}\"\nTER_LAYER_FMT    = \"_Contornos_terraplen_Zona{:02d}\"\nDES_COLOR_INDEX  = 1   # rojo\nTER_COLOR_INDEX  = 3   # verde\n\ntracker_surf_name = str(IN[0])\nmdt_surf_name     = str(IN[1])\ncontour_layer     = str(IN[2])\n\nlog = []\nlog.append(\"=== Superficies_Zonas v4.3 ===\")\nlog.append(\"Tracker surf : {}\".format(tracker_surf_name))\nlog.append(\"MDT surf     : {}\".format(mdt_surf_name))\nlog.append(\"Contour layer: {}\".format(contour_layer))\nlog.append(\"\")\n\n\ndef find_style_id(cdoc, candidates):\n    ss = cdoc.Styles.SurfaceStyles\n    for nm in candidates:\n        try:\n            return ss.get_Item(nm)\n        except:\n            continue\n    return None\n\n\ndef extract_contours_at_iface(surface, elevation):\n    \"\"\"Invoca ITerrainSurface.ExtractContoursAt(double) via reflection.\n    pythonnet no expone el metodo directamente en TinVolumeSurface porque\n    la interfaz esta implementada explicitamente. Cuatro estrategias en\n    orden de preferencia:\n      1) Llamada directa (por si el runtime ya lo expone).\n      2) Reflection sobre el tipo ITerrainSurface (si esta importado).\n      3) Reflection sobre el tipo concreto, buscando por nombre exacto\n         o nombre calificado 'Autodesk.Civil.DatabaseServices.ITerrainSurface.ExtractContoursAt'.\n      4) Igual que 3 pero filtrando por 'termina en .ExtractContoursAt'\n         y con parametro (double), captura cualquier nombre calificado\n         aunque el namespace haya cambiado.\n    Devuelve un ObjectIdCollection.\n    \"\"\"\n    from System import Type as NetType\n    double_elev = float(elevation)\n\n    # Estrategia 1: directo\n    try:\n        return surface.ExtractContoursAt(double_elev)\n    except Exception:\n        pass\n\n    args = Array[Object]([Double(double_elev)])\n    type_arr_double = Array[NetType]([clr.GetClrType(Double)])\n\n    # Estrategia 2: invocar a traves de ITerrainSurface (si esta importado)\n    if _HAS_ITERRAINSURFACE and ITerrainSurface is not None:\n        try:\n            iface_type = clr.GetClrType(ITerrainSurface)\n            m = iface_type.GetMethod(\"ExtractContoursAt\", type_arr_double)\n            if m is not None:\n                return m.Invoke(surface, args)\n        except Exception:\n            pass\n\n    # Estrategia 3 y 4: enumerar metodos del tipo concreto\n    try:\n        t = surface.GetType()\n        flags = (BindingFlags.Instance |\n                 BindingFlags.Public |\n                 BindingFlags.NonPublic |\n                 BindingFlags.FlattenHierarchy)\n        double_clr = clr.GetClrType(Double)\n        candidates = []\n        for m in t.GetMethods(flags):\n            name = m.Name\n            # 'ExtractContoursAt' o cualquier nombre que acabe en '.ExtractContoursAt'\n            if name == \"ExtractContoursAt\" or name.endswith(\".ExtractContoursAt\"):\n                ps = m.GetParameters()\n                if len(ps) == 1 and ps[0].ParameterType == double_clr:\n                    candidates.append(m)\n        # Probar todas las candidatas, priorizando la calificada (explicita)\n        candidates.sort(key=lambda mm: 0 if \".\" in mm.Name else 1)\n        for m in candidates:\n            try:\n                return m.Invoke(surface, args)\n            except Exception:\n                continue\n    except Exception:\n        pass\n\n    # Estrategia 5: InternalExtractContoursAt(Double)\n    # En Civil 3D 2024, los metodos publicos del guide son wrappers de\n    # Internal* que si estan visibles en el tipo concreto. Confirmado por\n    # diagnostico previo: 'InternalExtractContoursAt(Double)' existe.\n    try:\n        t = surface.GetType()\n        flags = (BindingFlags.Instance |\n                 BindingFlags.Public |\n                 BindingFlags.NonPublic |\n                 BindingFlags.FlattenHierarchy)\n        double_clr = clr.GetClrType(Double)\n        for m in t.GetMethods(flags):\n            if m.Name == \"InternalExtractContoursAt\":\n                ps = m.GetParameters()\n                if len(ps) == 1 and ps[0].ParameterType == double_clr:\n                    return m.Invoke(surface, args)\n    except Exception:\n        pass\n\n    raise Exception(\"ExtractContoursAt no accesible ni por reflection.\")\n\n\ndef get_deltas_from_volume(vol_surf):\n    \"\"\"Lee los intervalos de analisis del TinVolumeSurface y devuelve:\n         (raise_d, raise_t)\n       Criterio (borde mas cercano a 0 en ambos casos):\n         - Desmonte  = intervalo POSITIVO (min>=0). Cojo su MIN.\n                       Desmonte.RaiseSurface(+min)  -> sube.\n         - Terraplen = intervalo NEGATIVO (max<=0). Cojo su MAX.\n                       Terraplen.RaiseSurface(max)  (max <=0) -> baja.\n       None si no hay intervalo de ese signo.\n    \"\"\"\n    try:\n        data = vol_surf.Analysis.GetElevationData()\n    except Exception:\n        return None, None\n    if data is None:\n        return None, None\n    raise_d = None\n    raise_t = None\n    eps = 1e-6\n    for d in data:\n        try:\n            mn = float(d.MinimumElevation)\n            mx = float(d.MaximumElevation)\n        except Exception:\n            continue\n        if mn >= -eps:\n            cand = mn\n            if raise_d is None or cand < raise_d:\n                raise_d = cand\n        if mx <= eps:\n            cand = mx\n            if raise_t is None or cand > raise_t:\n                raise_t = cand\n    return raise_d, raise_t\n\n\n\n    \"\"\"Ver docstring v3.1: devuelve (raise_d, raise_t) con borde mas cercano a 0.\"\"\"\n    try:\n        data = vol_surf.Analysis.GetElevationData()\n    except Exception:\n        return None, None\n    if data is None:\n        return None, None\n    raise_d = None\n    raise_t = None\n    eps = 1e-6\n    for d in data:\n        try:\n            mn = float(d.MinimumElevation)\n            mx = float(d.MaximumElevation)\n        except Exception:\n            continue\n        if mn >= -eps:\n            cand = mn\n            if raise_d is None or cand < raise_d:\n                raise_d = cand\n        if mx <= eps:\n            cand = mx\n            if raise_t is None or cand > raise_t:\n                raise_t = cand\n    return raise_d, raise_t\n\n\ndef ensure_layer(tr, db, layer_name, color_index):\n    \"\"\"Crea la capa si no existe; si existe, fuerza su color. Devuelve\n    el ObjectId del LayerTableRecord.\"\"\"\n    lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n    if lt.Has(layer_name):\n        ltr_id = lt.get_Item(layer_name)\n        ltr = tr.GetObject(ltr_id, OpenMode.ForWrite)\n    else:\n        lt.UpgradeOpen()\n        ltr = LayerTableRecord()\n        ltr.Name = layer_name\n        ltr_id = lt.Add(ltr)\n        tr.AddNewlyCreatedDBObject(ltr, True)\n    try:\n        ltr.Color = AcadColor.FromColorIndex(ColorMethod.ByAci, color_index)\n    except Exception as ex:\n        # Fallback a RGB si FromColorIndex falla por algun motivo\n        rgb_map = {1: (255, 0, 0), 3: (0, 255, 0)}\n        r, g, b = rgb_map.get(color_index, (255, 255, 255))\n        try:\n            ltr.Color = AcadColor.FromRgb(r, g, b)\n        except:\n            pass\n    return ltr_id\n\n\ndef erase_polylines_in_layer(tr, db, layer_name):\n    \"\"\"Borra todas las Polylines del ModelSpace que esten en la capa dada.\"\"\"\n    ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n    btr = tr.GetObject(ms_id, OpenMode.ForRead)\n    to_erase = []\n    for oid in btr:\n        try:\n            obj = tr.GetObject(oid, OpenMode.ForRead)\n        except:\n            continue\n        if isinstance(obj, Polyline) and obj.Layer == layer_name:\n            to_erase.append(oid)\n    for oid in to_erase:\n        try:\n            o = tr.GetObject(oid, OpenMode.ForWrite)\n            o.Erase()\n        except:\n            pass\n    return len(to_erase)\n\n\ndef extract_stain_boundaries(tr, db, cdoc, base_surf_id, base_surf_name,\n                             mdt_surf_id, tmp_vol_name,\n                             target_layer_name, log):\n    \"\"\"Crea un TinVolumeSurface temporal, extrae contornos a 0, los mueve\n    a la capa target_layer_name y devuelve la lista de ObjectIds de esas\n    polylines (ordenadas por longitud descendente, para que la mayor sea\n    el Outer boundary). Borra la volume surface al terminar.\n\n    Puede devolver lista vacia si la volume surface no cruza el cero\n    (desmonte o terraplen irrelevante en esa zona).\"\"\"\n    # 1) Crear volumen temporal\n    vol_id = None\n    try:\n        vol_id = TinVolumeSurface.Create(\n            tmp_vol_name, base_surf_id, mdt_surf_id)\n    except Exception as ex:\n        log.append(\"    ERROR creando volumen temporal '{}': {}\".format(\n            tmp_vol_name, ex))\n        return []\n\n    # 2) Extraer contornos a elevacion 0\n    contour_ids_coll = ObjectIdCollection()\n    try:\n        vol_surf = tr.GetObject(vol_id, OpenMode.ForRead)\n        # Invocar via reflection (ExtractContoursAt esta en ITerrainSurface\n        # con implementacion explicita, no accesible directamente en\n        # TinVolumeSurface desde pythonnet).\n        contour_ids_coll = extract_contours_at_iface(vol_surf, 0.0)\n    except Exception as ex:\n        log.append(\"    ERROR ExtractContoursAt(0) en '{}': {}\".format(\n            base_surf_name, ex))\n        # Diagnostico: listar los metodos del tipo que contengan \"Contour\"\n        # o \"Extract\" (solo la primera vez, controlado con flag global).\n        global _DIAG_DONE\n        try:\n            _DIAG_DONE\n        except NameError:\n            _DIAG_DONE = False\n        if not _DIAG_DONE:\n            _DIAG_DONE = True\n            try:\n                from System.Reflection import BindingFlags as BF\n                t = vol_surf.GetType()\n                log.append(\"    [diag] Tipo: {}\".format(t.FullName))\n                flags = (BF.Instance | BF.Public | BF.NonPublic |\n                         BF.FlattenHierarchy)\n                found = []\n                for m in t.GetMethods(flags):\n                    nm = m.Name\n                    if \"Contour\" in nm or \"Extract\" in nm:\n                        ps = m.GetParameters()\n                        sig = \", \".join([p.ParameterType.Name for p in ps])\n                        found.append(\"{}({})\".format(nm, sig))\n                log.append(\"    [diag] Metodos Extract*/Contour*:\")\n                for s in sorted(set(found))[:15]:\n                    log.append(\"      {}\".format(s))\n            except Exception as ex2:\n                log.append(\"    [diag] Error en diagnostico: {}\".format(ex2))\n        try:\n            tr.GetObject(vol_id, OpenMode.ForWrite).Erase()\n        except:\n            pass\n        return []\n\n    # 3) Mover polylines a la capa destino + recoger IDs + longitudes\n    polys_info = []   # (oid, length)\n    for cid in contour_ids_coll:\n        try:\n            pl = tr.GetObject(cid, OpenMode.ForWrite)\n            if not isinstance(pl, Polyline):\n                continue\n            pl.Layer = target_layer_name\n            polys_info.append((cid, float(pl.Length)))\n        except Exception as ex:\n            log.append(\"    AVISO moviendo polyline a capa: {}\".format(ex))\n\n    # 4) Borrar volumen temporal\n    try:\n        tr.GetObject(vol_id, OpenMode.ForWrite).Erase()\n    except Exception as ex:\n        log.append(\"    AVISO borrando volumen temporal: {}\".format(ex))\n\n    # 5) Ordenar por longitud descendente (el mayor -> Outer)\n    polys_info.sort(key=lambda x: x[1], reverse=True)\n    return [oid for (oid, _) in polys_info]\n\n\ndef add_boundaries_from_polylines(tr, surf, poly_ids, log):\n    \"\"\"Anyade cada polyline como boundary de surf. La primera Outer,\n    el resto Show. Anyade al log el recuento.\"\"\"\n    if not poly_ids:\n        return 0\n    added = 0\n    for idx, pid in enumerate(poly_ids):\n        try:\n            pl = tr.GetObject(pid, OpenMode.ForRead)\n            if not isinstance(pl, Polyline):\n                continue\n            # Point3dCollection con los vertices de la polyline\n            pc = Point3dCollection()\n            n = pl.NumberOfVertices\n            for i in range(n):\n                p3 = pl.GetPoint3dAt(i)\n                pc.Add(Point3d(p3.X, p3.Y, 0.0))\n            # Cerrar si no lo esta\n            first = pl.GetPoint3dAt(0)\n            last  = pl.GetPoint3dAt(n - 1)\n            if (first.X, first.Y) != (last.X, last.Y):\n                pc.Add(Point3d(first.X, first.Y, 0.0))\n            btype = SurfaceBoundaryType.Outer if idx == 0 else SurfaceBoundaryType.Show\n            surf.BoundariesDefinition.AddBoundaries(pc, 1.0, btype, True)\n            added += 1\n        except Exception as ex:\n            log.append(\"    AVISO anyadiendo boundary #{}: {}\".format(idx, ex))\n    return added\n\n\ntry:\n    doc  = AcadApp.DocumentManager.MdiActiveDocument\n    db   = doc.Database\n    cdoc = CivilApplication.ActiveDocument\n\n    dlock = doc.LockDocument()\n    try:\n        tracker_surf_id = None\n        mdt_surf_id     = None\n        no_display_id   = None\n        contours        = []\n        vol_by_zone     = {}\n        created_names   = []\n        errors_count    = 0\n\n        # ===================================================== #\n        # FASE 0: Localizar superficies, estilo y contornos\n        # ===================================================== #\n        tr0 = db.TransactionManager.StartTransaction()\n        try:\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn == tracker_surf_name:\n                    tracker_surf_id = sid\n                elif sn == mdt_surf_name:\n                    mdt_surf_id = sid\n                else:\n                    prefix = VOLUME_PREFIX + \"_Zona\"\n                    if sn.startswith(prefix):\n                        tail = sn[len(prefix):]\n                        if len(tail) >= 2 and tail[:2].isdigit():\n                            zn = int(tail[:2])\n                            vol_by_zone[zn] = sid\n\n            if tracker_surf_id is None:\n                raise Exception(\"Superficie de trackers '{}' no encontrada.\".format(\n                    tracker_surf_name))\n            if mdt_surf_id is None:\n                raise Exception(\"Superficie MDT '{}' no encontrada.\".format(\n                    mdt_surf_name))\n\n            log.append(\"Superficies de volumen detectadas: {}\".format(\n                len(vol_by_zone)))\n\n            no_display_id = find_style_id(cdoc, [\n                \"_No Display\", \"_no display\", \"_NO DISPLAY\",\n                \"_Sin Display\", \"_Sin Visualizacion\",\n            ])\n            if no_display_id is None:\n                log.append(\"AVISO: estilo '_No Display' no encontrado.\")\n            else:\n                log.append(\"Estilo de superficie: '_No Display' OK.\")\n\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            btr = tr0.GetObject(ms_id, OpenMode.ForRead)\n            for oid in btr:\n                obj = tr0.GetObject(oid, OpenMode.ForRead)\n                if not isinstance(obj, Polyline):\n                    continue\n                if obj.Layer != contour_layer:\n                    continue\n                n = obj.NumberOfVertices\n                if n < 3:\n                    continue\n                pts = []\n                for i in range(n):\n                    p = obj.GetPoint2dAt(i)\n                    pts.append((p.X, p.Y))\n                contours.append(pts)\n\n            if not contours:\n                raise Exception(\"Sin contornos cerrados en '{}'.\".format(\n                    contour_layer))\n            contours.sort(key=lambda c: min(p[0] for p in c))\n            log.append(\"Contornos encontrados: {}\".format(len(contours)))\n\n            # Limpieza de ejecuciones previas:\n            # - Superficies Trackers_Zona*, Desmonte_Zona*, Terraplen_Zona*\n            # - Superficies temporales __tmp_vol_*\n            prefixes = (\"Trackers_Zona\", \"Desmonte_Zona\",\n                        \"Terraplen_Zona\", TMP_VOL_PREFIX)\n            to_erase = []\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn.startswith(prefixes):\n                    to_erase.append(sid)\n            for sid in to_erase:\n                tr0.GetObject(sid, OpenMode.ForWrite).Erase()\n            if to_erase:\n                log.append(\"Superficies previas borradas: {}\".format(len(to_erase)))\n\n            tr0.Commit()\n        finally:\n            tr0.Dispose()\n\n        # ===================================================== #\n        # FASE 1: Crear superficies por zona (+ raise/lower)\n        # ===================================================== #\n        tr = db.TransactionManager.StartTransaction()\n        trk_ids = {}   # zn -> ObjectId Trackers_ZonaXX\n        des_ids = {}   # zn -> ObjectId Desmonte_ZonaXX\n        ter_ids = {}   # zn -> ObjectId Terraplen_ZonaXX\n        try:\n            for i, pts in enumerate(contours):\n                zn = i + 1\n                trk_name = \"Trackers_Zona{:02d}\".format(zn)\n                des_name = \"Desmonte_Zona{:02d}\".format(zn)\n                ter_name = \"Terraplen_Zona{:02d}\".format(zn)\n\n                log.append(\"\")\n                log.append(\">>> Zona {:02d}\".format(zn))\n\n                raise_d, raise_t = None, None\n                vol_id = vol_by_zone.get(zn)\n                if vol_id is None:\n                    log.append(\"  AVISO: sin Volumen_MDT_Zona{:02d}.\".format(zn))\n                else:\n                    try:\n                        vol_surf = tr.GetObject(vol_id, OpenMode.ForRead)\n                        raise_d, raise_t = get_deltas_from_volume(vol_surf)\n                        if raise_d is not None:\n                            log.append(\"  Delta desmonte : {:+.3f} m\".format(raise_d))\n                        else:\n                            log.append(\"  AVISO: sin intervalo de desmonte.\")\n                        if raise_t is not None:\n                            log.append(\"  Delta terraplen: {:+.3f} m\".format(raise_t))\n                        else:\n                            log.append(\"  AVISO: sin intervalo de terraplen.\")\n                    except Exception as ex_v:\n                        log.append(\"  ERROR leyendo volumen: {}\".format(ex_v))\n\n                pc = Point3dCollection()\n                for (x, y) in pts:\n                    pc.Add(Point3d(x, y, 0.0))\n                if (pts[0][0], pts[0][1]) != (pts[-1][0], pts[-1][1]):\n                    pc.Add(Point3d(pts[0][0], pts[0][1], 0.0))\n\n                # ---- 1) Trackers_ZonaXX ----\n                trk_id = None\n                try:\n                    trk_id = TinSurface.Create(db, trk_name)\n                    trk_surf = tr.GetObject(trk_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        trk_surf.StyleId = no_display_id\n                    trk_surf.PasteSurface(tracker_surf_id)\n                    trk_surf.BoundariesDefinition.AddBoundaries(\n                        pc, 1.0, SurfaceBoundaryType.Outer, True)\n                    log.append(\"  OK {}\".format(trk_name))\n                    created_names.append(trk_name)\n                    trk_ids[zn] = trk_id\n                except Exception as ex_t:\n                    log.append(\"  ERROR {}: {}\".format(trk_name, ex_t))\n                    errors_count += 1\n                    continue\n\n                # ---- 2) Desmonte_ZonaXX ----\n                try:\n                    des_id = TinSurface.Create(db, des_name)\n                    des_surf = tr.GetObject(des_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        des_surf.StyleId = no_display_id\n                    des_surf.PasteSurface(trk_id)\n                    if raise_d is not None:\n                        des_surf.RaiseSurface(float(raise_d))\n                        log.append(\"  OK {}  (raise {:+.3f})\".format(\n                            des_name, raise_d))\n                    else:\n                        log.append(\"  OK {}  (sin raise)\".format(des_name))\n                    created_names.append(des_name)\n                    des_ids[zn] = des_id\n                except Exception as ex_d:\n                    log.append(\"  ERROR {}: {}\".format(des_name, ex_d))\n                    errors_count += 1\n\n                # ---- 3) Terraplen_ZonaXX ----\n                try:\n                    ter_id = TinSurface.Create(db, ter_name)\n                    ter_surf = tr.GetObject(ter_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        ter_surf.StyleId = no_display_id\n                    ter_surf.PasteSurface(trk_id)\n                    if raise_t is not None:\n                        ter_surf.RaiseSurface(float(raise_t))\n                        log.append(\"  OK {}  (raise {:+.3f})\".format(\n                            ter_name, raise_t))\n                    else:\n                        log.append(\"  OK {}  (sin raise)\".format(ter_name))\n                    created_names.append(ter_name)\n                    ter_ids[zn] = ter_id\n                except Exception as ex_r:\n                    log.append(\"  ERROR {}: {}\".format(ter_name, ex_r))\n                    errors_count += 1\n\n            tr.Commit()\n        finally:\n            tr.Dispose()\n\n        # ===================================================== #\n        # FASE 2: Manchas (extraer contornos) + boundaries\n        # ===================================================== #\n        # Transaccion nueva: las superficies ya estan commiteadas y\n        # ExtractContoursAt crea polylines en ModelSpace.\n        log.append(\"\")\n        log.append(\"--- FASE 2: manchas + boundaries ---\")\n\n        tr2 = db.TransactionManager.StartTransaction()\n        try:\n            for zn in sorted(set(list(des_ids.keys()) + list(ter_ids.keys()))):\n                log.append(\"\")\n                log.append(\">>> Zona {:02d} (manchas)\".format(zn))\n\n                # ---- Desmonte ----\n                des_id = des_ids.get(zn)\n                if des_id is not None:\n                    des_layer = DES_LAYER_FMT.format(zn)\n                    des_name_short = \"Desmonte_Zona{:02d}\".format(zn)\n                    try:\n                        ensure_layer(tr2, db, des_layer, DES_COLOR_INDEX)\n                        n_old = erase_polylines_in_layer(tr2, db, des_layer)\n                        if n_old:\n                            log.append(\"  Capa '{}': {} polylines previas borradas\".format(\n                                des_layer, n_old))\n                        tmp_name = \"{}des_{:02d}\".format(TMP_VOL_PREFIX, zn)\n                        pids = extract_stain_boundaries(\n                            tr2, db, cdoc, des_id, des_name_short,\n                            mdt_surf_id, tmp_name, des_layer, log)\n                        log.append(\"  {} -> {} polyline(s) de mancha\".format(\n                            des_name_short, len(pids)))\n                        if pids:\n                            des_surf = tr2.GetObject(des_id, OpenMode.ForWrite)\n                            added = add_boundaries_from_polylines(tr2, des_surf, pids, log)\n                            log.append(\"  {}: {} boundaries anyadidas\".format(\n                                des_name_short, added))\n                    except Exception as ex_d2:\n                        log.append(\"  ERROR manchas desmonte Zona{:02d}: {}\".format(\n                            zn, ex_d2))\n                        errors_count += 1\n\n                # ---- Terraplen ----\n                ter_id = ter_ids.get(zn)\n                if ter_id is not None:\n                    ter_layer = TER_LAYER_FMT.format(zn)\n                    ter_name_short = \"Terraplen_Zona{:02d}\".format(zn)\n                    try:\n                        ensure_layer(tr2, db, ter_layer, TER_COLOR_INDEX)\n                        n_old = erase_polylines_in_layer(tr2, db, ter_layer)\n                        if n_old:\n                            log.append(\"  Capa '{}': {} polylines previas borradas\".format(\n                                ter_layer, n_old))\n                        tmp_name = \"{}ter_{:02d}\".format(TMP_VOL_PREFIX, zn)\n                        pids = extract_stain_boundaries(\n                            tr2, db, cdoc, ter_id, ter_name_short,\n                            mdt_surf_id, tmp_name, ter_layer, log)\n                        log.append(\"  {} -> {} polyline(s) de mancha\".format(\n                            ter_name_short, len(pids)))\n                        if pids:\n                            ter_surf = tr2.GetObject(ter_id, OpenMode.ForWrite)\n                            added = add_boundaries_from_polylines(tr2, ter_surf, pids, log)\n                            log.append(\"  {}: {} boundaries anyadidas\".format(\n                                ter_name_short, added))\n                    except Exception as ex_t2:\n                        log.append(\"  ERROR manchas terraplen Zona{:02d}: {}\".format(\n                            zn, ex_t2))\n                        errors_count += 1\n\n            tr2.Commit()\n        finally:\n            tr2.Dispose()\n\n        # ===================================================== #\n        # FASE 3: Cambiar estilo de Volumen_MDT_ZonaXX a 'elevaciones'\n        # ===================================================== #\n        log.append(\"\")\n        log.append(\"--- FASE 3: estilo de Volumen_MDT ---\")\n        tr3 = db.TransactionManager.StartTransaction()\n        try:\n            # Buscar el estilo (prioridad al nombre exacto 'elevaciones')\n            vol_style_id = find_style_id(cdoc, [\n                \"elevaciones\",\n                \"Elevaciones\",\n                \"ELEVACIONES\",\n                \"Elevation Banding 2D\",\n                \"Elevation Banding 3D\",\n            ])\n            if vol_style_id is None:\n                log.append(\"  AVISO: estilo 'elevaciones' no encontrado. \"\n                           \"Se deja el estilo actual de cada volumen.\")\n            else:\n                log.append(\"  Estilo 'elevaciones' localizado.\")\n                n_updated = 0\n                for zn, vid in sorted(vol_by_zone.items()):\n                    vname = \"Volumen_MDT_Zona{:02d}\".format(zn)\n                    try:\n                        vsurf = tr3.GetObject(vid, OpenMode.ForWrite)\n                        vsurf.StyleId = vol_style_id\n                        log.append(\"  OK {} -> estilo 'elevaciones'\".format(vname))\n                        n_updated += 1\n                    except Exception as ex_s:\n                        log.append(\"  ERROR {} al aplicar estilo: {}\".format(\n                            vname, ex_s))\n                        errors_count += 1\n                log.append(\"  Volumenes actualizados: {} de {}\".format(\n                    n_updated, len(vol_by_zone)))\n            tr3.Commit()\n        finally:\n            tr3.Dispose()\n\n        # ===================================================== #\n        # Resumen\n        # ===================================================== #\n        log.append(\"\")\n        log.append(\"=\" * 50)\n        n_zones = len(contours)\n        expected = n_zones * 3\n        log.append(\"RESUMEN\")\n        log.append(\"  Zonas procesadas : {}\".format(n_zones))\n        log.append(\"  Superficies OK   : {} de {}\".format(\n            len(created_names), expected))\n        log.append(\"  ERRORES          : {}\".format(errors_count))\n        log.append(\"\")\n        log.append(\"SIGUIENTE PASO (manual): en Prospector > Surfaces\")\n        log.append(\"crear una carpeta por zona (Zona01, Zona02, ...) y\")\n        log.append(\"arrastrar Trackers_ZonaXX, Desmonte_ZonaXX,\")\n        log.append(\"Terraplen_ZonaXX y Volumen_MDT_ZonaXX a cada una.\")\n\n    finally:\n        dlock.Dispose()\n\n    OUT = \"\\n\".join(log)\n\nexcept Exception as ex:\n    log.append(\"ERROR FATAL: {}\".format(ex))\n    log.append(traceback.format_exc())\n    OUT = \"\\n\".join(log)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "8eecb91cdbb24b11bcc7a6ea0f8cf333",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "127bbed7148449f591764a10de073a27",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "271d439f729a4c5bb08569cb4a29e311",
+          "Name": "IN[1]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7f7535741c994db19c4c2fc19eeef4d2",
+          "Name": "IN[2]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f40f42e2b07f4a00bcab8992d2431be7",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "591667e7298141e898a779313fba2089",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "d2e576b755c84aabb9aa414a5e7c8d72",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "175aaa18127a4a68a29ee13756bf4e0c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "6d4e7f9ba2ba4f1a996e2e587a20d0cc",
+      "End": "127bbed7148449f591764a10de073a27",
+      "Id": "f9b0ce02a9cb423991a798f6e0d02028",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "115afab0fe784830aa500ac2c985cb5d",
+      "End": "271d439f729a4c5bb08569cb4a29e311",
+      "Id": "db3ee53ed2654ab3b42f188719d69bc8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "10d7d70e98ce4daf947d4b9898169cc7",
+      "End": "7f7535741c994db19c4c2fc19eeef4d2",
+      "Id": "2a016f904e6645acb53a90f74893b8f3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f40f42e2b07f4a00bcab8992d2431be7",
+      "End": "d2e576b755c84aabb9aa414a5e7c8d72",
+      "Id": "b3afc132bc194c97bb5f4292149924f6",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "None provided",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "cc496d5721ba45da8a5c17dc7a3196d2",
+        "Name": "Superficie trackers general",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": -240.0
+      },
+      {
+        "Id": "e91dfbbfa6ad4c74934a505f22253c6a",
+        "Name": "Superficie MDT original",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": -120.0
+      },
+      {
+        "Id": "589912fcd1bf41ae8a52e786778f681c",
+        "Name": "Capa de contornos",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "8eecb91cdbb24b11bcc7a6ea0f8cf333",
+        "Name": "Superficies_Zonas",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -400.0,
+        "Y": -120.0
+      },
+      {
+        "Id": "591667e7298141e898a779313fba2089",
+        "Name": "Watch",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 200.0,
+        "Y": -120.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}

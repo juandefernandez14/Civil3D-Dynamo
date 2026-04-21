@@ -1,0 +1,474 @@
+{
+  "Uuid": "d0e7be00-e3dd-4a22-bf15-833f599e86da",
+  "IsCustomNode": false,
+  "Description": "v6: Multi-zona. Una superficie de volumen por contorno con analysis y leyenda.",
+  "Name": "Volumen_MDT",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "a0c6067810fc4b5f9d259f783818de9d",
+      "Name": "Superficie base (trackers)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Trackers_Apamate_E",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "8313d238960f41859720355ff7092c4f",
+      "Name": "Superficie comparacion (MDT original)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MdT_Apamate_Topografia_E",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+      "Name": "Rugosidad (mm)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "100",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+      "Name": "Prefijo nombre volumen",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Volumen_MDT",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+      "Name": "Capa de contornos",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_contornos offset",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "41dced036c45411fa9ad49fa5a2a1325",
+      "Name": "Log",
+      "Type": "string",
+      "InitialValue": "=== Volumen MDT v26 ===\n\nContornos: 9\nEstilo picking: 'Standard'\n  Volumen_MDT_Zona01: C1213 R692 r1.75\n  Volumen_MDT_Zona02: C706 R1122 r0.63\n  Volumen_MDT_Zona03: C712 R113 r6.31\n  Volumen_MDT_Zona04: C116 R185 r0.63\n  Volumen_MDT_Zona05: C540 R767 r0.70\n  Volumen_MDT_Zona06: C9527 R9774 r0.97\n  Volumen_MDT_Zona07: C4259 R1512 r2.82\n  Volumen_MDT_Zona08: C680 R315 r2.16\n  Volumen_MDT_Zona09: C379 R473 r0.80\n\n9 volumenes creados.\nZona 01: tabla en (362124.7, 4666780.4)\nZona 02: tabla en (362124.7, 4666740.4)\nZona 03: tabla en (362124.7, 4666700.4)\nZona 04: tabla en (362124.7, 4666660.4)\nZona 05: tabla en (362124.7, 4666620.4)\nZona 06: tabla en (362124.7, 4666580.4)\nZona 07: tabla en (362124.7, 4666540.4)\nZona 08: tabla en (362124.7, 4666500.4)\nZona 09: tabla en (362124.7, 4666460.4)\n\n>>> 9 tablas + restaurar estilo encolados.\n\n=== COMPLETADO ===",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a0c6067810fc4b5f9d259f783818de9d",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9d3e579ffde3461bbdd177f59f8546ea",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers_Apamate_E"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "8313d238960f41859720355ff7092c4f",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8058fd4646814ed088c0d49ba195a265",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MdT_Apamate_Topografia_E"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f199140e7bfd4fba96618a47809986f0",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 100.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d11ca1b14e744d69be15ac71bbd85499",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Volumen_MDT"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5e64ffee31464228a528e185d01a37b8",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos offset"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Volumen_MDT.dyn  v31 (split) - Solo superficies de volumen + tablas\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# Crea por cada contorno cerrado en la capa indicada:\n#   - Volumen_MDT_ZonaXX : TIN Volume Surface con analysis y tabla\n#\n# Las superficies se dejan con estilo \"picking\" (todo visible) porque\n# asi el comando de tabla puede seleccionarlas correctamente.\n#\n# IN[0] : str    superficie base (trackers)\n# IN[1] : str    superficie comparacion (MDT original)\n# IN[2] : float  rugosidad en mm\n# IN[3] : str    prefijo del nombre volumen (ej: Volumen_MDT)\n# IN[4] : str    nombre de la capa de contornos\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, ObjectId, Polyline, SymbolUtilityServices\n)\nfrom Autodesk.AutoCAD.Geometry import Point3d, Point3dCollection\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    TinVolumeSurface, SurfaceAnalysisElevationData\n)\nfrom Autodesk.Civil import SurfaceBoundaryType\nfrom Autodesk.AutoCAD.Colors import Color as AcadColor\n\nimport System\nfrom System import Array\n\nbase_surf_name = str(IN[0])\ncomp_surf_name = str(IN[1])\nrugosidad_mm   = float(IN[2])\nprefix         = str(IN[3])\ncontour_layer  = str(IN[4])\nrugosidad_m    = rugosidad_mm / 1000.0\n\nlog = []\nlog.append(\"=== Volumen MDT v31 (split) - Crea volumenes ===\")\nlog.append(\"\")\n\ntry:\n    doc  = AcadApp.DocumentManager.MdiActiveDocument\n    db   = doc.Database\n    cdoc = CivilApplication.ActiveDocument\n\n    contours = []\n    created_info = []\n\n    green = AcadColor.FromRgb(80, 200, 80)\n    red   = AcadColor.FromRgb(220, 50, 50)\n\n    dlock = doc.LockDocument()\n    try:\n        base_id = None\n        comp_id = None\n        style_picking_id = None\n\n        tr0 = db.TransactionManager.StartTransaction()\n        try:\n            # Localizar superficies\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn == base_surf_name:\n                    base_id = sid\n                elif sn == comp_surf_name:\n                    comp_id = sid\n            if base_id is None:\n                raise Exception(\"Base '{}' no encontrada.\".format(\n                    base_surf_name))\n            if comp_id is None:\n                raise Exception(\"Comp '{}' no encontrada.\".format(\n                    comp_surf_name))\n\n            # Leer contornos\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            btr = tr0.GetObject(ms_id, OpenMode.ForRead)\n            for oid in btr:\n                obj = tr0.GetObject(oid, OpenMode.ForRead)\n                if not isinstance(obj, Polyline):\n                    continue\n                if obj.Layer != contour_layer:\n                    continue\n                n = obj.NumberOfVertices\n                if n < 3:\n                    continue\n                pts = []\n                for i in range(n):\n                    p = obj.GetPoint2dAt(i)\n                    pts.append((p.X, p.Y))\n                contours.append(pts)\n\n            if not contours:\n                raise Exception(\"Sin contornos en '{}'.\".format(\n                    contour_layer))\n            contours.sort(key=lambda c: min(p[0] for p in c))\n            log.append(\"Contornos: {}\".format(len(contours)))\n\n            # Eliminar volumenes anteriores con mismo prefijo\n            vol_prefix = prefix + \"_Zona\"\n            to_erase = []\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn.startswith(vol_prefix):\n                    to_erase.append(sid)\n            for sid in to_erase:\n                tr0.GetObject(sid, OpenMode.ForWrite).Erase()\n\n            # Buscar estilo para picking (todo visible)\n            ss = cdoc.Styles.SurfaceStyles\n            for tv in [\"analisis de pendientes\",\n                       \"Analisis de pendientes\",\n                       \"Analisis de Pendientes\",\n                       \"ANALISIS DE PENDIENTES\",\n                       \"Contours 1m and 5m (Background)\",\n                       \"Standard\",\n                       \"Triangles\"]:\n                try:\n                    style_picking_id = ss.get_Item(tv)\n                    log.append(\"Estilo picking: '{}'\".format(tv))\n                    break\n                except:\n                    continue\n\n            # Fallback\n            if style_picking_id is None:\n                for sid_s in ss:\n                    try:\n                        s_obj = tr0.GetObject(sid_s, OpenMode.ForRead)\n                        nm = s_obj.Name\n                        if nm and not nm.startswith(\"_No\"):\n                            style_picking_id = sid_s\n                            log.append(\"Picking (fallback): '{}'\".format(nm))\n                            break\n                    except:\n                        continue\n\n            tr0.Commit()\n        finally:\n            tr0.Dispose()\n\n        all_min_x = min(x for pts in contours for x, y in pts)\n        all_max_x = max(x for pts in contours for x, y in pts)\n        all_max_y = max(y for pts in contours for x, y in pts)\n        width = all_max_x - all_min_x\n        margin_x = max(width * 0.2, 100.0)\n        table_x = all_max_x + margin_x\n        table_spacing = 40.0\n\n        # ============================================================== #\n        # FASE 1: Crear volumenes\n        # ============================================================== #\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            for i, pts in enumerate(contours):\n                zn = i + 1\n                zone_name = \"{}_Zona{:02d}\".format(prefix, zn)\n                try:\n                    vol_id = TinVolumeSurface.Create(\n                        zone_name, base_id, comp_id)\n                    vol_surf = tr.GetObject(vol_id, OpenMode.ForWrite)\n\n                    if style_picking_id is not None:\n                        vol_surf.StyleId = style_picking_id\n\n                    pc = Point3dCollection()\n                    for (x, y) in pts:\n                        pc.Add(Point3d(x, y, 0.0))\n                    if (pts[0][0], pts[0][1]) != (pts[-1][0], pts[-1][1]):\n                        pc.Add(Point3d(pts[0][0], pts[0][1], 0.0))\n                    vol_surf.BoundariesDefinition.AddBoundaries(\n                        pc, 1.0, SurfaceBoundaryType.Outer, True)\n\n                    min_e = -50.0; max_e = 50.0\n                    try:\n                        gp = vol_surf.GetGeneralProperties()\n                        gt = clr.GetClrType(type(gp))\n                        for p in gt.GetProperties():\n                            pn = p.Name\n                            if \"min\" in pn.lower() and \"elev\" in pn.lower():\n                                min_e = p.GetValue(gp)\n                            elif \"max\" in pn.lower() and \"elev\" in pn.lower():\n                                max_e = p.GetValue(gp)\n                    except:\n                        pass\n\n                    try:\n                        d1 = SurfaceAnalysisElevationData(\n                            min_e, -rugosidad_m, green)\n                        d2 = SurfaceAnalysisElevationData(\n                            rugosidad_m, max_e, red)\n                        vol_surf.Analysis.SetElevationData(\n                            Array[SurfaceAnalysisElevationData]([d1, d2]))\n                    except:\n                        pass\n\n                    try:\n                        vp = vol_surf.GetVolumeProperties()\n                        r = (vp.UnadjustedCutVolume /\n                             vp.UnadjustedFillVolume\n                             if vp.UnadjustedFillVolume > 0 else 0)\n                        log.append(\"  {}: C{:.0f} R{:.0f} r{:.2f}\".format(\n                            zone_name, vp.UnadjustedCutVolume,\n                            vp.UnadjustedFillVolume, r))\n                    except:\n                        pass\n\n                    cx = sum(p[0] for p in pts) / len(pts)\n                    cy = sum(p[1] for p in pts) / len(pts)\n                    created_info.append((zone_name, cx, cy))\n                except Exception as ex_v:\n                    log.append(\"  ERROR volumen: {}\".format(ex_v))\n\n            tr.Commit()\n        finally:\n            tr.Dispose()\n\n        log.append(\"\")\n        log.append(\"{} volumenes creados.\".format(len(created_info)))\n\n        # ============================================================== #\n        # FASE 2: Encolar tablas + LISP restaurar estilo \"elevaciones\"\n        # en UNA sola llamada SendStringToExecute para garantizar orden\n        # ============================================================== #\n        if created_info:\n            full_cmd = \"\"\n            for i, (zone_name, zcx, zcy) in enumerate(created_info):\n                table_y = all_max_y - i * table_spacing\n                full_cmd += (\n                    \"_.ADDSURFACELEGENDTABLE\\n\"\n                    \"{},{}\\n\"\n                    \"E\\n\"\n                    \"D\\n\"\n                    \"{},{}\\n\"\n                ).format(zcx, zcy, table_x, table_y)\n                log.append(\"Zona {:02d}: tabla en ({:.1f}, {:.1f})\".format(\n                    i + 1, table_x, table_y))\n\n            # LISP al final para restaurar \"elevaciones\"\n            full_cmd += \"(vl-load-com)\\n\"\n            lisp_body = \"(progn\"\n            for (zone_name, _, _) in created_info:\n                lisp_body += (\n                    \" (vl-catch-all-apply (function (lambda ()\"\n                    \" (vla-put-style\"\n                    \" (vla-item\"\n                    \" (vla-get-surfaces\"\n                    \" (vla-get-civildocument\"\n                    \" (vla-get-application\"\n                    \" (vla-get-activedocument\"\n                    \" (vlax-get-acad-object)))))\"\n                    \" \\\"{}\\\")\"\n                    \" \\\"elevaciones\\\"))))\"\n                ).format(zone_name)\n            lisp_body += \" (princ))\\n\"\n            full_cmd += lisp_body\n\n            doc.SendStringToExecute(full_cmd, True, False, False)\n            log.append(\"\")\n            log.append(\">>> {} tablas + restaurar estilo encolados.\".format(\n                len(created_info)))\n\n    finally:\n        dlock.Dispose()\n\n    log.append(\"\")\n    log.append(\"=== Volumenes listos, pasando a nodo de tablas ===\")\n    # OUT devuelve (log_string, lista_tablas) para el siguiente nodo\n    OUT = [log, table_info]\n\nexcept Exception as ex:\n    log.append(\"ERROR: {}\".format(ex))\n    log.append(traceback.format_exc())\n    OUT = [log, []]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "1443590f895a48dc8c2a30075facc5b3",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "f91f1158bc644a85b421ed6b0a25a8bd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c8cccef982914db09d692ad68554819d",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "873e8be9da81413fabeecd580f0abb6c",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b85e3580e4634a5696be1a3efe61d3a5",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "49993a9c6f784a62990a41d34ee04943",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "80707d97c3d24973ace2b3c794b3dff7",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "41dced036c45411fa9ad49fa5a2a1325",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "f6b0003f01494cdb8530e607e9f63eb4",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "45b8c6e6f7af46a7830abaa44138de80",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Id": "e36b1e7b32634b3fa669cbf9d22b406d",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "95d5ecf3e2174df9a83b6fc5ec8b3850",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "73deb70ba0a14c20aa99fb47858534d0",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script.",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Nodo 2: Crea tablas de leyenda por NOMBRE de superficie\n#\n# Recibe: IN[0] = [log_lista, [(nombre, table_x, table_y), ...]]\n# Devuelve log agregado.\n#\n# Estrategia:\n#   Usa ssget con filtro por nombre para PRESELECCIONAR la superficie\n#   antes de lanzar el comando ADDSURFACELEGENDTABLE. Con la seleccion\n#   ya hecha, el comando no pide picking.\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\n\nlog_prev, table_info = IN[0]\nlog = list(log_prev)\nlog.append(\"\")\nlog.append(\"=== Nodo 2: tablas de leyenda ===\")\n\ntry:\n    if not table_info:\n        log.append(\"Sin tablas que crear.\")\n        OUT = \"\\n\".join(log)\n    else:\n        doc = AcadApp.DocumentManager.MdiActiveDocument\n\n        # Construir UN unico string con TODOS los bloques preseleccion+tabla.\n        # Por cada tabla:\n        #   1. QSELECT via ssget con filtro DXF 2 (nombre) + 0 (tipo AECC_TIN_VOLUME_SURFACE)\n        #   2. Comando ADDSURFACELEGENDTABLE - usara la seleccion previa\n        #\n        # En AutoCAD / Civil 3D, preseleccion se hace con:\n        #   (sssetfirst nil (ssget \"_X\" '((0 . \"AECC_TIN_VOLUME_SURFACE\") (2 . \"nombre\"))))\n        # Despues el comando ve la seleccion en \"implied selection\" y\n        # salta el prompt de \"Select a surface\".\n\n        full_cmd = \"\"\n        for (name, tx, ty) in table_info:\n            # LISP para preseleccionar por nombre\n            full_cmd += (\n                \"(sssetfirst nil (ssget \\\"_X\\\" \"\n                \"(list (cons 0 \\\"AECC_TIN_VOLUME_SURFACE\\\") \"\n                \"(cons 2 \\\"{}\\\"))))\\n\"\n            ).format(name)\n            # Comando de tabla (con superficie ya preseleccionada)\n            full_cmd += (\n                \"_.ADDSURFACELEGENDTABLE\\n\"\n                \"E\\n\"\n                \"D\\n\"\n                \"{},{}\\n\"\n            ).format(tx, ty)\n            log.append(\"  {}: tabla en ({:.1f},{:.1f})\".format(\n                name, tx, ty))\n\n        doc.SendStringToExecute(full_cmd, True, False, False)\n        log.append(\"\")\n        log.append(\">>> {} tablas encoladas por NOMBRE.\".format(\n            len(table_info)))\n\n        OUT = \"\\n\".join(log)\n\nexcept Exception as ex:\n    log.append(\"ERROR: {}\".format(ex))\n    log.append(traceback.format_exc())\n    OUT = \"\\n\".join(log)\n"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "9d3e579ffde3461bbdd177f59f8546ea",
+      "End": "f91f1158bc644a85b421ed6b0a25a8bd",
+      "Id": "641d9ac6436d457fbc49471f4f6cd72d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "8058fd4646814ed088c0d49ba195a265",
+      "End": "c8cccef982914db09d692ad68554819d",
+      "Id": "6508be01cfbd4794a907112d762908e7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f199140e7bfd4fba96618a47809986f0",
+      "End": "873e8be9da81413fabeecd580f0abb6c",
+      "Id": "ab01b0263a0345de9aa932c6ddf04276",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d11ca1b14e744d69be15ac71bbd85499",
+      "End": "b85e3580e4634a5696be1a3efe61d3a5",
+      "Id": "fce983e9dc974f27a460ad4de984cc1c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "5e64ffee31464228a528e185d01a37b8",
+      "End": "49993a9c6f784a62990a41d34ee04943",
+      "Id": "90f9eaeb5fc04b2f8b22b8cf506109ad",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "80707d97c3d24973ace2b3c794b3dff7",
+      "End": "95d5ecf3e2174df9a83b6fc5ec8b3850",
+      "Id": "60b193fd83024d0a937f0a1b4e9de959",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "73deb70ba0a14c20aa99fb47858534d0",
+      "End": "f6b0003f01494cdb8530e607e9f63eb4",
+      "Id": "cd201e2188f144eba9d7d3f1554eeaea",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a0c6067810fc4b5f9d259f783818de9d",
+        "Name": "Superficie base (trackers)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "8313d238960f41859720355ff7092c4f",
+        "Name": "Superficie comparacion (MDT original)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 100.0
+      },
+      {
+        "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+        "Name": "Rugosidad (mm)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 200.0
+      },
+      {
+        "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+        "Name": "Prefijo nombre volumen",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 300.0
+      },
+      {
+        "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+        "Name": "Capa de contornos",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 400.0
+      },
+      {
+        "Id": "1443590f895a48dc8c2a30075facc5b3",
+        "Name": "Volumen_MDT",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 450.0,
+        "Y": 150.0
+      },
+      {
+        "Id": "41dced036c45411fa9ad49fa5a2a1325",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1400.0,
+        "Y": 250.0
+      },
+      {
+        "Id": "e36b1e7b32634b3fa669cbf9d22b406d",
+        "Name": "Tablas de leyenda",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 900.0,
+        "Y": 250.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}
