@@ -1,0 +1,2348 @@
+{
+  "Uuid": "4d186cb5-bba6-43e1-af6e-130ac496bc13",
+  "IsCustomNode": false,
+  "Description": "Rasante_Viales (Paso 1-3) + Create_Corridors. Primero crea perfiles TN, ProfileViews y rasantes RAS <aname>, luego crea los corredores de caminos con la rasante de cada eje, asigna el MDT como target y construye las superficies TOP y DATUM con boundaries shrinkwrap.",
+  "Name": "Rasante_y_Corredores",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "a1000000000000000000000000000001",
+      "Name": "01 Capa de ejes",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "C-ROAD",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000002",
+      "Name": "02 Superficie TN",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_IND-Formaciones_CVL",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000003",
+      "Name": "03 Estilo perfil TN",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Existing Ground (Lynka)",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000004",
+      "Name": "04 Origen X",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "526708.676",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000005",
+      "Name": "05 Origen Y",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "7421534.177",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000006",
+      "Name": "06 Numero de columnas",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "2",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000007",
+      "Name": "07 Espaciado X (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "500",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000008",
+      "Name": "08 Espaciado Y (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "150",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000009",
+      "Name": "09 Estilo ProfileView",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Planos Finales (Lynka Español)",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000a",
+      "Name": "10 Band Set",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Band Set (Lynka Español)",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000b",
+      "Name": "11 Altura rasante sobre TN (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "0.1",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000c",
+      "Name": "12 Pendiente maxima (%)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "10",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000d",
+      "Name": "13 Pendiente minima (%)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "0.5",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000e",
+      "Name": "14 Longitud acuerdo vertical (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "10",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a100000000000000000000000000000f",
+      "Name": "15 Intervalo muestreo TN (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "5",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a1000000000000000000000000000010",
+      "Name": "16 Estilo perfil rasante",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Estilo de diseño (Lynka)",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "834d29eec447450e847e0e4fc75190fe",
+      "Name": "17 Assembly del corredor",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "ANCHO 4m T1",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "6de0aabf930b465494a294c5c6903448",
+      "Name": "18 Prefijo rasante corredor",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "RAS",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "e1000000000000000000000000000000",
+      "Name": "Alignments procesados",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000001",
+      "Name": "Perfiles TN creados",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000002",
+      "Name": "ProfileViews creadas",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000005",
+      "Name": "Rasantes creadas",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000003",
+      "Name": "Log Paso 1",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000004",
+      "Name": "Log Paso 2",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "Id": "e1000000000000000000000000000006",
+      "Name": "Log Paso 3",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a1000000000000000000000000000001",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000001",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "C-ROAD"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a1000000000000000000000000000002",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000002",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_IND-Formaciones_CVL"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a1000000000000000000000000000003",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000003",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Existing Ground (Lynka)"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a1000000000000000000000000000004",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000004",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 526708.676
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a1000000000000000000000000000005",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000005",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 7421534.177
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a1000000000000000000000000000006",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000006",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 2.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a1000000000000000000000000000007",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000007",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 500.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a1000000000000000000000000000008",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000008",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 150.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a1000000000000000000000000000009",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000009",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Planos Finales (Lynka Español)"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a100000000000000000000000000000a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000a",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Band Set (Lynka Español)"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a100000000000000000000000000000b",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000b",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 0.1
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a100000000000000000000000000000c",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000c",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 10.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a100000000000000000000000000000d",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000d",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 0.5
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a100000000000000000000000000000e",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000e",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 10.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "a100000000000000000000000000000f",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a200000000000000000000000000000f",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 5.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a1000000000000000000000000000010",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "a2000000000000000000000000000010",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Estilo de diseño (Lynka)"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Rasante_Viales_Parte1.dyn - Representar ejes existentes con TN\n#\n# Los alignments ya estan creados en el dibujo. Este nodo:\n#   1. Busca todos los alignments cuya capa coincida con la indicada\n#   2. Para cada uno, crea (o regenera) un perfil TN muestreando la superficie\n#   3. El perfil se llama \"TN_<nombre_del_alignment>\"\n#\n# Si al re-ejecutar ya existe un perfil con ese nombre, lo borra antes de\n# crear el nuevo (idempotente).\n#\n# ENTRADAS:\n#   IN[0] : str  Capa de los ejes (e.g. \"EJES\"). Vacio = todos los alignments\n#   IN[1] : str  Nombre de la superficie TN (MDT)\n#   IN[2] : str  Nombre del estilo de perfil TN (e.g. \"Existing Ground (Lynka)\")\n#\n# SALIDA (lista de 3 elementos):\n#   [0] list[str]  nombres de los alignments procesados\n#   [1] list[str]  nombres de los perfiles TN creados\n#   [2] list[str]  log / diagnostico\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference(\"AcMgd\")\nclr.AddReference(\"AcDbMgd\")\nclr.AddReference(\"AcCoreMgd\")\nclr.AddReference(\"AeccDbMgd\")\n\nfrom System import String as SysString\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, ObjectId, LayerTableRecord\n)\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import Profile\n\nlayer_name    = str(IN[0]) if IN[0] else \"\"\nsurface_name  = str(IN[1]) if IN[1] else \"\"\ntn_style_name = str(IN[2]) if IN[2] else \"\"\ntn_prefix     = \"TN_\"\nprofile_layer = \"0\"          # capa por defecto para el perfil\n\nlog = []\nalignments_found  = []\nprofiles_created  = []\n\n\ndef get_name_safe(obj):\n    try:\n        return obj.Name\n    except Exception:\n        return None\n\n\ndef ensure_layer(tr, db, name):\n    \"\"\"Busca/crea la capa indicada y devuelve su ObjectId.\"\"\"\n    lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n    try:\n        if lt.Has(name):\n            return lt.get_Item(name)\n    except Exception:\n        pass\n    try:\n        lt.UpgradeOpen()\n        ltr = LayerTableRecord()\n        ltr.Name = name\n        lid = lt.Add(ltr)\n        tr.AddNewlyCreatedDBObject(ltr, True)\n        return lid\n    except Exception:\n        try:\n            return lt.get_Item(\"0\")\n        except Exception:\n            return ObjectId.Null\n\n\ndef find_surface_by_name(cdoc, tr, name):\n    \"\"\"Busca una superficie por nombre exacto. Devuelve el objeto Surface o None.\"\"\"\n    try:\n        sids = cdoc.GetSurfaceIds()\n        for i in range(sids.Count):\n            try:\n                sid = sids.get_Item(i)\n            except Exception:\n                try:\n                    sid = sids[i]\n                except Exception:\n                    continue\n            try:\n                surf = tr.GetObject(sid, OpenMode.ForRead)\n                if get_name_safe(surf) == name:\n                    return surf\n            except Exception:\n                pass\n    except Exception:\n        pass\n    return None\n\n\ndef default_style_id(styles_col):\n    try:\n        if styles_col.Count > 0:\n            try:\n                return styles_col.get_Item(0)\n            except Exception:\n                return styles_col[0]\n    except Exception:\n        pass\n    return ObjectId.Null\n\n\ndef get_profile_label_set_id(cdoc, tr):\n    \"\"\"Devuelve un ObjectId valido de ProfileLabelSetStyle. Civil 3D NO\n    acepta ObjectId.Null para este parametro al crear un Profile, asi que\n    siempre hay que darle uno. Preferimos uno con nombre estandar; si no,\n    el primero disponible por indice.\"\"\"\n    try:\n        coll = cdoc.Styles.LabelSetStyles.ProfileLabelSetStyles\n    except Exception:\n        return ObjectId.Null\n\n    # Nombres tipicos de label sets \"vacios\" en plantillas Civil 3D\n    for candidate in (\"_No Labels\", \"No Labels\", \"_Sin etiquetas\", \"Standard\"):\n        # Metodo 1: get_Item(string)\n        try:\n            oid = coll.get_Item(candidate)\n            if oid is not None and not oid.IsNull:\n                return oid\n        except Exception:\n            pass\n        # Metodo 2: indexer corchetes\n        try:\n            oid = coll[candidate]\n            if oid is not None and not oid.IsNull:\n                return oid\n        except Exception:\n            pass\n\n    # Fallback: primer item por indice\n    try:\n        oid = coll.get_Item(0)\n        if oid is not None and not oid.IsNull:\n            return oid\n    except Exception:\n        pass\n\n    # Fallback: iterar y tomar el primero\n    try:\n        for oid in coll:\n            if oid is not None and not oid.IsNull:\n                return oid\n    except Exception:\n        pass\n\n    return ObjectId.Null\n\n\ndef find_profile_style_by_name(cdoc, tr, name, log):\n    \"\"\"Busca un estilo de Profile por nombre. Usa los 4 metodos en cascada\n    (get_Item string, indexer, reflection, iter) para evitar el bug de\n    pythonnet que impide leer .Name en objetos Style de Civil 3D.\"\"\"\n    if not name:\n        return ObjectId.Null\n\n    wanted = name.strip()\n    try:\n        coll = cdoc.Styles.ProfileStyles\n    except Exception:\n        return ObjectId.Null\n\n    # Metodo 1: get_Item(string) - indexer .NET con clave string\n    try:\n        sid = coll.get_Item(wanted)\n        if sid is not None and not sid.IsNull:\n            log.append(\"Estilo perfil TN encontrado (get_Item): '{}'\"\n                       .format(wanted))\n            return sid\n    except Exception:\n        pass\n\n    # Metodo 2: indexer Python con corchetes\n    try:\n        sid = coll[wanted]\n        if sid is not None and not sid.IsNull:\n            log.append(\"Estilo perfil TN encontrado (indexer): '{}'\"\n                       .format(wanted))\n            return sid\n    except Exception:\n        pass\n\n    # Metodo 3: reflexion explicita\n    try:\n        ct = clr.GetClrType(coll.GetType())\n        gi = ct.GetMethod(\"get_Item\", [clr.GetClrType(SysString)])\n        if gi is not None:\n            sid = gi.Invoke(coll, [wanted])\n            if sid is not None and not sid.IsNull:\n                log.append(\"Estilo perfil TN encontrado (reflection): '{}'\"\n                           .format(wanted))\n                return sid\n    except Exception:\n        pass\n\n    # Metodo 4: iterar (bare except por el bug de .Name)\n    try:\n        for stid in coll:\n            try:\n                st = tr.GetObject(stid, OpenMode.ForRead)\n                try:\n                    nm = st.Name\n                    if nm and nm.strip().lower() == wanted.lower():\n                        log.append(\"Estilo perfil TN encontrado (iter): '{}'\"\n                                   .format(nm))\n                        return stid\n                except:\n                    pass\n            except Exception:\n                pass\n    except Exception:\n        pass\n\n    return ObjectId.Null\n\n\n# ═══════════════════════════════════════════════════════════════════════\n# Proceso\n# ═══════════════════════════════════════════════════════════════════════\n\ndoc = Application.DocumentManager.MdiActiveDocument\ndb  = doc.Database\n\nlck = None\ntr  = None\n\ntry:\n    lck = doc.LockDocument()\n    tr  = db.TransactionManager.StartTransaction()\n\n    cdoc = CivilApplication.ActiveDocument\n\n    # ── Encontrar superficie ──────────────────────────────────────\n    surface = find_surface_by_name(cdoc, tr, surface_name)\n    if surface is None:\n        log.append(\"ERROR: Superficie '{}' no encontrada\".format(surface_name))\n        # Listar superficies disponibles para diagnostico\n        try:\n            sids = cdoc.GetSurfaceIds()\n            names = []\n            for i in range(sids.Count):\n                try:\n                    sid = sids.get_Item(i)\n                    s = tr.GetObject(sid, OpenMode.ForRead)\n                    nm = get_name_safe(s)\n                    if nm: names.append(nm)\n                except Exception:\n                    pass\n            log.append(\"Superficies disponibles: \" + str(names))\n        except Exception:\n            pass\n        OUT = [[], [], log]\n    else:\n        log.append(\"Superficie encontrada: '{}'\".format(surface_name))\n\n        # ── Preparar estilo perfil TN y label set ────────────────\n        prof_style_id = find_profile_style_by_name(cdoc, tr, tn_style_name, log)\n        if tn_style_name and prof_style_id.IsNull:\n            log.append(\"Estilo perfil TN '{}' NO encontrado. \"\n                       \"Se usara el default del dibujo.\".format(tn_style_name))\n\n        # Label set: Civil 3D NO acepta null para este parametro.\n        # Usamos uno estandar o el primero disponible.\n        label_set_id = get_profile_label_set_id(cdoc, tr)\n        if label_set_id.IsNull:\n            log.append(\"AVISO: No se encontro ningun Profile Label Set.\")\n\n        layer_id = ensure_layer(tr, db, profile_layer)\n\n        # ── Encontrar alignments en la capa ───────────────────────\n        align_ids = cdoc.GetAlignmentIds()\n        matching = []\n        for i in range(align_ids.Count):\n            try:\n                aid = align_ids.get_Item(i)\n            except Exception:\n                try:\n                    aid = align_ids[i]\n                except Exception:\n                    continue\n            try:\n                a = tr.GetObject(aid, OpenMode.ForRead)\n                a_layer = getattr(a, \"Layer\", None)\n                a_name  = get_name_safe(a) or \"Align_?\"\n                if layer_name == \"\" or a_layer == layer_name:\n                    matching.append((a_name, aid, a))\n            except Exception:\n                pass\n\n        matching.sort(key=lambda x: x[0])\n        log.append(\"Alignments en capa '{}': {} ({})\".format(\n            layer_name, len(matching),\n            \", \".join(a[0] for a in matching)))\n\n        # ── Para cada alignment: borrar TN previo y crear nuevo ───\n        for aname, aid, a in matching:\n            alignments_found.append(aname)\n            tn_name = tn_prefix + aname\n\n            # Borrar perfil con ese nombre (re-ejecucion limpia)\n            try:\n                prof_ids = a.GetProfileIds()\n                for pi in range(prof_ids.Count):\n                    try:\n                        pid = prof_ids.get_Item(pi)\n                    except Exception:\n                        try:\n                            pid = prof_ids[pi]\n                        except Exception:\n                            continue\n                    try:\n                        p = tr.GetObject(pid, OpenMode.ForRead)\n                        if get_name_safe(p) == tn_name:\n                            p.UpgradeOpen()\n                            p.Erase()\n                    except Exception:\n                        pass\n            except Exception:\n                pass\n\n            # Crear nuevo perfil TN\n            try:\n                new_pid = Profile.CreateFromSurface(\n                    tn_name,\n                    aid,\n                    surface.ObjectId,\n                    layer_id,\n                    prof_style_id,\n                    label_set_id\n                )\n                if new_pid and not new_pid.IsNull:\n                    profiles_created.append(tn_name)\n            except Exception as ex:\n                log.append(\"{}: fallo creando perfil TN: {}\".format(\n                    aname, str(ex)))\n\n        log.append(\"Perfiles TN creados: {}\".format(len(profiles_created)))\n        OUT = [alignments_found, profiles_created, log]\n\n    tr.Commit()\n\nexcept Exception:\n    log.append(\"ERROR GLOBAL: \" + traceback.format_exc())\n    try:\n        if tr: tr.Abort()\n    except Exception:\n        pass\n    OUT = [alignments_found, profiles_created, log]\nfinally:\n    try:\n        if tr: tr.Dispose()\n    except Exception:\n        pass\n    try:\n        if lck: lck.Dispose()\n    except Exception:\n        pass\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "b1000000000000000000000000000001",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b1100000000000000000000000000001",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1100001000000000000000000000001",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1100002000000000000000000000001",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b2000000000000000000000000000001",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Rasante_Viales - Paso 2: ProfileViews en rejilla (con estilo configurable)\n#\n# Toma la lista de nombres de alignments del Paso 1 (sync + evita re-scan) y\n# crea una ProfileView por cada uno, distribuidas en rejilla. Aplica el\n# estilo ProfileView indicado.\n#\n# Una vez creada la PV, Civil 3D incluye automaticamente todos los perfiles\n# del alignment (incluido TN_<aname> creado en Paso 1).\n#\n# ENTRADAS:\n#   IN[0] : list[str]  nombres alignments (output del Paso 1, barrera sync)\n#   IN[1] : float      Origen X\n#   IN[2] : float      Origen Y\n#   IN[3] : float      Numero de columnas\n#   IN[4] : float      Espaciado X (m, positivo hacia derecha)\n#   IN[5] : float      Espaciado Y (m, positivo hacia arriba, negativo hacia abajo)\n#   IN[6] : str        Nombre del estilo ProfileView\n#\n# SALIDA (lista de 2):\n#   [0] list[str]  ProfileViews creadas con su coordenada\n#   [1] list[str]  log / diagnostico\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference(\"AcMgd\")\nclr.AddReference(\"AcDbMgd\")\nclr.AddReference(\"AcCoreMgd\")\nclr.AddReference(\"AeccDbMgd\")\n\nfrom System import String as SysString\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import OpenMode, ObjectId\nfrom Autodesk.AutoCAD.Geometry import Point3d\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import ProfileView\n\nalignment_names = IN[0] if IN[0] is not None else []\nif not isinstance(alignment_names, list):\n    alignment_names = [alignment_names]\n\norigin_x       = float(IN[1])\norigin_y       = float(IN[2])\nn_cols         = int(float(IN[3]))\nspacing_x      = float(IN[4])\nspacing_y      = float(IN[5])\npv_style_name  = str(IN[6]) if IN[6] else \"\"\nbandset_name   = str(IN[7]) if IN[7] else \"\"\n\nif n_cols < 1:\n    n_cols = 1\n\n# Sin prefijo: la PV se llama igual que el eje (CI01, CI02...)\npv_prefix = \"\"\nlog = []\npvs_created = []\npv_handles = []   # list de \"name|handle\" para pasar a Paso 3\n\n\ndef get_name_safe(obj):\n    try:\n        return obj.Name\n    except Exception:\n        return None\n\n\ndef find_alignment_by_name(cdoc, tr, name):\n    try:\n        align_ids = cdoc.GetAlignmentIds()\n        for i in range(align_ids.Count):\n            try:\n                aid = align_ids.get_Item(i)\n            except Exception:\n                try:\n                    aid = align_ids[i]\n                except Exception:\n                    continue\n            try:\n                a = tr.GetObject(aid, OpenMode.ForRead)\n                if get_name_safe(a) == name:\n                    return aid, a\n            except Exception:\n                pass\n    except Exception:\n        pass\n    return None, None\n\n\ndef find_pv_style_by_name(cdoc, tr, name, log):\n    \"\"\"Busca un estilo PV por nombre. Replica la estrategia del script de\n    trackers, que evita el bug de pythonnet al leer .Name de objetos Style.\n    Prueba 4 metodos en cascada.\n    \"\"\"\n    if not name:\n        return ObjectId.Null\n\n    wanted = name.strip()\n    style_id = ObjectId.Null\n\n    # Metodo 1: get_Item(string) en la coleccion (indexer .NET directo).\n    # La coleccion mantiene un mapping interno nombre->ObjectId sin leer .Name.\n    try:\n        coll = cdoc.Styles.ProfileViewStyles\n        try:\n            style_id = coll.get_Item(wanted)\n            if style_id is not None and not style_id.IsNull:\n                log.append(\"Estilo PV encontrado (get_Item): '{}'\".format(wanted))\n                return style_id\n        except Exception:\n            pass\n    except Exception:\n        pass\n\n    # Metodo 2: indexer con corchetes al estilo Python (this[string])\n    try:\n        coll = cdoc.Styles.ProfileViewStyles\n        style_id = coll[wanted]\n        if style_id is not None and not style_id.IsNull:\n            log.append(\"Estilo PV encontrado (indexer): '{}'\".format(wanted))\n            return style_id\n    except Exception:\n        pass\n\n    # Metodo 3: reflexion para invocar get_Item(String) explicitamente\n    try:\n        coll = cdoc.Styles.ProfileViewStyles\n        ct = clr.GetClrType(coll.GetType())\n        gi = ct.GetMethod(\"get_Item\", [clr.GetClrType(SysString)])\n        if gi is not None:\n            style_id = gi.Invoke(coll, [wanted])\n            if style_id is not None and not style_id.IsNull:\n                log.append(\"Estilo PV encontrado (reflection): '{}'\"\n                           .format(wanted))\n                return style_id\n    except Exception:\n        pass\n\n    # Metodo 4: iterar con bare except (pythonnet tiene bug con .Name)\n    try:\n        coll = cdoc.Styles.ProfileViewStyles\n        found_names = []\n        for stid in coll:\n            try:\n                st = tr.GetObject(stid, OpenMode.ForRead)\n                try:\n                    nm = st.Name\n                    found_names.append(nm)\n                    if nm and nm.strip().lower() == wanted.lower():\n                        log.append(\"Estilo PV encontrado (iter): '{}'\".format(nm))\n                        return stid\n                except:\n                    found_names.append(\"<ilegible>\")\n            except Exception:\n                pass\n        if found_names:\n            log.append(\"Estilos encontrados al iterar: \" + str(found_names))\n    except Exception as ex:\n        log.append(\"Error iterando estilos PV: \" + str(ex))\n\n    return ObjectId.Null\n\n\ndef list_pv_style_names(cdoc, tr):\n    \"\"\"Lista nombres de estilos PV (solo para diagnostico). Usa bare except\n    porque .Name puede fallar en pythonnet.\"\"\"\n    names = []\n    try:\n        coll = cdoc.Styles.ProfileViewStyles\n        for stid in coll:\n            try:\n                st = tr.GetObject(stid, OpenMode.ForRead)\n                try:\n                    nm = st.Name\n                    if nm and nm not in names:\n                        names.append(nm)\n                except:\n                    pass\n            except Exception:\n                pass\n    except Exception:\n        pass\n    return names\n\n\ndef find_pv_bandset_by_name(cdoc, tr, name, log):\n    \"\"\"Busca un Band Set de ProfileView por nombre. Prueba varias rutas de\n    coleccion (Civil 3D expone los band sets en distintas jerarquias segun\n    version) y, dentro de cada ruta, 3 metodos de indexacion.\"\"\"\n    if not name:\n        return ObjectId.Null\n\n    wanted = name.strip()\n\n    # Rutas candidatas donde puede vivir la coleccion de band sets de PV\n    paths = []\n    for accessor in (\n        lambda: cdoc.Styles.ProfileViewBandSetStyles,\n        lambda: cdoc.Styles.BandSetStyles.ProfileViewBandSetStyles,\n        lambda: cdoc.Styles.BandSetStyles,\n        lambda: cdoc.Styles.ProfileView.BandSetStyles,\n    ):\n        try:\n            coll = accessor()\n            if coll is not None:\n                paths.append(coll)\n        except Exception:\n            pass\n\n    for coll in paths:\n        # Metodo 1: get_Item(string)\n        try:\n            bid = coll.get_Item(wanted)\n            if bid is not None and not bid.IsNull:\n                log.append(\"Band set encontrado (get_Item): '{}'\".format(wanted))\n                return bid\n        except Exception:\n            pass\n        # Metodo 2: indexer\n        try:\n            bid = coll[wanted]\n            if bid is not None and not bid.IsNull:\n                log.append(\"Band set encontrado (indexer): '{}'\".format(wanted))\n                return bid\n        except Exception:\n            pass\n        # Metodo 3: reflexion\n        try:\n            ct = clr.GetClrType(coll.GetType())\n            gi = ct.GetMethod(\"get_Item\", [clr.GetClrType(SysString)])\n            if gi is not None:\n                bid = gi.Invoke(coll, [wanted])\n                if bid is not None and not bid.IsNull:\n                    log.append(\"Band set encontrado (reflection): '{}'\"\n                               .format(wanted))\n                    return bid\n        except Exception:\n            pass\n\n    return ObjectId.Null\n\n\ndef apply_bandset_to_pv(pv_obj, bandset_id, log, aname):\n    \"\"\"Aplica un band set a una ProfileView. Intenta varias firmas del API\n    porque el metodo exacto varia entre versiones de Civil 3D.\"\"\"\n    tried_errors = []\n\n    # Metodo A: pv.ImportBandSet(id)\n    try:\n        pv_obj.ImportBandSet(bandset_id)\n        return True\n    except Exception as e:\n        tried_errors.append(\"ImportBandSet: \" + str(e))\n\n    # Metodo B: pv.Bands.ImportBandSetStyle(id)\n    try:\n        pv_obj.Bands.ImportBandSetStyle(bandset_id)\n        return True\n    except Exception as e:\n        tried_errors.append(\"Bands.ImportBandSetStyle: \" + str(e))\n\n    log.append(\"{}: no pude aplicar band set. Errores: {}\".format(\n        aname, \" | \".join(tried_errors)))\n    return False\n\n\n# ═══════════════════════════════════════════════════════════════════════\ndoc = Application.DocumentManager.MdiActiveDocument\ndb  = doc.Database\n\nlck = None\ntr  = None\n\ntry:\n    lck = doc.LockDocument()\n    tr  = db.TransactionManager.StartTransaction()\n    cdoc = CivilApplication.ActiveDocument\n\n    # Buscar estilo PV por nombre\n    pv_style_id = find_pv_style_by_name(cdoc, tr, pv_style_name, log)\n    if pv_style_name and pv_style_id.IsNull:\n        log.append(\"Estilo PV '{}' NO encontrado. Se usara el estilo por defecto.\"\n                   .format(pv_style_name))\n        log.append(\"Estilos PV disponibles (diagnostico): \"\n                   + str(list_pv_style_names(cdoc, tr)))\n\n    # Buscar band set por nombre\n    bandset_id = find_pv_bandset_by_name(cdoc, tr, bandset_name, log)\n    if bandset_name and bandset_id.IsNull:\n        log.append(\"Band Set '{}' NO encontrado. No se importara.\"\n                   .format(bandset_name))\n\n    n_rows = (len(alignment_names) + n_cols - 1) // n_cols if alignment_names else 0\n    log.append(\"Rejilla: {} columnas x {} filas\".format(n_cols, n_rows))\n\n    for i, aname in enumerate(alignment_names):\n        aname = str(aname)\n        aid, a = find_alignment_by_name(cdoc, tr, aname)\n        if aid is None:\n            log.append(\"{}: alignment no encontrado, omitido\".format(aname))\n            continue\n\n        pv_name = pv_prefix + aname\n\n        # Posicion en la rejilla (fila por fila)\n        col = i % n_cols\n        row = i // n_cols\n        x = origin_x + col * spacing_x\n        y = origin_y + row * spacing_y\n        origin = Point3d(x, y, 0.0)\n\n        # Borrar PV existente con ese nombre (idempotente)\n        try:\n            pv_ids = a.GetProfileViewIds()\n            to_erase = []\n            for pi in range(pv_ids.Count):\n                try:\n                    pvid = pv_ids.get_Item(pi)\n                except Exception:\n                    try:\n                        pvid = pv_ids[pi]\n                    except Exception:\n                        continue\n                try:\n                    pv = tr.GetObject(pvid, OpenMode.ForRead)\n                    if get_name_safe(pv) == pv_name:\n                        to_erase.append(pvid)\n                except Exception:\n                    pass\n            for pvid in to_erase:\n                try:\n                    obj = tr.GetObject(pvid, OpenMode.ForWrite)\n                    obj.Erase()\n                except Exception:\n                    pass\n        except Exception:\n            pass\n\n        # Crear PV nueva\n        try:\n            new_pv_id = ProfileView.Create(aid, origin)\n            if new_pv_id and not new_pv_id.IsNull:\n                pv_obj = tr.GetObject(new_pv_id, OpenMode.ForWrite)\n                # Renombrar\n                try:\n                    pv_obj.Name = pv_name\n                except Exception as ex_rn:\n                    log.append(\"{}: no pude renombrar: {}\".format(\n                        aname, str(ex_rn)))\n                # Aplicar estilo PV\n                if not pv_style_id.IsNull:\n                    try:\n                        pv_obj.StyleId = pv_style_id\n                    except Exception as ex_st:\n                        log.append(\"{}: no pude asignar estilo: {}\".format(\n                            aname, str(ex_st)))\n                # Aplicar band set\n                if not bandset_id.IsNull:\n                    apply_bandset_to_pv(pv_obj, bandset_id, log, aname)\n                pvs_created.append(\"{} @ ({:.2f}, {:.2f})\".format(pv_name, x, y))\n                try:\n                    pv_handles.append(\"{}|{}\".format(pv_name, pv_obj.Handle.ToString()))\n                except Exception:\n                    pv_handles.append(\"{}|\".format(pv_name))\n            else:\n                log.append(\"{}: ProfileView.Create devolvio ObjectId nulo\"\n                           .format(aname))\n        except Exception as ex:\n            log.append(\"{}: fallo crear PV: {}\".format(aname, str(ex)))\n\n    log.append(\"PVs creadas: {}\".format(len(pvs_created)))\n    tr.Commit()\n\nexcept Exception:\n    log.append(\"ERROR: \" + traceback.format_exc())\n    try:\n        if tr: tr.Abort()\n    except Exception:\n        pass\nfinally:\n    try:\n        if tr: tr.Dispose()\n    except Exception:\n        pass\n    try:\n        if lck: lck.Dispose()\n    except Exception:\n        pass\n\n\nOUT = [pvs_created, log, pv_handles]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "b1000000000000000000000000000002",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b1200000000000000000000000000002",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200001000000000000000000000002",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200002000000000000000000000002",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200003000000000000000000000002",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200004000000000000000000000002",
+          "Name": "IN[4]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200005000000000000000000000002",
+          "Name": "IN[5]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200006000000000000000000000002",
+          "Name": "IN[6]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1200007000000000000000000000002",
+          "Name": "IN[7]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b2000000000000000000000000000002",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Rasante_Viales - Paso 3: Genera rasante auto para cada alignment\n#\n# Algoritmo (enfoque HIBRIDO - el script propone, el usuario ajusta):\n#   1. Muestrear TN cada `intervalo` m a lo largo del eje\n#        -> Alignment.PointLocation(sta, 0) + Surface.FindElevationAtXY(x,y)\n#   2. Desplazar cotas +altura objetivo (p.ej. +10 cm)\n#   3. Simplificar Douglas-Peucker con tolerancia 2*altura (~20 cm)\n#        -> reduce la nube de puntos a los PVIs significativos\n#   4. Fusionar PVIs demasiado cercanos (< 1.5 * long_acuerdo)\n#        -> deja sitio para los acuerdos verticales\n#   5. Corregir pendientes:\n#        - si |s| > max -> capar a +/-max\n#        - si |s| < min -> redondear a +/-min preservando signo\n#   6. Crear Profile Layout con Profile.CreateByLayout\n#   7. Insertar PVIs via profile.PVIs.AddPVI(Point2d(sta, elev))\n#   8. Insertar acuerdos parabolicos simetricos de longitud = long_acuerdo\n#\n# El perfil resultante queda como Profile tipo Layout (editable en Civil 3D),\n# por lo que el usuario puede arrastrar PVIs, cambiar longitudes de acuerdo,\n# anyadir o borrar PVIs directamente en la ProfileView.\n#\n# ENTRADAS:\n#   IN[0] : list[str]  nombres alignments (output Paso 1, barrera sync)\n#   IN[1] : str        nombre superficie TN\n#   IN[2] : float      altura objetivo rasante sobre TN (m)\n#   IN[3] : float      pendiente maxima (%)\n#   IN[4] : float      pendiente minima (%)\n#   IN[5] : float      longitud minima acuerdo vertical (m)\n#   IN[6] : float      intervalo muestreo TN (m)\n#   IN[7] : str        nombre estilo perfil rasante\n#\n# SALIDA (lista de 2):\n#   [0] list[str]  rasantes creadas (nombre: N_PVIs)\n#   [1] list[str]  log / diagnostico\n# =============================================================================\n\nimport clr\nimport math\nimport traceback\n\nclr.AddReference(\"AcMgd\")\nclr.AddReference(\"AcDbMgd\")\nclr.AddReference(\"AcCoreMgd\")\nclr.AddReference(\"AeccDbMgd\")\n\nfrom System import String as SysString, Double\nimport System\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, ObjectId, LayerTableRecord\n)\nfrom Autodesk.AutoCAD.Geometry import Point2d\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import Profile\n\n# ═══════════════════════════════════════════════════════════════════════\n# Inputs\n# ═══════════════════════════════════════════════════════════════════════\nalignment_names = IN[0] if IN[0] is not None else []\nif not isinstance(alignment_names, list):\n    alignment_names = [alignment_names]\n\nsurface_name        = str(IN[1]) if IN[1] else \"\"\ntarget_h            = float(IN[2])          # m\nmax_slope           = float(IN[3]) / 100.0  # decimal\nmin_slope           = float(IN[4]) / 100.0  # decimal\nmin_curve_length    = float(IN[5])          # m\nsampling_interval   = float(IN[6])          # m\nrasante_style_name  = str(IN[7]) if IN[7] else \"\"\n\n# IN[9]: lista de \"name|handle\" que viene de Paso 2 (barrera sync + datos)\npv_handles_in = IN[9] if (len(IN) > 9 and IN[9] is not None) else []\nif not isinstance(pv_handles_in, list):\n    pv_handles_in = [pv_handles_in]\n\n# Parsear: dict nombre_PV -> handle (string hex)\npv_handle_by_name = {}\nfor s in pv_handles_in:\n    try:\n        parts = str(s).split(\"|\", 1)\n        if len(parts) == 2 and parts[1]:\n            pv_handle_by_name[parts[0]] = parts[1]\n    except Exception:\n        pass\n\nrasante_prefix = \"RAS \"\nprofile_layer  = \"0\"\n\n# Derivados\ndp_tolerance = target_h * 2.0              # tolerancia Douglas-Peucker (m)\nmin_pvi_distance = min_curve_length * 1.5  # separacion minima entre PVIs (m)\n\nlog = []\nrasantes_created = []\n\n\n# ═══════════════════════════════════════════════════════════════════════\n# Helpers: lookup robustos (mismo patron que Pasos 1 y 2)\n# ═══════════════════════════════════════════════════════════════════════\n\ndef get_name_safe(obj):\n    try:\n        return obj.Name\n    except Exception:\n        return None\n\n\ndef find_alignment_by_name(cdoc, tr, name):\n    try:\n        ids = cdoc.GetAlignmentIds()\n        for i in range(ids.Count):\n            try:\n                aid = ids.get_Item(i)\n            except Exception:\n                try:\n                    aid = ids[i]\n                except Exception:\n                    continue\n            try:\n                a = tr.GetObject(aid, OpenMode.ForRead)\n                if get_name_safe(a) == name:\n                    return aid, a\n            except Exception:\n                pass\n    except Exception:\n        pass\n    return None, None\n\n\ndef find_surface_by_name(cdoc, tr, name):\n    try:\n        ids = cdoc.GetSurfaceIds()\n        for i in range(ids.Count):\n            try:\n                sid = ids.get_Item(i)\n            except Exception:\n                try:\n                    sid = ids[i]\n                except Exception:\n                    continue\n            try:\n                s = tr.GetObject(sid, OpenMode.ForRead)\n                if get_name_safe(s) == name:\n                    return s\n            except Exception:\n                pass\n    except Exception:\n        pass\n    return None\n\n\ndef find_profile_style_by_name(cdoc, tr, name, log):\n    \"\"\"Patron 4-metodos ya probado (evita el bug de .Name).\"\"\"\n    if not name:\n        return ObjectId.Null\n    wanted = name.strip()\n    try:\n        coll = cdoc.Styles.ProfileStyles\n    except Exception:\n        return ObjectId.Null\n\n    try:\n        sid = coll.get_Item(wanted)\n        if sid is not None and not sid.IsNull:\n            log.append(\"Estilo rasante encontrado (get_Item): '{}'\".format(wanted))\n            return sid\n    except Exception:\n        pass\n    try:\n        sid = coll[wanted]\n        if sid is not None and not sid.IsNull:\n            log.append(\"Estilo rasante encontrado (indexer): '{}'\".format(wanted))\n            return sid\n    except Exception:\n        pass\n    try:\n        ct = clr.GetClrType(coll.GetType())\n        gi = ct.GetMethod(\"get_Item\", [clr.GetClrType(SysString)])\n        if gi is not None:\n            sid = gi.Invoke(coll, [wanted])\n            if sid is not None and not sid.IsNull:\n                log.append(\"Estilo rasante encontrado (reflection): '{}'\"\n                           .format(wanted))\n                return sid\n    except Exception:\n        pass\n    return ObjectId.Null\n\n\ndef get_profile_label_set_id(cdoc, tr):\n    \"\"\"Civil 3D NO acepta null para labelSetId; devolvemos uno valido.\"\"\"\n    try:\n        coll = cdoc.Styles.LabelSetStyles.ProfileLabelSetStyles\n    except Exception:\n        return ObjectId.Null\n\n    for cand in (\"_No Labels\", \"No Labels\", \"_Sin etiquetas\", \"Standard\"):\n        try:\n            oid = coll.get_Item(cand)\n            if oid is not None and not oid.IsNull:\n                return oid\n        except Exception:\n            pass\n        try:\n            oid = coll[cand]\n            if oid is not None and not oid.IsNull:\n                return oid\n        except Exception:\n            pass\n\n    try:\n        oid = coll.get_Item(0)\n        if oid is not None and not oid.IsNull:\n            return oid\n    except Exception:\n        pass\n    try:\n        for oid in coll:\n            if oid is not None and not oid.IsNull:\n                return oid\n    except Exception:\n        pass\n    return ObjectId.Null\n\n\ndef ensure_layer(tr, db, name):\n    lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n    try:\n        if lt.Has(name):\n            return lt.get_Item(name)\n    except Exception:\n        pass\n    try:\n        lt.UpgradeOpen()\n        ltr = LayerTableRecord()\n        ltr.Name = name\n        lid = lt.Add(ltr)\n        tr.AddNewlyCreatedDBObject(ltr, True)\n        return lid\n    except Exception:\n        try:\n            return lt.get_Item(\"0\")\n        except Exception:\n            return ObjectId.Null\n\n\ndef find_pv_bandset_by_name(cdoc, tr, name, log):\n    \"\"\"Busca Band Set por nombre. Prueba varias rutas de coleccion y 3\n    metodos de indexacion (mismo patron que Paso 2).\"\"\"\n    if not name:\n        return ObjectId.Null\n    wanted = name.strip()\n\n    paths = []\n    for accessor in (\n        lambda: cdoc.Styles.ProfileViewBandSetStyles,\n        lambda: cdoc.Styles.BandSetStyles.ProfileViewBandSetStyles,\n        lambda: cdoc.Styles.BandSetStyles,\n        lambda: cdoc.Styles.ProfileView.BandSetStyles,\n    ):\n        try:\n            coll = accessor()\n            if coll is not None:\n                paths.append(coll)\n        except Exception:\n            pass\n\n    for coll in paths:\n        try:\n            bid = coll.get_Item(wanted)\n            if bid is not None and not bid.IsNull:\n                log.append(\"Band set encontrado (get_Item): '{}'\".format(wanted))\n                return bid\n        except Exception:\n            pass\n        try:\n            bid = coll[wanted]\n            if bid is not None and not bid.IsNull:\n                log.append(\"Band set encontrado (indexer): '{}'\".format(wanted))\n                return bid\n        except Exception:\n            pass\n        try:\n            ct = clr.GetClrType(coll.GetType())\n            gi = ct.GetMethod(\"get_Item\", [clr.GetClrType(SysString)])\n            if gi is not None:\n                bid = gi.Invoke(coll, [wanted])\n                if bid is not None and not bid.IsNull:\n                    log.append(\"Band set encontrado (reflection): '{}'\"\n                               .format(wanted))\n                    return bid\n        except Exception:\n            pass\n    return ObjectId.Null\n\n\ndef list_pv_band_methods(pv_obj, log):\n    \"\"\"Diagnostico: lista metodos de ProfileView relacionados con bandas.\"\"\"\n    try:\n        ct = clr.GetClrType(pv_obj.GetType())\n        found = []\n        for m in ct.GetMethods():\n            if \"Band\" in m.Name:\n                params_str = \", \".join(\n                    \"{} {}\".format(p.ParameterType.Name, p.Name)\n                    for p in m.GetParameters())\n                found.append(\"{}({})\".format(m.Name, params_str))\n        for s in found[:10]:\n            log.append(\"  PV.{}\".format(s))\n    except Exception as ex:\n        log.append(\"  list_pv_band_methods error: \" + str(ex)[:100])\n\n\ndef apply_bandset_to_pv(pv_obj, bandset_id, log, label):\n    \"\"\"Aplica un band set a una ProfileView. Prueba 3 caminos:\n       1) pv.ImportBandSet(id)\n       2) pv.Bands.ImportBandSetStyle(id)\n       3) Reflexion: buscar cualquier metodo que tome ObjectId y lo invoca\"\"\"\n    tried = []\n\n    # Intento 1\n    try:\n        pv_obj.ImportBandSet(bandset_id)\n        log.append(\"  {}: band set aplicado via ImportBandSet\".format(label))\n        return True\n    except Exception as e:\n        tried.append(\"ImportBandSet: \" + str(e)[:150])\n\n    # Intento 2\n    try:\n        pv_obj.Bands.ImportBandSetStyle(bandset_id)\n        log.append(\"  {}: band set aplicado via Bands.ImportBandSetStyle\"\n                   .format(label))\n        return True\n    except Exception as e:\n        tried.append(\"Bands.ImportBandSetStyle: \" + str(e)[:150])\n\n    # Intento 3: reflexion sobre el objeto PV, buscar cualquier metodo con\n    #            \"Import\" o \"Band\" que tome un ObjectId\n    try:\n        ct = clr.GetClrType(pv_obj.GetType())\n        for m in ct.GetMethods():\n            name = m.Name\n            if not (\"Band\" in name and (\"Import\" in name or \"Set\" in name)):\n                continue\n            params = m.GetParameters()\n            if len(params) != 1:\n                continue\n            pt_name = params[0].ParameterType.Name\n            if pt_name != \"ObjectId\":\n                continue\n            try:\n                args = System.Array[System.Object]([bandset_id])\n                m.Invoke(pv_obj, args)\n                log.append(\"  {}: band set aplicado via reflection.{}\"\n                           .format(label, name))\n                return True\n            except Exception as e_refl:\n                tried.append(\"refl.{}: {}\".format(name, str(e_refl)[:150]))\n    except Exception as e:\n        tried.append(\"reflection scan: \" + str(e)[:100])\n\n    log.append(\"{}: no pude aplicar band set. Intentos: {}\".format(\n        label, \" || \".join(tried)))\n    return False\n\n\ndef find_pv_for_alignment(alignment, alignment_id, tr, db, name_hint, log=None):\n    \"\"\"Busca la ProfileView asociada al alignment. 2 estrategias:\n       1) alignment.GetProfileViewIds() — en teoria lo correcto\n       2) Iterar ModelSpace filtrando ProfileView por nombre o AlignmentId\n    \"\"\"\n    from Autodesk.Civil.DatabaseServices import ProfileView\n    from Autodesk.AutoCAD.DatabaseServices import BlockTableRecord\n\n    # Metodo 1\n    pv_ids_count = -1\n    try:\n        pv_ids = alignment.GetProfileViewIds()\n        pv_ids_count = pv_ids.Count\n        if log is not None:\n            log.append(\"  GetProfileViewIds devolvio {} PVs\".format(pv_ids_count))\n        for i in range(pv_ids_count):\n            try:\n                pvid = pv_ids.get_Item(i)\n            except Exception:\n                try:\n                    pvid = pv_ids[i]\n                except Exception:\n                    continue\n            try:\n                return tr.GetObject(pvid, OpenMode.ForWrite)\n            except Exception:\n                pass\n    except Exception as ex:\n        if log is not None:\n            log.append(\"  GetProfileViewIds ERROR: \" + str(ex)[:100])\n\n    # Metodo 2: iterar TODOS los BlockTableRecords (ModelSpace + Layouts)\n    #           porque las ProfileViews pueden estar en un Layout (Paper Space)\n    try:\n        bt = tr.GetObject(db.BlockTableId, OpenMode.ForRead)\n        n_checked = 0\n        types_seen = {}\n        containers_seen = {}\n        pv_obj = None\n\n        for btr_id in bt:\n            try:\n                btr = tr.GetObject(btr_id, OpenMode.ForRead)\n                btr_name = \"<?>\"\n                try:\n                    btr_name = btr.Name\n                except Exception:\n                    pass\n                n_in_btr = 0\n                for oid in btr:\n                    try:\n                        obj = tr.GetObject(oid, OpenMode.ForRead)\n                        n_checked += 1\n                        n_in_btr += 1\n                        type_name = obj.GetType().Name\n                        types_seen[type_name] = types_seen.get(type_name, 0) + 1\n                        if type_name == \"ProfileView\":\n                            containers_seen[btr_name] = containers_seen.get(\n                                btr_name, 0) + 1\n                            try:\n                                obj_name = obj.Name\n                                if obj_name == name_hint:\n                                    obj.UpgradeOpen()\n                                    pv_obj = obj\n                                    if log is not None:\n                                        log.append(\n                                            \"  PV '{}' encontrada en '{}'\"\n                                            .format(name_hint, btr_name))\n                                    break\n                            except Exception:\n                                pass\n                            try:\n                                if obj.AlignmentId == alignment_id:\n                                    obj.UpgradeOpen()\n                                    pv_obj = obj\n                                    if log is not None:\n                                        log.append(\n                                            \"  PV encontrada por AlignmentId en '{}'\"\n                                            .format(btr_name))\n                                    break\n                            except Exception:\n                                pass\n                    except Exception:\n                        pass\n                if pv_obj is not None:\n                    break\n            except Exception:\n                pass\n\n        if pv_obj is not None:\n            return pv_obj\n\n        if log is not None:\n            tstr = \", \".join(\"{}:{}\".format(k, v)\n                             for k, v in sorted(types_seen.items()))\n            log.append(\"  Scan full BT: {} objetos. Tipos: {}\"\n                       .format(n_checked, tstr))\n            if containers_seen:\n                log.append(\"  PVs vistas (pero sin coincidir): {}\"\n                           .format(dict(containers_seen)))\n    except Exception as ex:\n        if log is not None:\n            log.append(\"  BlockTable iterate ERROR: \" + str(ex)[:150])\n\n    return None\n\n\n# ═══════════════════════════════════════════════════════════════════════\n# Algoritmo rasante\n# ═══════════════════════════════════════════════════════════════════════\n\ndef alignment_xy_at_station(alignment, station, diag=None):\n    \"\"\"Devuelve (x, y) en la estacion. Prueba 4 metodos; si diag no es None\n    apunta ahi los errores del primer fallo.\"\"\"\n    errors = []\n\n    # Metodo A: out params vuelven como tupla (pythonnet CPython3 default)\n    try:\n        result = alignment.PointLocation(float(station), 0.0)\n        if isinstance(result, (tuple, list)):\n            if len(result) >= 2:\n                return float(result[0]), float(result[1])\n            errors.append(\"A: tupla con {} elems\".format(len(result)))\n        elif result is None:\n            errors.append(\"A: returno None\")\n        else:\n            errors.append(\"A: tipo={}\".format(type(result).__name__))\n    except Exception as e:\n        errors.append(\"A: \" + str(e)[:100])\n\n    # Metodo B: clr.Reference[Double]\n    try:\n        e_ref = clr.Reference[Double](0.0)\n        n_ref = clr.Reference[Double](0.0)\n        alignment.PointLocation(float(station), 0.0, e_ref, n_ref)\n        return float(e_ref.Value), float(n_ref.Value)\n    except Exception as e:\n        errors.append(\"B: \" + str(e)[:100])\n\n    # Metodo C: StrongBox\n    try:\n        from System.Runtime.CompilerServices import StrongBox\n        e_box = StrongBox[Double](0.0)\n        n_box = StrongBox[Double](0.0)\n        alignment.PointLocation(float(station), 0.0, e_box, n_box)\n        return float(e_box.Value), float(n_box.Value)\n    except Exception as e:\n        errors.append(\"C: \" + str(e)[:100])\n\n    # Metodo D: reflexion para llamar con System.Double refs\n    try:\n        ct = clr.GetClrType(alignment.GetType())\n        methods = ct.GetMethods()\n        for m in methods:\n            if m.Name == \"PointLocation\":\n                ps = m.GetParameters()\n                if len(ps) == 4:\n                    # Construir args: station, offset, e_out, n_out\n                    args = System.Array[System.Object]([\n                        float(station), 0.0, 0.0, 0.0])\n                    m.Invoke(alignment, args)\n                    return float(args[2]), float(args[3])\n    except Exception as e:\n        errors.append(\"D: \" + str(e)[:100])\n\n    if diag is not None:\n        diag.append(\"XY@sta {:.2f}: fallaron los 4 metodos. {}\"\n                    .format(station, \" | \".join(errors)))\n    return None, None\n\n\ndef sample_tn(alignment, surface, start_sta, end_sta, interval, log,\n              diagnose_first=False):\n    \"\"\"Muestrea cotas del TN cada `interval` m, incluido el final.\"\"\"\n    samples = []\n    diag_info = []\n\n    if diagnose_first:\n        diag_info.append(\"alignment type: {}\".format(type(alignment).__name__))\n        diag_info.append(\"surface type: {}\".format(type(surface).__name__))\n        diag_info.append(\"stations: [{:.2f}, {:.2f}] len={:.2f}\"\n                         .format(start_sta, end_sta, end_sta - start_sta))\n\n    first_xy_fail_logged = False\n    first_elev_fail_logged = False\n    n_xy_fail = 0\n    n_elev_fail = 0\n\n    s = start_sta\n    idx = 0\n    while s <= end_sta + 1e-6:\n        xy_errs = [] if (diagnose_first and not first_xy_fail_logged) else None\n        x, y = alignment_xy_at_station(alignment, s, xy_errs)\n\n        if x is None:\n            n_xy_fail += 1\n            if xy_errs and not first_xy_fail_logged:\n                diag_info.extend(xy_errs)\n                first_xy_fail_logged = True\n        else:\n            try:\n                elev = surface.FindElevationAtXY(float(x), float(y))\n                samples.append((s, float(elev)))\n                if diagnose_first and idx == 0:\n                    diag_info.append(\"1a muestra OK: sta={:.2f} xy=({:.2f},{:.2f}) z={:.3f}\"\n                                     .format(s, x, y, float(elev)))\n            except Exception as e:\n                n_elev_fail += 1\n                if diagnose_first and not first_elev_fail_logged:\n                    diag_info.append(\"FindElevationAtXY fallo @sta={:.2f} xy=({:.2f},{:.2f}): {}\"\n                                     .format(s, x, y, str(e)[:150]))\n                    first_elev_fail_logged = True\n\n        s += interval\n        idx += 1\n\n    # Incluir estacion final\n    if not samples or abs(samples[-1][0] - end_sta) > 0.01:\n        x, y = alignment_xy_at_station(alignment, end_sta)\n        if x is not None:\n            try:\n                elev = surface.FindElevationAtXY(float(x), float(y))\n                samples.append((end_sta, float(elev)))\n            except Exception:\n                pass\n\n    if diagnose_first:\n        diag_info.append(\"total muestras: {}, XY fails: {}, elev fails: {}\"\n                         .format(len(samples), n_xy_fail, n_elev_fail))\n        for line in diag_info:\n            log.append(\"  [DIAG] \" + line)\n\n    return samples\n\n\ndef douglas_peucker(points, epsilon):\n    \"\"\"Simplifica polyline (sta, elev) por desviacion vertical maxima.\"\"\"\n    if len(points) <= 2:\n        return list(points)\n\n    s1, e1 = points[0]\n    s2, e2 = points[-1]\n    ds = s2 - s1\n\n    max_dev = 0.0\n    max_idx = 0\n    for i in range(1, len(points) - 1):\n        s, e = points[i]\n        if abs(ds) < 1e-10:\n            dev = abs(e - e1)\n        else:\n            t = (s - s1) / ds\n            e_interp = e1 + t * (e2 - e1)\n            dev = abs(e - e_interp)\n        if dev > max_dev:\n            max_dev = dev\n            max_idx = i\n\n    if max_dev > epsilon:\n        left  = douglas_peucker(points[:max_idx + 1], epsilon)\n        right = douglas_peucker(points[max_idx:],     epsilon)\n        return left[:-1] + right\n    return [points[0], points[-1]]\n\n\ndef merge_short_segments(pvis, min_length):\n    \"\"\"Descarta PVIs interiores demasiado pegados a un vecino.\"\"\"\n    if len(pvis) <= 2:\n        return list(pvis)\n    result = [pvis[0]]\n    for i in range(1, len(pvis) - 1):\n        ds_prev = pvis[i][0] - result[-1][0]\n        ds_next = pvis[i + 1][0] - pvis[i][0]\n        if ds_prev >= min_length and ds_next >= min_length:\n            result.append(pvis[i])\n    result.append(pvis[-1])\n    return result\n\n\ndef correct_slopes(pvis, min_s, max_s):\n    \"\"\"Pasada forward: ajusta elevacion de cada PVI para cumplir\n    pendiente en [min_s, max_s].\"\"\"\n    if len(pvis) < 2:\n        return list(pvis)\n    corrected = [pvis[0]]\n    for i in range(1, len(pvis)):\n        s_prev, e_prev = corrected[-1]\n        s_cur,  e_cur  = pvis[i]\n        ds = s_cur - s_prev\n        if ds <= 1e-6:\n            corrected.append((s_cur, e_cur))\n            continue\n        slope = (e_cur - e_prev) / ds\n        abs_s = abs(slope)\n        if abs_s > max_s:\n            sign = 1.0 if slope >= 0 else -1.0\n            corrected.append((s_cur, e_prev + sign * max_s * ds))\n        elif abs_s < min_s:\n            # evitar slope=0 por drenaje: forzamos al minimo\n            sign = 1.0 if slope >= 0 else -1.0\n            if slope == 0.0:\n                sign = 1.0  # ascendente por convencion\n            corrected.append((s_cur, e_prev + sign * min_s * ds))\n        else:\n            corrected.append((s_cur, e_cur))\n    return corrected\n\n\n# ═══════════════════════════════════════════════════════════════════════\n# Main\n# ═══════════════════════════════════════════════════════════════════════\n\ndoc = Application.DocumentManager.MdiActiveDocument\ndb  = doc.Database\n\nlck = None\ntr  = None\n\ntry:\n    lck = doc.LockDocument()\n    tr  = db.TransactionManager.StartTransaction()\n    cdoc = CivilApplication.ActiveDocument\n\n    # -- Superficie TN --\n    surface = find_surface_by_name(cdoc, tr, surface_name)\n    if surface is None:\n        log.append(\"ERROR: superficie '{}' no encontrada\".format(surface_name))\n        tr.Commit()\n    else:\n        log.append(\"Superficie: '{}'\".format(surface_name))\n        log.append(\"Params: h={:.2f}m, pendiente [{:.2f}%, {:.2f}%], \"\n                   \"acuerdo>={:.1f}m, muestreo cada {:.1f}m\"\n                   .format(target_h, min_slope * 100, max_slope * 100,\n                           min_curve_length, sampling_interval))\n\n        style_id = find_profile_style_by_name(\n            cdoc, tr, rasante_style_name, log)\n        if rasante_style_name and style_id.IsNull:\n            log.append(\"Estilo rasante '{}' NO encontrado. Uso el default.\"\n                       .format(rasante_style_name))\n\n        label_set_id = get_profile_label_set_id(cdoc, tr)\n        if label_set_id.IsNull:\n            log.append(\"AVISO: no encuentro ningun Profile Label Set.\")\n\n        layer_id = ensure_layer(tr, db, profile_layer)\n\n        first_iter = True\n        for aname in alignment_names:\n            aname = str(aname)\n            aid, alignment = find_alignment_by_name(cdoc, tr, aname)\n            if aid is None:\n                log.append(\"{}: alignment no encontrado\".format(aname))\n                continue\n\n            try:\n                start_sta = alignment.StartingStation\n                end_sta   = alignment.EndingStation\n\n                # 1. Muestrear TN (diagnostico detallado solo en el 1er eje)\n                tn_samples = sample_tn(alignment, surface,\n                                       start_sta, end_sta, sampling_interval,\n                                       log, diagnose_first=first_iter)\n                first_iter = False\n                if len(tn_samples) < 2:\n                    log.append(\"{}: muestreo TN insuficiente ({} puntos)\"\n                               .format(aname, len(tn_samples)))\n                    continue\n\n                # 2. Desplazar por altura objetivo\n                target_poly = [(s, e + target_h) for s, e in tn_samples]\n\n                # 3. Douglas-Peucker\n                pvis_dp = douglas_peucker(target_poly, dp_tolerance)\n\n                # 4. Fusionar PVIs cercanos\n                pvis_merged = merge_short_segments(pvis_dp, min_pvi_distance)\n\n                # 5. Corregir pendientes\n                pvis_final = correct_slopes(pvis_merged, min_slope, max_slope)\n\n                # 6. Borrar rasante previa con el mismo nombre\n                rasante_name = rasante_prefix + aname\n                try:\n                    prof_ids = alignment.GetProfileIds()\n                    to_erase = []\n                    for pi in range(prof_ids.Count):\n                        try:\n                            pid = prof_ids.get_Item(pi)\n                        except Exception:\n                            try:\n                                pid = prof_ids[pi]\n                            except Exception:\n                                continue\n                        try:\n                            p = tr.GetObject(pid, OpenMode.ForRead)\n                            if get_name_safe(p) == rasante_name:\n                                to_erase.append(pid)\n                        except Exception:\n                            pass\n                    for pid in to_erase:\n                        try:\n                            obj = tr.GetObject(pid, OpenMode.ForWrite)\n                            obj.Erase()\n                        except Exception:\n                            pass\n                except Exception:\n                    pass\n\n                # 7. Crear Profile Layout\n                new_prof_id = Profile.CreateByLayout(\n                    rasante_name, aid, layer_id, style_id, label_set_id)\n\n                if new_prof_id is None or new_prof_id.IsNull:\n                    log.append(\"{}: CreateByLayout devolvio ObjectId nulo\"\n                               .format(aname))\n                    continue\n\n                new_prof = tr.GetObject(new_prof_id, OpenMode.ForWrite)\n\n                # 8. Anyadir PVIs (prueba varias firmas porque varian\n                #    entre versiones de Civil 3D)\n                n_pvi_ok = 0\n                first_pvi_method = None\n                first_pvi_err = None\n                for s, e in pvis_final:\n                    added = False\n\n                    # Firma 1: AddPVI(double station, double elevation)\n                    if not added:\n                        try:\n                            new_prof.PVIs.AddPVI(float(s), float(e))\n                            added = True\n                            if first_pvi_method is None:\n                                first_pvi_method = \"AddPVI(sta, elev)\"\n                        except Exception as ex1:\n                            if first_pvi_err is None:\n                                first_pvi_err = \"sig1: \" + str(ex1)[:80]\n\n                    # Firma 2: AddPVI(Point2d)\n                    if not added:\n                        try:\n                            new_prof.PVIs.AddPVI(Point2d(float(s), float(e)))\n                            added = True\n                            if first_pvi_method is None:\n                                first_pvi_method = \"AddPVI(Point2d)\"\n                        except Exception as ex2:\n                            if first_pvi_err is None:\n                                first_pvi_err = (first_pvi_err or \"\") \\\n                                    + \" | sig2: \" + str(ex2)[:80]\n\n                    if added:\n                        n_pvi_ok += 1\n                    else:\n                        log.append(\"{}: PVI @sta {:.2f} fallo ({})\"\n                                   .format(aname, s, first_pvi_err))\n\n                if first_pvi_method and n_pvi_ok > 0:\n                    log.append(\"{}: PVIs con firma {} (total {}/{})\"\n                               .format(aname, first_pvi_method,\n                                       n_pvi_ok, len(pvis_final)))\n\n                # 9. Anyadir acuerdos: USO \"AddFreeSymmetricParabolaByPVIAndCurveLength\"\n                #    (el metodo \"por PVI\") porque tiene 2 params claros (PVI, double)\n                #    y corresponde al boton \"Free Vertical Curve (Parabola)\" del\n                #    menu de Civil 3D.\n                n_curves = 0\n                curve_errors = []\n                try:\n                    entities = new_prof.Entities\n                    n_ent = entities.Count\n\n                    # Diagnostico (solo primer eje): firmas COMPLETAS de\n                    # todos los metodos AddFreeSymmetric*\n                    if first_iter:\n                        try:\n                            ct = clr.GetClrType(entities.GetType())\n                            for m in ct.GetMethods():\n                                if (m.Name.startswith(\"AddFree\")\n                                        and \"Parabola\" in m.Name):\n                                    params_str = \", \".join(\n                                        \"{} {}\".format(\n                                            p.ParameterType.Name, p.Name)\n                                        for p in m.GetParameters())\n                                    log.append(\"  {}({})\".format(\n                                        m.Name, params_str))\n                        except Exception as ex_r:\n                            log.append(\"  Reflection error: \"\n                                       + str(ex_r)[:150])\n\n                    # Iterar PVIs interiores (sin el 1o ni el ultimo)\n                    pvi_coll = new_prof.PVIs\n                    n_pvi = pvi_coll.Count\n                    log.append(\"{}: PVI count en profile = {}\"\n                               .format(aname, n_pvi))\n\n                    for pi in range(1, n_pvi - 1):\n                        try:\n                            pvi = pvi_coll.get_Item(pi)\n                        except Exception:\n                            try:\n                                pvi = pvi_coll[pi]\n                            except Exception as ex_g:\n                                curve_errors.append(\n                                    \"PVI[{}] acceso: {}\".format(\n                                        pi, str(ex_g)[:100]))\n                                continue\n                        try:\n                            entities.AddFreeSymmetricParabolaByPVIAndCurveLength(\n                                pvi, float(min_curve_length))\n                            n_curves += 1\n                        except Exception as ex_c:\n                            if len(curve_errors) < 3:\n                                curve_errors.append(\n                                    \"PVI[{}] AddCurve: {}\".format(\n                                        pi, str(ex_c)[:300]))\n                except Exception as ex_cv:\n                    log.append(\"{}: error general acuerdos: {}\"\n                               .format(aname, str(ex_cv)[:200]))\n\n                # Loguear resultado\n                n_expected = max(0, len(pvis_final) - 2)\n                log.append(\"{}: acuerdos OK={}/{} esperados\"\n                           .format(aname, n_curves, n_expected))\n                if curve_errors:\n                    for ce in curve_errors:\n                        log.append(\"  {}: {}\".format(aname, ce))\n\n                rasantes_created.append(\n                    \"{}: {} PVIs, {} acuerdos (muestras TN={}, DP={})\"\n                    .format(rasante_name, n_pvi_ok, n_curves,\n                            len(tn_samples), len(pvis_dp)))\n\n            except Exception as ex:\n                log.append(\"{}: fallo generar rasante: {}\"\n                           .format(aname, str(ex)))\n\n        log.append(\"Rasantes creadas: {}\".format(len(rasantes_created)))\n        tr.Commit()\n\nexcept Exception:\n    log.append(\"ERROR GLOBAL: \" + traceback.format_exc())\n    try:\n        if tr: tr.Abort()\n    except Exception:\n        pass\nfinally:\n    try:\n        if tr: tr.Dispose()\n    except Exception:\n        pass\n    try:\n        if lck: lck.Dispose()\n    except Exception:\n        pass\n\n\nOUT = [rasantes_created, log]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "b1000000000000000000000000000003",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b1300000000000000000000000000003",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300001000000000000000000000003",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300002000000000000000000000003",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300003000000000000000000000003",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300004000000000000000000000003",
+          "Name": "IN[4]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300005000000000000000000000003",
+          "Name": "IN[5]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300006000000000000000000000003",
+          "Name": "IN[6]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b1300007000000000000000000000003",
+          "Name": "IN[7]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b2000000000000000000000000000003",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c1000000000000000000000000000000",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c2000000000000000000000000000000",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "0;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c1000000000000000000000000000001",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c2000000000000000000000000000001",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "1;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "c1000000000000000000000000000002",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c2000000000000000000000000000002",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "2;"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d1000000000000000000000000000000",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d1100000000000000000000000000000",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d1200000000000000000000000000000",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d2000000000000000000000000000000",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d1000000000000000000000000000001",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d1100000000000000000000000000001",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d1200000000000000000000000000001",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d2000000000000000000000000000001",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d1000000000000000000000000000002",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d1100000000000000000000000000002",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d1200000000000000000000000000002",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d2000000000000000000000000000002",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d2000000000000000000000000010000",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d2100000000000000000000000010000",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d2200000000000000000000000010000",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d2300000000000000000000000010000",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d2000000000000000000000000010001",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d2100000000000000000000000010001",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d2200000000000000000000000010001",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d2300000000000000000000000010001",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d3000000000000000000000000020000",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d3100000000000000000000000020000",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d3200000000000000000000000020000",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d3300000000000000000000000020000",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "d3000000000000000000000000020001",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "d3100000000000000000000000020001",
+          "Name": "list",
+          "Description": "List to fetch an item from.\n\nvar[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d3200000000000000000000000020001",
+          "Name": "index",
+          "Description": "Index of the item to be fetched.\n\nint",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d3300000000000000000000000020001",
+          "Name": "item",
+          "Description": "Item in the list at the given index.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "DSCore.List.GetItemAtIndex@var[]..[],int",
+      "Replication": "Auto",
+      "Description": "Returns an item from the given list that's located at the specified index.\n\nList.GetItemAtIndex (list: var[]..[], index: int): var[]..[]"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000000",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000000",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000000",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000001",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000001",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000001",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000002",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000002",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000002",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000005",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000005",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000005",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000003",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000003",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000003",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000004",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000004",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000004",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 130.0,
+      "Id": "e1000000000000000000000000000006",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "e1100000000000000000000000000006",
+          "Name": "",
+          "Description": "Node to evaluate.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e2000000000000000000000000000006",
+          "Name": "",
+          "Description": "Watch contents.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "834d29eec447450e847e0e4fc75190fe",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c87e110fb31140fba178d54ae6666efc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "ANCHO 4m T1"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "6de0aabf930b465494a294c5c6903448",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "156be6fee8774c7b9e83b453e2ef24d7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "RAS"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Create_Corridors (integrado en Rasante_y_Corredores.dyn)\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# IN[0] : str   nombre del assembly\n# IN[1] : str   nombre de la superficie MDT (target)\n# IN[2] : str   prefijo rasante (ej. \"RAS\")\n# IN[3] : any   SYNC BARRIER (output del Paso 3) - no se usa, solo fuerza orden\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, ObjectIdCollection, SymbolUtilityServices, ObjectId\n)\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    Alignment, Profile, Corridor, Assembly\n)\nfrom System import Enum\nfrom System.Reflection import BindingFlags\nfrom System import AppDomain\n\nCORRIDOR_STYLE_NAME     = \"Not display\"\nCODE_SET_STYLE_NAME     = \"Plan View - Solid Hatch (Lynka)\"\nSURFACE_STYLE_NAME      = \"_No Display\"\nTOP_PREFIX              = \"TOP \"\nDATUM_PREFIX            = \"DATUM \"\nTOP_CODE                = \"Top\"\nDATUM_CODE              = \"Datum\"\nBOUNDARY_NAME           = \"Corridor Boundary(1)\"\nTARGET_SUBASM_PREFIXES  = (\"C1 -\", \"F1 -\", \"C1-\", \"F1-\")\n\nlog = []\ndef say(m): log.append(str(m))\n\nassembly_name = str(IN[0]).strip()\nmdt_name      = str(IN[1]).strip()\nras_prefix    = str(IN[2]).strip()\n# IN[3] es el sync barrier desde Paso 3 (ignorado)\n\nsay(\"=== CREAR CORREDORES ===\")\nsay(\"Assembly: '{}'\".format(assembly_name))\nsay(\"MDT target: '{}'\".format(mdt_name))\nsay(\"Prefijo rasante: '{}'\".format(ras_prefix))\nsay(\"\")\n\ndoc = AcadApp.DocumentManager.MdiActiveDocument\ndb  = doc.Database\n\ndef safe_name(obj):\n    try: return obj.Name\n    except: pass\n    try: return obj.get_Name()\n    except: pass\n    return None\n\ndef find_type_by_name(simple_name):\n    for asm in AppDomain.CurrentDomain.GetAssemblies():\n        try:\n            for t in asm.GetExportedTypes():\n                if t.Name == simple_name:\n                    return t\n        except: continue\n    return None\n\ndef find_style_id_in_collection(tr_local, coll, target_name):\n    try:\n        for sid in coll:\n            try:\n                s = tr_local.GetObject(sid, OpenMode.ForRead)\n                nm = safe_name(s)\n                if nm and nm.strip() == target_name:\n                    return sid\n            except: continue\n    except: pass\n    try:\n        for i in range(coll.Count):\n            sid = coll.get_Item(i) if hasattr(coll, 'get_Item') else coll[i]\n            try:\n                s = tr_local.GetObject(sid, OpenMode.ForRead)\n                nm = safe_name(s)\n                if nm and nm.strip() == target_name:\n                    return sid\n            except: continue\n    except: pass\n    return None\n\ndef get_subasm_name(ti):\n    for attr in (\"SubassemblyName\", \"SubAssemblyName\",\n                 \"SubassemblyLogicalName\", \"AssemblyGroupName\"):\n        if hasattr(ti, attr):\n            try:\n                v = getattr(ti, attr)\n                if v is not None:\n                    return str(v)\n            except: continue\n    return \"\"\n\ndef starts_with_any(name, prefixes):\n    n_lower = name.lower().strip()\n    for p in prefixes:\n        if n_lower.startswith(p.lower()):\n            return True\n    return False\n\noc_type   = find_type_by_name(\"OverhangCorrectionType\")\ncsbt_type = find_type_by_name(\"CorridorSurfaceBoundaryType\")\noc_top_links = None\noc_bottom_links = None\ncsbt_outside = None\nif oc_type is not None:\n    try: oc_top_links = Enum.Parse(oc_type, \"TopLinks\")\n    except: pass\n    try: oc_bottom_links = Enum.Parse(oc_type, \"BottomLinks\")\n    except: pass\nif csbt_type is not None:\n    for cand in (\"OutsideBoundary\", \"Outside\", \"Outer\"):\n        try:\n            csbt_outside = Enum.Parse(csbt_type, cand)\n            break\n        except: continue\n\nn_created = 0\nn_skipped = 0\nn_errors  = 0\n\ndoc_lock = doc.LockDocument()\ntry:\n    tr = db.TransactionManager.StartTransaction()\n    try:\n        civDoc = CivilApplication.ActiveDocument\n\n        mdt_surf_id = None\n        for sid in civDoc.GetSurfaceIds():\n            s = tr.GetObject(sid, OpenMode.ForRead)\n            if safe_name(s) == mdt_name:\n                mdt_surf_id = sid\n                break\n        if mdt_surf_id is None:\n            raise Exception(\"Superficie '{}' no encontrada.\".format(mdt_name))\n        say(\"MDT: OK\")\n\n        assembly_id = None\n        bt = tr.GetObject(db.BlockTableId, OpenMode.ForRead)\n        ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n        btr = tr.GetObject(ms_id, OpenMode.ForRead)\n        for oid in btr:\n            try:\n                obj = tr.GetObject(oid, OpenMode.ForRead)\n                if isinstance(obj, Assembly):\n                    if safe_name(obj) == assembly_name:\n                        assembly_id = oid\n                        break\n            except: continue\n        if assembly_id is None:\n            raise Exception(\"Assembly '{}' no encontrado.\".format(assembly_name))\n        say(\"Assembly: OK\")\n\n        surface_style_id = ObjectId.Null\n        try:\n            surf_styles = civDoc.Styles.SurfaceStyles\n            surface_style_id = find_style_id_in_collection(\n                tr, surf_styles, SURFACE_STYLE_NAME)\n            if surface_style_id is None or surface_style_id == ObjectId.Null:\n                say(\"AVISO: SurfaceStyle '{}' no encontrado\".format(SURFACE_STYLE_NAME))\n                surface_style_id = ObjectId.Null\n        except Exception as ex:\n            say(\"AVISO SurfaceStyles: {}\".format(str(ex)[:150]))\n\n        say(\"\")\n        corr_coll = civDoc.CorridorCollection\n        align_ids = civDoc.GetAlignmentIds()\n        say(\"Alignments en dibujo: {}\".format(align_ids.Count))\n        say(\"\")\n\n        for aidx in range(align_ids.Count):\n            a_id = align_ids.get_Item(aidx)\n            al = tr.GetObject(a_id, OpenMode.ForRead)\n            align_name = safe_name(al)\n            if align_name is None:\n                n_skipped += 1\n                continue\n\n            rasante_id = None\n            rasante_name = None\n            prof_ids = al.GetProfileIds()\n            pfx_lower = ras_prefix.lower()\n            all_profiles = []\n            for pidx in range(prof_ids.Count):\n                p_id = prof_ids.get_Item(pidx)\n                prof = tr.GetObject(p_id, OpenMode.ForRead)\n                pname = safe_name(prof)\n                if pname: all_profiles.append(pname)\n                if pname and pname.strip().lower().startswith(pfx_lower):\n                    rasante_id = p_id\n                    rasante_name = pname\n                    break\n            if rasante_id is None:\n                n_skipped += 1\n                say(\"[SKIP] '{}': sin rasante. Perfiles: {}\".format(\n                    align_name, all_profiles))\n                continue\n\n            start_sta = al.StartingStation\n            end_sta   = al.EndingStation\n            corr_name = align_name\n\n            try:\n                for i in range(corr_coll.Count):\n                    existing_id = corr_coll.get_Item(i)\n                    try:\n                        ec = tr.GetObject(existing_id, OpenMode.ForRead)\n                        if safe_name(ec) == corr_name:\n                            ec.UpgradeOpen()\n                            ec.Erase()\n                            break\n                    except: continue\n            except: pass\n\n            try:\n                new_corr_id = corr_coll.Add(corr_name)\n                corridor = tr.GetObject(new_corr_id, OpenMode.ForWrite)\n\n                try: corridor.StyleName = CORRIDOR_STYLE_NAME\n                except: pass\n                try: corridor.CodeSetStyleName = CODE_SET_STYLE_NAME\n                except: pass\n\n                bl_name = \"BL_\" + align_name\n                if len(bl_name) > 80: bl_name = bl_name[:80]\n                baseline = corridor.Baselines.Add(bl_name, a_id, rasante_id)\n\n                region = baseline.BaselineRegions.Add(\n                    \"Region_1\", assembly_id, start_sta, end_sta)\n\n                # Frecuencia default de UI Civil 3D 2024\n                try:\n                    aas = region.AppliedAssemblySetting\n                    aas.FrequencyAlongTangents                = 10.0\n                    aas.FrequencyAlongCurves                  = 2.0\n                    aas.FrequencyAlongSpirals                 = 10.0\n                    aas.MODAlongCurves                        = 0.1\n                    aas.AppliedAtHorizontalGeometryPoints     = True\n                    aas.AppliedAtSuperelevationCriticalPoints = True\n                    aas.FrequencyAlongProfileCurves           = 5.0\n                    aas.AppliedAtProfileGeometryPoints        = True\n                    aas.AppliedAtProfileHighLowPoints         = True\n                    aas.AppliedAtOffsetTargetGeometryPoints   = True\n                    aas.AppliedAdjacentToOffsetTargetStartEnd = True\n                except Exception as ex_freq:\n                    if n_created == 0:\n                        say(\"  AVISO freq: {}\".format(str(ex_freq)[:150]))\n\n                # Targets: MDT solo en C1-/F1- con TargetType==1 (Surface)\n                try:\n                    tgts = region.GetTargets()\n                    changed = False\n                    first_log = (n_created == 0)\n                    n_assigned = 0\n\n                    for ti_idx in range(tgts.Count):\n                        ti = tgts.get_Item(ti_idx)\n                        sub_name = get_subasm_name(ti)\n                        if not starts_with_any(sub_name, TARGET_SUBASM_PREFIXES):\n                            continue\n                        try: tt_int = int(ti.TargetType)\n                        except: continue\n                        if tt_int != 1:\n                            continue\n                        ids = ObjectIdCollection()\n                        ids.Add(mdt_surf_id)\n                        try:\n                            ti.TargetIds = ids\n                            changed = True\n                            n_assigned += 1\n                        except Exception as ex_set:\n                            if first_log:\n                                say(\"  TargetIds fail '{}': {}\".format(\n                                    sub_name, str(ex_set)[:80]))\n\n                    if first_log:\n                        say(\"  Targets MDT asignados: {}\".format(n_assigned))\n                    if changed:\n                        region.SetTargets(tgts)\n                except Exception as ex_tgt:\n                    if n_created == 0:\n                        say(\"  AVISO targets: {}\".format(str(ex_tgt)[:120]))\n\n                try: corridor.Rebuild()\n                except Exception as ex_rb:\n                    say(\"  AVISO Rebuild-1 '{}': {}\".format(corr_name, str(ex_rb)[:100]))\n\n                top_surf_name   = TOP_PREFIX   + align_name\n                datum_surf_name = DATUM_PREFIX + align_name\n                try: corridor.CorridorSurfaces.Remove(top_surf_name)\n                except: pass\n                try: corridor.CorridorSurfaces.Remove(datum_surf_name)\n                except: pass\n\n                top_surf = corridor.CorridorSurfaces.Add(top_surf_name)\n                if surface_style_id is not None and surface_style_id != ObjectId.Null:\n                    try: top_surf.SurfaceStyleId = surface_style_id\n                    except: pass\n                added_top = False\n                for code_variant in (TOP_CODE, TOP_CODE.lower(), TOP_CODE.upper()):\n                    try:\n                        top_surf.AddLinkCode(code_variant, False)\n                        added_top = True\n                        break\n                    except: continue\n                if oc_top_links is not None:\n                    try: top_surf.OverhangCorrection = oc_top_links\n                    except: pass\n\n                datum_surf = corridor.CorridorSurfaces.Add(datum_surf_name)\n                if surface_style_id is not None and surface_style_id != ObjectId.Null:\n                    try: datum_surf.SurfaceStyleId = surface_style_id\n                    except: pass\n                added_datum = False\n                for code_variant in (DATUM_CODE, DATUM_CODE.lower(), DATUM_CODE.upper()):\n                    try:\n                        datum_surf.AddLinkCode(code_variant, False)\n                        added_datum = True\n                        break\n                    except: continue\n                if oc_bottom_links is not None:\n                    try: datum_surf.OverhangCorrection = oc_bottom_links\n                    except: pass\n\n                try: corridor.Rebuild()\n                except: pass\n\n                try:\n                    top_bnd = top_surf.Boundaries.AddCorridorExtentsBoundary(BOUNDARY_NAME)\n                    if csbt_outside is not None:\n                        try: top_bnd.BoundaryType = csbt_outside\n                        except: pass\n                except Exception as ex_b1:\n                    say(\"  AVISO TOP boundary: {}\".format(str(ex_b1)[:120]))\n                try:\n                    datum_bnd = datum_surf.Boundaries.AddCorridorExtentsBoundary(BOUNDARY_NAME)\n                    if csbt_outside is not None:\n                        try: datum_bnd.BoundaryType = csbt_outside\n                        except: pass\n                except Exception as ex_b2:\n                    say(\"  AVISO DATUM boundary: {}\".format(str(ex_b2)[:120]))\n\n                try: corridor.Rebuild()\n                except: pass\n\n                n_created += 1\n                status = \"TOP:{} DATUM:{}\".format(\n                    \"OK\" if added_top else \"FAIL\",\n                    \"OK\" if added_datum else \"FAIL\")\n                say(\"[OK] '{}' | rasante '{}' | {:.1f}-{:.1f} | {}\".format(\n                    corr_name, rasante_name, start_sta, end_sta, status))\n\n            except Exception as ex:\n                n_errors += 1\n                say(\"[ERROR] '{}': {}\".format(align_name, str(ex)[:200]))\n                if n_errors <= 2:\n                    for line in traceback.format_exc().split(\"\\n\")[:6]:\n                        say(\"    \" + line)\n\n        tr.Commit()\n    finally:\n        tr.Dispose()\nfinally:\n    doc_lock.Dispose()\n\nsay(\"\")\nsay(\"=== RESUMEN CORREDORES ===\")\nsay(\"Corredores creados: {}\".format(n_created))\nsay(\"Skipped (sin rasante): {}\".format(n_skipped))\nsay(\"Errores: {}\".format(n_errors))\n\nOUT = log\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "01178e4f4c944450931421aa309d3900",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "58aa7d58d99d4c67a122abe6e050cd27",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "669136ab3a6c4a58b91cca7a437e8ee2",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "236d0e9560254ea5ac1ad5420be4092e",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "fe78961b20e04862a77a98bb1b63539f",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "253b54c9d6f440bfab0e84b85cacdac5",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 700.0,
+      "WatchHeight": 500.0,
+      "Id": "7d57cc0745764a279236c42b2c61f3cd",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "27c068d29483442fb4c2373028f6947b",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "51e1acfebb064cb0869898751be1cfdb",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "a2000000000000000000000000000001",
+      "End": "b1100000000000000000000000000001",
+      "Id": "f1b3b6d7b1f54b7bae10e7a7e1def473",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000002",
+      "End": "b1100001000000000000000000000001",
+      "Id": "4ec6bf4c6f674601b162f4ed78498c7e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000002",
+      "End": "b1300001000000000000000000000003",
+      "Id": "cda8a34255bd470aa057574cd00f6e7f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000002",
+      "End": "669136ab3a6c4a58b91cca7a437e8ee2",
+      "Id": "04fc75676a104f01b261aac32f32da8c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000003",
+      "End": "b1100002000000000000000000000001",
+      "Id": "c0d6c3c732404bfd85880e9c3a803183",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000004",
+      "End": "b1200001000000000000000000000002",
+      "Id": "ccfa627c1354473d9e0e04c86e264cb9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000005",
+      "End": "b1200002000000000000000000000002",
+      "Id": "d18c763756e248299510a0ecd8820879",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000006",
+      "End": "b1200003000000000000000000000002",
+      "Id": "dbf33c7e977e48eb95684c26eeb63482",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000007",
+      "End": "b1200004000000000000000000000002",
+      "Id": "c134894295d7490cb3a02320b44b6e8d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000008",
+      "End": "b1200005000000000000000000000002",
+      "Id": "eafe0563c6204c879c4fa115afd59f7f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000009",
+      "End": "b1200006000000000000000000000002",
+      "Id": "1fb71b37494448bdb3e2678a638504e7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000a",
+      "End": "b1200007000000000000000000000002",
+      "Id": "dc244d74a7324c71b07e86b5a469b8d8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000b",
+      "End": "b1300002000000000000000000000003",
+      "Id": "a043c2b3ec904ca09088493d02881481",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000c",
+      "End": "b1300003000000000000000000000003",
+      "Id": "dedf093cde8340c8844a418479baa36b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000d",
+      "End": "b1300004000000000000000000000003",
+      "Id": "bcd37ae010a84826a995ff95aed11c07",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000e",
+      "End": "b1300005000000000000000000000003",
+      "Id": "570942f8839b43d38fe20d4f79743043",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a200000000000000000000000000000f",
+      "End": "b1300006000000000000000000000003",
+      "Id": "6f60d7b358ab4f5a91b46a8a3bc3a1e4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a2000000000000000000000000000010",
+      "End": "b1300007000000000000000000000003",
+      "Id": "4f500ddd66c54f7791e4fac1c17d0782",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000001",
+      "End": "d1100000000000000000000000000000",
+      "Id": "6c497335c0e84610b2c8397275fe1aef",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000001",
+      "End": "d1100000000000000000000000000001",
+      "Id": "246050f71b1749dc9545116c9eb8be3f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000001",
+      "End": "d1100000000000000000000000000002",
+      "Id": "34dfaefdd19d4ec08d69e1b5471dc0cb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000002",
+      "End": "d2100000000000000000000000010000",
+      "Id": "7c3034d1170e4cbf81fb3b8d7f41c080",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000002",
+      "End": "d2100000000000000000000000010001",
+      "Id": "514345b407cb4363ac51760e5c50fa56",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000003",
+      "End": "d3100000000000000000000000020000",
+      "Id": "2eed451729844e058c80929d2c7317bb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b2000000000000000000000000000003",
+      "End": "d3100000000000000000000000020001",
+      "Id": "00fc099b60d64f6aaa068128059a3346",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000000",
+      "End": "d1200000000000000000000000000000",
+      "Id": "e73292c22143411fab1a17dd52d2e932",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000000",
+      "End": "d2200000000000000000000000010000",
+      "Id": "83c3179f53ab4b259af94dde9d598a65",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000000",
+      "End": "d3200000000000000000000000020000",
+      "Id": "c8732e173b24407dadc376c0a157057d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000001",
+      "End": "d1200000000000000000000000000001",
+      "Id": "6ec7ee75f0f04465b0f2015f227c3bbb",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000001",
+      "End": "d2200000000000000000000000010001",
+      "Id": "e4f128d35ca24cbf8d26794b6256d6a5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000001",
+      "End": "d3200000000000000000000000020001",
+      "Id": "09c3970f1852491bad592d769bae8e8e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2000000000000000000000000000002",
+      "End": "d1200000000000000000000000000002",
+      "Id": "f6b3dbf68e194794861f8570b6eacb65",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2000000000000000000000000000000",
+      "End": "e1100000000000000000000000000000",
+      "Id": "604b3ae402754a3492a7365c2197a347",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2000000000000000000000000000000",
+      "End": "b1200000000000000000000000000002",
+      "Id": "b155dac06c4948d1aa982cac6dff91af",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2000000000000000000000000000000",
+      "End": "b1300000000000000000000000000003",
+      "Id": "8f67a10ab44d44269f722b0db490cfd7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2000000000000000000000000000001",
+      "End": "e1100000000000000000000000000001",
+      "Id": "7fb626f4cb4e408ab4922c8c9f0d8cfc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2000000000000000000000000000002",
+      "End": "e1100000000000000000000000000003",
+      "Id": "81007f352a6c4d6cbf8e7ebfc363897f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2300000000000000000000000010000",
+      "End": "e1100000000000000000000000000002",
+      "Id": "b7cc98a19fd64576ab7a93f51a0f25cc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d2300000000000000000000000010001",
+      "End": "e1100000000000000000000000000004",
+      "Id": "5c33f40728254632a80a720f9e99d9f3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d3300000000000000000000000020000",
+      "End": "e1100000000000000000000000000005",
+      "Id": "5a66a5e72c674239b4fcf6984f1d8e83",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d3300000000000000000000000020000",
+      "End": "fe78961b20e04862a77a98bb1b63539f",
+      "Id": "e051d2d18af14de09da2748277b29666",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d3300000000000000000000000020001",
+      "End": "e1100000000000000000000000000006",
+      "Id": "9c865f972f6e46ee95232d11c6e64cb7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c87e110fb31140fba178d54ae6666efc",
+      "End": "58aa7d58d99d4c67a122abe6e050cd27",
+      "Id": "9b5d19cbde494b519a0048cc68feed39",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "156be6fee8774c7b9e83b453e2ef24d7",
+      "End": "236d0e9560254ea5ac1ad5420be4092e",
+      "Id": "432d75bac4374d5fbf5a7a440e856bf2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "253b54c9d6f440bfab0e84b85cacdac5",
+      "End": "27c068d29483442fb4c2373028f6947b",
+      "Id": "3b35804fe1d44bbca54dbcd4e6b904cd",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.18",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000001",
+        "Name": "01 Capa de ejes",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -89.30176160188114,
+        "Y": -59.9787951057411
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000002",
+        "Name": "02 Superficie TN",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 122.15846664577077,
+        "Y": -59.168972175141562
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000003",
+        "Name": "03 Estilo perfil TN",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -85.50478510349933,
+        "Y": 74.047808843638393
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000004",
+        "Name": "04 Origen X",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -91.954928281978255,
+        "Y": 274.27068274294481
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000005",
+        "Name": "05 Origen Y",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 129.30199423899785,
+        "Y": 274.4271435233594
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000006",
+        "Name": "06 Numero de columnas",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -94.719619165532322,
+        "Y": 398.28027924827836
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000007",
+        "Name": "07 Espaciado X (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -92.821130916341417,
+        "Y": 514.53946197643359
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000008",
+        "Name": "08 Espaciado Y (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 133.2984061866232,
+        "Y": 514.3883025911158
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000009",
+        "Name": "09 Estilo ProfileView",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -92.821130916341644,
+        "Y": 646.43795022562449
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000a",
+        "Name": "10 Band Set",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 155.88082972767097,
+        "Y": 643.09237325475078
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000b",
+        "Name": "11 Altura rasante sobre TN (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -85.2271779195778,
+        "Y": 854.35155598290612
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000c",
+        "Name": "12 Pendiente maxima (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -89.024154417959608,
+        "Y": 972.50922696025225
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000d",
+        "Name": "13 Pendiente minima (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 180.56117696715296,
+        "Y": 974.85911473695126
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000e",
+        "Name": "14 Longitud acuerdo vertical (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -85.227177919577571,
+        "Y": 1098.7122504618703
+      },
+      {
+        "UserDescription": "",
+        "Id": "a100000000000000000000000000000f",
+        "Name": "15 Intervalo muestreo TN (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -87.50992184779011,
+        "Y": 1220.2883397950557
+      },
+      {
+        "UserDescription": "",
+        "Id": "a1000000000000000000000000000010",
+        "Name": "16 Estilo perfil rasante",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -84.091503491950562,
+        "Y": 1339.9830334884871
+      },
+      {
+        "UserDescription": "",
+        "Id": "b1000000000000000000000000000001",
+        "Name": "Paso 1: Crear perfiles TN",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 341.02135541690018,
+        "Y": -35.841223282810432
+      },
+      {
+        "UserDescription": "",
+        "Id": "b1000000000000000000000000000002",
+        "Name": "Paso 2: Crear ProfileViews",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 378.43805181181392,
+        "Y": 427.64097372724257
+      },
+      {
+        "UserDescription": "",
+        "Id": "b1000000000000000000000000000003",
+        "Name": "Paso 3: Generar rasante auto",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 454.37758177945125,
+        "Y": 892.20900251365072
+      },
+      {
+        "UserDescription": "",
+        "Id": "c1000000000000000000000000000000",
+        "Name": "0",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 354.53663436169495,
+        "Y": 154.09372100444207
+      },
+      {
+        "UserDescription": "",
+        "Id": "c1000000000000000000000000000001",
+        "Name": "1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 474.779834086361,
+        "Y": 153.35538308474048
+      },
+      {
+        "UserDescription": "",
+        "Id": "c1000000000000000000000000000002",
+        "Name": "2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 368.74081727184489,
+        "Y": 306.33477026860851
+      },
+      {
+        "UserDescription": "",
+        "Id": "d1000000000000000000000000000000",
+        "Name": "[0] alignments",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 626.6996520577361,
+        "Y": 6.66431056730454
+      },
+      {
+        "UserDescription": "",
+        "Id": "d1000000000000000000000000000001",
+        "Name": "[1] TN profiles",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 626.6996520577361,
+        "Y": 91.66431056730454
+      },
+      {
+        "UserDescription": "",
+        "Id": "d1000000000000000000000000000002",
+        "Name": "[2] log P1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 626.6996520577361,
+        "Y": 176.66431056730454
+      },
+      {
+        "UserDescription": "",
+        "Id": "d2000000000000000000000000010000",
+        "Name": "[0] PVs",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 689.82898130695935,
+        "Y": 518.39259770135254
+      },
+      {
+        "UserDescription": "",
+        "Id": "d2000000000000000000000000010001",
+        "Name": "[1] log P2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 689.82898130695935,
+        "Y": 677.433639419799
+      },
+      {
+        "UserDescription": "",
+        "Id": "d3000000000000000000000000020000",
+        "Name": "[0] rasantes",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 754.37758177945125,
+        "Y": 958.65609123533329
+      },
+      {
+        "UserDescription": "",
+        "Id": "d3000000000000000000000000020001",
+        "Name": "[1] log P3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 750.58060528106921,
+        "Y": 1119.5956212029707
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000000",
+        "Name": "Alignments procesados",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 956.6996520577361,
+        "Y": 6.66431056730454
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000001",
+        "Name": "Perfiles TN creados",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 956.6996520577361,
+        "Y": 166.66431056730454
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000002",
+        "Name": "ProfileViews creadas",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 976.16375157556786,
+        "Y": 486.86992143921657
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000005",
+        "Name": "Rasantes creadas",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 976.16375157556786,
+        "Y": 996.86992143921657
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000003",
+        "Name": "Log Paso 1",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 956.6996520577361,
+        "Y": 486.6643105673046
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000004",
+        "Name": "Log Paso 2",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 976.16375157556786,
+        "Y": 806.86992143921657
+      },
+      {
+        "UserDescription": "",
+        "Id": "e1000000000000000000000000000006",
+        "Name": "Log Paso 3",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 976.16375157556786,
+        "Y": 1156.8699214392166
+      },
+      {
+        "Id": "834d29eec447450e847e0e4fc75190fe",
+        "Name": "17 Assembly del corredor",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -85.0,
+        "Y": 1460.0
+      },
+      {
+        "Id": "6de0aabf930b465494a294c5c6903448",
+        "Name": "18 Prefijo rasante corredor",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 150.0,
+        "Y": 1460.0
+      },
+      {
+        "Id": "01178e4f4c944450931421aa309d3900",
+        "Name": "Paso 4: Crear Corredores",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 520.0,
+        "Y": 1480.0
+      },
+      {
+        "Id": "7d57cc0745764a279236c42b2c61f3cd",
+        "Name": "Log Corredores",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1000.0,
+        "Y": 1480.0
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "2a795879d15149edaaeacce989aaa60a",
+        "Title": "PASO 1  -  Crear perfiles TN sobre cada eje",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "a1000000000000000000000000000001",
+          "a1000000000000000000000000000002",
+          "a1000000000000000000000000000003",
+          "b1000000000000000000000000000001",
+          "d1000000000000000000000000000000",
+          "d1000000000000000000000000000001",
+          "d1000000000000000000000000000002",
+          "e1000000000000000000000000000000",
+          "e1000000000000000000000000000001",
+          "e1000000000000000000000000000003",
+          "c1000000000000000000000000000000",
+          "c1000000000000000000000000000001",
+          "c1000000000000000000000000000002"
+        ],
+        "HasNestedGroups": false,
+        "Left": -99.30176160188114,
+        "Top": -118.9787951057411,
+        "Width": 1563.0014136596174,
+        "Height": 833.64310567304574,
+        "FontSize": 24.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": -59.9787951057411,
+        "InitialHeight": 691.64310567304574,
+        "TextblockHeight": 49.0,
+        "Background": "#FFC1D676"
+      },
+      {
+        "Id": "670f7ec94b564b7082be498838eef6f0",
+        "Title": "PASO 3  -  Rasante auto (muestreo + DP + pendientes + acuerdos)",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "a100000000000000000000000000000b",
+          "a100000000000000000000000000000c",
+          "a100000000000000000000000000000d",
+          "a100000000000000000000000000000e",
+          "a100000000000000000000000000000f",
+          "a1000000000000000000000000000010",
+          "b1000000000000000000000000000003",
+          "d3000000000000000000000000020000",
+          "d3000000000000000000000000020001",
+          "e1000000000000000000000000000005",
+          "e1000000000000000000000000000006"
+        ],
+        "HasNestedGroups": false,
+        "Left": -99.024154417959608,
+        "Top": 795.35155598290612,
+        "Width": 1582.1879059935275,
+        "Height": 676.631477505581,
+        "FontSize": 24.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 854.35155598290612,
+        "InitialHeight": 630.631477505581,
+        "TextblockHeight": 49.0,
+        "Background": "#FFE0C6A7"
+      },
+      {
+        "Id": "96733fe20c9a4e1ea347f66fb2026b8d",
+        "Title": "PASO 2  -  Crear ProfileView en rejilla (con estilo + band set)",
+        "DescriptionText": "",
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [
+          "a1000000000000000000000000000004",
+          "a1000000000000000000000000000005",
+          "a1000000000000000000000000000006",
+          "a1000000000000000000000000000007",
+          "a1000000000000000000000000000008",
+          "a1000000000000000000000000000009",
+          "a100000000000000000000000000000a",
+          "b1000000000000000000000000000002",
+          "d2000000000000000000000000010000",
+          "d2000000000000000000000000010001",
+          "e1000000000000000000000000000002",
+          "e1000000000000000000000000000004",
+          "670f7ec94b564b7082be498838eef6f0"
+        ],
+        "HasNestedGroups": true,
+        "Left": -109.02415441795961,
+        "Top": 215.27068274294481,
+        "Width": 1602.1879059935275,
+        "Height": 1271.7123507455422,
+        "FontSize": 24.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 274.27068274294481,
+        "InitialHeight": 1225.7123507455422,
+        "TextblockHeight": 49.0,
+        "Background": "#FF9EC4D6"
+      }
+    ],
+    "X": 36.498847034627225,
+    "Y": -455.96383410793158,
+    "Zoom": 0.56048026836711951
+  }
+}
