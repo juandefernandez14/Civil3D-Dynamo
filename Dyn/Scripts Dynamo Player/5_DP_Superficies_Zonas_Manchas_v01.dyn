@@ -1,0 +1,1787 @@
+{
+  "Uuid": "a198e527-fbac-4b66-8162-59f0d219fedf",
+  "IsCustomNode": false,
+  "Description": "Superficies de desmonte y terraplen por contornos y obtención MDT_Modificado. Inputs: Contornos, Trackers y MDT.",
+  "Name": "5_DP_Superficies_Zonas_Manchas_v03",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "cc496d5721ba45da8a5c17dc7a3196d2",
+      "Name": "Superficie trackers general",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Trackers_Proyecto",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "e91dfbbfa6ad4c74934a505f22253c6a",
+      "Name": "Superficie MDT original",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_REC_2",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "589912fcd1bf41ae8a52e786778f681c",
+      "Name": "Capa de contornos",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_contornos",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "09b9192e14f34602bedb907a54cae81d",
+      "Name": "Superficie combinada ",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_Modificado",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "6bbeee9a001a46cf8dfe8be27f4dd8ca",
+      "Name": "Offset manchas (m)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "0.10",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "cd7816c93c564a0b8ccfe6bd72178ec2",
+      "Name": "Filtro manchas (% area media)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "10",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "424dbd34af444c97b6d5d64745ba38a7",
+      "Name": "Pegar MDT base en combinada (S/N)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "S",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "0d8a8a80893f41f8bf0bdc2bf0db2076",
+      "Name": "Intentos offset (0=off)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "3",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "a2cb5ea62afc4fa5965032cff6ce0050",
+      "Name": "Paso offset (m)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "0.05",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "e900bb08ddb84de19284366f649bbf69",
+      "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+      "Type": "boolean",
+      "Type2": "boolean",
+      "Value": "true",
+      "Description": "Enables selection between True and False",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "cc496d5721ba45da8a5c17dc7a3196d2",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6d4e7f9ba2ba4f1a996e2e587a20d0cc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers_Proyecto"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "e91dfbbfa6ad4c74934a505f22253c6a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "115afab0fe784830aa500ac2c985cb5d",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_REC_2"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "589912fcd1bf41ae8a52e786778f681c",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "10d7d70e98ce4daf947d4b9898169cc7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# IN[9]: BARRERA de sincronizacion del nodo NORMALIZAR (contenido ignorado).\n# -*- coding: utf-8 -*-\n# =============================================================================\n# Superficies_Zonas.dyn  v4.16\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# Por cada contorno cerrado en la capa indicada (ordenado por min_x asc,\n# igual que Volumen_MDT.dyn para mantener la misma numeracion de zonas):\n#\n#   FASE 1 (por zona):\n#     - Trackers_ZonaXX  : TinSurface vacia -> Paste(<tracker_surf>) ->\n#                          Outer Boundary = contorno de la zona\n#     - Desmonte_ZonaXX  : TinSurface vacia -> Paste(Trackers_ZonaXX)\n#                          -> Raise(+min del intervalo positivo del Volumen)\n#     - Terraplen_ZonaXX : TinSurface vacia -> Paste(Trackers_ZonaXX)\n#                          -> Raise(max del intervalo negativo)   (baja)\n#\n#   FASE 2 (por zona): MANCHAS + LIMPIEZA + OFFSET + BOUNDARIES\n#     Para Desmonte y Terraplen:\n#       a) Crear TinVolumeSurface temporal __tmp_vol_<tipo>_ZonaXX con\n#          Base=<tipo>_ZonaXX, Comparison=MDT.\n#       b) ExtractContoursAt(0.0) -> polylines en ModelSpace donde las dos\n#          superficies se cruzan (las \"manchas\").\n#       c) Mover esas polylines a la capa:\n#            _Contornos_desmonte_ZonaXX  (color rojo, index 1)\n#            _Contornos_terraplen_ZonaXX (color verde, index 3)\n#          Crear la capa si no existe.\n#       c1b) FILTRO de area: eliminar las manchas con area menor que\n#           IN[5]% del area media de su superficie. Son astillas pegadas\n#           al contorno cero (desmonte ~ terraplen ~ MDT), con efecto\n#           despreciable en el MDT modificado y causa principal de\n#           boundaries ilegales y fallos de paste.\n#       c2) Limpiar esas polylines (weed de vertices casi duplicados +\n#           cerrar las abiertas) y desfasarlas hacia DENTRO un valor\n#           configurable (IN[4]); si el offset colapsa la mancha, se\n#           reintenta en cascada con x0.5, x0.2 y x0.1 del valor, para\n#           que las manchas estrechas tambien queden separadas (las\n#           aristas coincidentes son las que disparan el fallo de paste);\n#           borrar las originales y dejar las\n#           limpias/desfasadas en su capa. Regenera geometria limpia y\n#           separa aristas para mitigar el \"Error performing edit\" al\n#           pegar en la combinada (FASE 4).\n#       d) Anyadir las polylines DESFASADAS como boundary de <tipo>_ZonaXX:\n#          la mayor como Outer, el resto como Show.\n#       e) Borrar la TinVolumeSurface temporal.\n#\n#   FASE 4 (global): agrupaciones + MDT MODIFICADO\n#     Jerarquia: zona -> agrupacion -> definitiva.\n#       1) Desmonte_Total  = paste de todos los Desmonte_ZonaXX\n#       2) Terraplen_Total = paste de todos los Terraplen_ZonaXX\n#       3) Combinada (IN[3]) = [MDT (IN[1]) si IN[6]=S] + Desmonte_Total\n#          + Terraplen_Total -> el resultado es el MDT MODIFICADO.\n#     Cada pegado va en su propia transaccion; los que fallan se\n#     reintentan tras un Rebuild y, si siguen fallando, la ANTILOTERIA\n#     desfasa las manchas de ESA superficie de zona el paso IN[8] (m) por\n#     intento (acumulativo, max IN[7] intentos), la recrea y repega.\n#     Las agrupaciones empiezan VACIAS (sin MDT base), asi que los\n#     pegados zona->agrupacion pueden fallar mas; se cubren con\n#     reintento + ANTILOTERIA y con RONDAS adicionales sobre los fallos\n#     definitivos (el estado del destino cambia entre rondas y eso\n#     rebaraja el bug). JERARQUIA ESTRICTA: la combinada SOLO se crea si\n#     las dos agrupaciones quedan completas; si no, se aborta listando\n#     las zonas pendientes (sin pegados directos ni fallback).\n#     Estilo _No Display. Las previas se borran en FASE 0.\n#\n# Las 3 superficies Trackers/Desmonte/Terraplen se crean con estilo\n# '_No Display'. El MDT se pide como input para la comparacion de volumen\n# y para validacion (typo-check).\n#\n# Re-ejecutable: superficies y capas previas con los prefijos del script\n# se borran (o vacian) antes de recrearse.\n#\n# NOTA: Carpetas del Prospector (Zona01, ...) se crean a mano.\n#\n# IN[0] : str   nombre superficie de trackers general\n# IN[1] : str   nombre superficie MDT original\n# IN[2] : str   nombre capa de contornos de zonas\n# IN[3] : str   nombre de la combinada FINAL (MDT modificado), que se\n#               monta como [MDT] + Desmonte_Total + Terraplen_Total\n# IN[4] : str   offset de las manchas en metros (limpieza + separacion)\n# IN[5] : str   filtro de area: eliminar manchas con area < este % del\n#               area MEDIA de las manchas de su superficie (0 = off)\n# IN[6] : str   S/N pegar el MDT como base de la combinada (S = la\n#               combinada es el MDT MODIFICADO; N = solo union manchas)\n# IN[7] : str   antiloteria: numero max de intentos de rescate por\n#               superficie cuyo pegado falla (0 = desactivada)\n# IN[8] : str   antiloteria: offset EXTRA en metros aplicado en cada\n#               intento, ACUMULATIVO (p.ej. 0.02 -> +0.02, +0.04, +0.06)\n# =============================================================================\n\nimport clr\nimport time\nimport traceback\n\n# --- cronometro ---\n_T_START = time.perf_counter()\n_t_last  = _T_START\n_T_PHASES = {}\n\ndef _fmt_hms(secs):\n    secs = float(secs)\n    if secs < 0:\n        secs = 0.0\n    m, s = divmod(secs, 60.0)\n    h, m = divmod(m, 60.0)\n    if h >= 1:\n        return \"{:d}h {:02d}m {:04.1f}s\".format(int(h), int(m), s)\n    if m >= 1:\n        return \"{:d}m {:04.1f}s\".format(int(m), s)\n    return \"{:.2f}s\".format(s)\n\ndef _tlog(label, log):\n    \"\"\"Anyade al log el tiempo de la fase (desde la marca anterior) y el\n    acumulado total; actualiza la marca.\"\"\"\n    global _t_last\n    now = time.perf_counter()\n    _T_PHASES[label] = now - _t_last\n    log.append(\"  [tiempo] {}: {}  (acumulado {})\".format(\n        label, _fmt_hms(now - _t_last), _fmt_hms(now - _T_START)))\n    _t_last = now\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, SymbolUtilityServices,\n    LayerTable, LayerTableRecord, ObjectIdCollection\n)\nfrom Autodesk.AutoCAD.Geometry import Point2d, Point3d, Point3dCollection\nfrom Autodesk.AutoCAD.Colors import Color as AcadColor, ColorMethod\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    TinSurface, TinVolumeSurface\n)\n# ITerrainSurface puede no estar expuesto en el modulo raiz en algunas\n# versiones; lo importamos aparte de forma tolerante.\ntry:\n    from Autodesk.Civil.DatabaseServices import ITerrainSurface\n    _HAS_ITERRAINSURFACE = True\nexcept Exception:\n    ITerrainSurface = None\n    _HAS_ITERRAINSURFACE = False\n\nfrom Autodesk.Civil import SurfaceBoundaryType\n\n# Reflection para invocar metodos de interfaz explicita (pythonnet no\n# expone ExtractContoursAt directamente en TinVolumeSurface porque la\n# interfaz ITerrainSurface esta implementada explicitamente).\nfrom System import Array, Double, Object\nfrom System.Reflection import BindingFlags\n\nVOLUME_PREFIX    = \"Volumen_MDT\"    # Volumen_MDT_ZonaXX\nTMP_VOL_PREFIX   = \"__tmp_vol_\"     # para volumenes temporales de manchas\nDES_LAYER_FMT    = \"_Contornos_desmonte_Zona{:02d}\"\nTER_LAYER_FMT    = \"_Contornos_terraplen_Zona{:02d}\"\nDES_COLOR_INDEX  = 1   # rojo\nTER_COLOR_INDEX  = 3   # verde\nOFFSET_DIST      = 0.10   # valor por defecto si IN[4] no es valido (m)\nWEED_TOL         = 0.001  # 1 mm: tolerancia weed (quita vert. duplicados)\nANTILOT_STEP     = 0.05   # paso antiloteria por defecto si IN[8] no es valido (m)\nDES_TOTAL_NAME   = \"Desmonte_Total\"    # agrupacion de todos los Desmonte_ZonaXX\nTER_TOTAL_NAME   = \"Terraplen_Total\"   # agrupacion de todos los Terraplen_ZonaXX\n\ntracker_surf_name = str(IN[0])\nmdt_surf_name     = str(IN[1])\ncontour_layer     = str(IN[2])\ntry:\n    combined_name = str(IN[3]).strip()\nexcept Exception:\n    combined_name = \"\"\ntry:\n    offset_dist = float(str(IN[4]).strip().replace(\",\", \".\"))\n    if offset_dist < 0:\n        offset_dist = OFFSET_DIST\nexcept Exception:\n    offset_dist = OFFSET_DIST\ntry:\n    filtro_pct = float(str(IN[5]).strip().replace(\",\", \".\"))\n    if filtro_pct < 0:\n        filtro_pct = 0.0\nexcept Exception:\n    filtro_pct = 5.0\ntry:\n    _v6 = str(IN[6]).strip().upper()\nexcept Exception:\n    _v6 = \"\"\n# Por defecto SI: solo un NO explicito desactiva la base MDT.\npegar_mdt = _v6 not in (\"N\", \"NO\", \"FALSE\", \"0\")\ntry:\n    antilot_max = int(float(str(IN[7]).strip().replace(\",\", \".\")))\n    if antilot_max < 0:\n        antilot_max = 0\nexcept Exception:\n    antilot_max = 3\ntry:\n    antilot_paso = float(str(IN[8]).strip().replace(\",\", \".\"))\n    if antilot_paso <= 0:\n        antilot_paso = ANTILOT_STEP\nexcept Exception:\n    antilot_paso = ANTILOT_STEP\n\nlog = []\nlog.append(\"=== Superficies_Zonas v4.16 ===\")\nlog.append(\"Inicio: {}\".format(time.strftime(\"%Y-%m-%d %H:%M:%S\")))\nlog.append(\"Tracker surf : {}\".format(tracker_surf_name))\nlog.append(\"MDT surf     : {}\".format(mdt_surf_name))\nlog.append(\"Contour layer: {}\".format(contour_layer))\nlog.append(\"Superf. comb.: {}\".format(combined_name))\nlog.append(\"Offset (m)   : {}  (cascada x1, x0.5, x0.2, x0.1)\".format(offset_dist))\nlog.append(\"Filtro area  : manchas < {}% del area media se eliminan (0 = off)\".format(filtro_pct))\nlog.append(\"MDT base     : {}  [IN[6]='{}']\".format(\n    \"SI (la combinada sera el MDT MODIFICADO)\" if pegar_mdt\n    else \"NO (solo union de manchas)\", _v6))\nlog.append(\"Antiloteria  : {} intento(s) max, +{} m de offset por intento\".format(\n    antilot_max, antilot_paso))\nlog.append(\"\")\n\n\ndef find_style_id(cdoc, candidates):\n    ss = cdoc.Styles.SurfaceStyles\n    for nm in candidates:\n        try:\n            return ss.get_Item(nm)\n        except:\n            continue\n    return None\n\n\ndef extract_contours_at_iface(surface, elevation):\n    \"\"\"Invoca ITerrainSurface.ExtractContoursAt(double) via reflection.\n    pythonnet no expone el metodo directamente en TinVolumeSurface porque\n    la interfaz esta implementada explicitamente. Cuatro estrategias en\n    orden de preferencia:\n      1) Llamada directa (por si el runtime ya lo expone).\n      2) Reflection sobre el tipo ITerrainSurface (si esta importado).\n      3) Reflection sobre el tipo concreto, buscando por nombre exacto\n         o nombre calificado 'Autodesk.Civil.DatabaseServices.ITerrainSurface.ExtractContoursAt'.\n      4) Igual que 3 pero filtrando por 'termina en .ExtractContoursAt'\n         y con parametro (double), captura cualquier nombre calificado\n         aunque el namespace haya cambiado.\n    Devuelve un ObjectIdCollection.\n    \"\"\"\n    from System import Type as NetType\n    double_elev = float(elevation)\n\n    # Estrategia 1: directo\n    try:\n        return surface.ExtractContoursAt(double_elev)\n    except Exception:\n        pass\n\n    args = Array[Object]([Double(double_elev)])\n    type_arr_double = Array[NetType]([clr.GetClrType(Double)])\n\n    # Estrategia 2: invocar a traves de ITerrainSurface (si esta importado)\n    if _HAS_ITERRAINSURFACE and ITerrainSurface is not None:\n        try:\n            iface_type = clr.GetClrType(ITerrainSurface)\n            m = iface_type.GetMethod(\"ExtractContoursAt\", type_arr_double)\n            if m is not None:\n                return m.Invoke(surface, args)\n        except Exception:\n            pass\n\n    # Estrategia 3 y 4: enumerar metodos del tipo concreto\n    try:\n        t = surface.GetType()\n        flags = (BindingFlags.Instance |\n                 BindingFlags.Public |\n                 BindingFlags.NonPublic |\n                 BindingFlags.FlattenHierarchy)\n        double_clr = clr.GetClrType(Double)\n        candidates = []\n        for m in t.GetMethods(flags):\n            name = m.Name\n            # 'ExtractContoursAt' o cualquier nombre que acabe en '.ExtractContoursAt'\n            if name == \"ExtractContoursAt\" or name.endswith(\".ExtractContoursAt\"):\n                ps = m.GetParameters()\n                if len(ps) == 1 and ps[0].ParameterType == double_clr:\n                    candidates.append(m)\n        # Probar todas las candidatas, priorizando la calificada (explicita)\n        candidates.sort(key=lambda mm: 0 if \".\" in mm.Name else 1)\n        for m in candidates:\n            try:\n                return m.Invoke(surface, args)\n            except Exception:\n                continue\n    except Exception:\n        pass\n\n    # Estrategia 5: InternalExtractContoursAt(Double)\n    # En Civil 3D 2024, los metodos publicos del guide son wrappers de\n    # Internal* que si estan visibles en el tipo concreto. Confirmado por\n    # diagnostico previo: 'InternalExtractContoursAt(Double)' existe.\n    try:\n        t = surface.GetType()\n        flags = (BindingFlags.Instance |\n                 BindingFlags.Public |\n                 BindingFlags.NonPublic |\n                 BindingFlags.FlattenHierarchy)\n        double_clr = clr.GetClrType(Double)\n        for m in t.GetMethods(flags):\n            if m.Name == \"InternalExtractContoursAt\":\n                ps = m.GetParameters()\n                if len(ps) == 1 and ps[0].ParameterType == double_clr:\n                    return m.Invoke(surface, args)\n    except Exception:\n        pass\n\n    raise Exception(\"ExtractContoursAt no accesible ni por reflection.\")\n\n\ndef get_deltas_from_volume(vol_surf):\n    \"\"\"Lee los intervalos de analisis del TinVolumeSurface y devuelve:\n         (raise_d, raise_t)\n       Criterio (borde mas cercano a 0 en ambos casos):\n         - Desmonte  = intervalo POSITIVO (min>=0). Cojo su MIN.\n                       Desmonte.RaiseSurface(+min)  -> sube.\n         - Terraplen = intervalo NEGATIVO (max<=0). Cojo su MAX.\n                       Terraplen.RaiseSurface(max)  (max <=0) -> baja.\n       None si no hay intervalo de ese signo.\n    \"\"\"\n    try:\n        data = vol_surf.Analysis.GetElevationData()\n    except Exception:\n        return None, None\n    if data is None:\n        return None, None\n    raise_d = None\n    raise_t = None\n    eps = 1e-6\n    for d in data:\n        try:\n            mn = float(d.MinimumElevation)\n            mx = float(d.MaximumElevation)\n        except Exception:\n            continue\n        if mn >= -eps:\n            cand = mn\n            if raise_d is None or cand < raise_d:\n                raise_d = cand\n        if mx <= eps:\n            cand = mx\n            if raise_t is None or cand > raise_t:\n                raise_t = cand\n    return raise_d, raise_t\n\n\n\n    \"\"\"Ver docstring v3.1: devuelve (raise_d, raise_t) con borde mas cercano a 0.\"\"\"\n    try:\n        data = vol_surf.Analysis.GetElevationData()\n    except Exception:\n        return None, None\n    if data is None:\n        return None, None\n    raise_d = None\n    raise_t = None\n    eps = 1e-6\n    for d in data:\n        try:\n            mn = float(d.MinimumElevation)\n            mx = float(d.MaximumElevation)\n        except Exception:\n            continue\n        if mn >= -eps:\n            cand = mn\n            if raise_d is None or cand < raise_d:\n                raise_d = cand\n        if mx <= eps:\n            cand = mx\n            if raise_t is None or cand > raise_t:\n                raise_t = cand\n    return raise_d, raise_t\n\n\ndef ensure_layer(tr, db, layer_name, color_index):\n    \"\"\"Crea la capa si no existe; si existe, fuerza su color. Devuelve\n    el ObjectId del LayerTableRecord.\"\"\"\n    lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n    if lt.Has(layer_name):\n        ltr_id = lt.get_Item(layer_name)\n        ltr = tr.GetObject(ltr_id, OpenMode.ForWrite)\n    else:\n        lt.UpgradeOpen()\n        ltr = LayerTableRecord()\n        ltr.Name = layer_name\n        ltr_id = lt.Add(ltr)\n        tr.AddNewlyCreatedDBObject(ltr, True)\n    try:\n        ltr.Color = AcadColor.FromColorIndex(ColorMethod.ByAci, color_index)\n    except Exception as ex:\n        # Fallback a RGB si FromColorIndex falla por algun motivo\n        rgb_map = {1: (255, 0, 0), 3: (0, 255, 0)}\n        r, g, b = rgb_map.get(color_index, (255, 255, 255))\n        try:\n            ltr.Color = AcadColor.FromRgb(r, g, b)\n        except:\n            pass\n    return ltr_id\n\n\ndef erase_polylines_in_layer(tr, db, layer_name):\n    \"\"\"Borra todas las Polylines del ModelSpace que esten en la capa dada.\"\"\"\n    ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n    btr = tr.GetObject(ms_id, OpenMode.ForRead)\n    to_erase = []\n    for oid in btr:\n        try:\n            obj = tr.GetObject(oid, OpenMode.ForRead)\n        except:\n            continue\n        if isinstance(obj, Polyline) and obj.Layer == layer_name:\n            to_erase.append(oid)\n    for oid in to_erase:\n        try:\n            o = tr.GetObject(oid, OpenMode.ForWrite)\n            o.Erase()\n        except:\n            pass\n    return len(to_erase)\n\n\ndef extract_stain_boundaries(tr, db, cdoc, base_surf_id, base_surf_name,\n                             mdt_surf_id, tmp_vol_name,\n                             target_layer_name, log):\n    \"\"\"Crea un TinVolumeSurface temporal, extrae contornos a 0, los mueve\n    a la capa target_layer_name y devuelve la lista de ObjectIds de esas\n    polylines (ordenadas por longitud descendente, para que la mayor sea\n    el Outer boundary). Borra la volume surface al terminar.\n\n    Puede devolver lista vacia si la volume surface no cruza el cero\n    (desmonte o terraplen irrelevante en esa zona).\"\"\"\n    # 1) Crear volumen temporal\n    vol_id = None\n    try:\n        vol_id = TinVolumeSurface.Create(\n            tmp_vol_name, base_surf_id, mdt_surf_id)\n    except Exception as ex:\n        log.append(\"    ERROR creando volumen temporal '{}': {}\".format(\n            tmp_vol_name, ex))\n        return []\n\n    # 2) Extraer contornos a elevacion 0\n    contour_ids_coll = ObjectIdCollection()\n    try:\n        vol_surf = tr.GetObject(vol_id, OpenMode.ForRead)\n        # Invocar via reflection (ExtractContoursAt esta en ITerrainSurface\n        # con implementacion explicita, no accesible directamente en\n        # TinVolumeSurface desde pythonnet).\n        contour_ids_coll = extract_contours_at_iface(vol_surf, 0.0)\n    except Exception as ex:\n        log.append(\"    ERROR ExtractContoursAt(0) en '{}': {}\".format(\n            base_surf_name, ex))\n        # Diagnostico: listar los metodos del tipo que contengan \"Contour\"\n        # o \"Extract\" (solo la primera vez, controlado con flag global).\n        global _DIAG_DONE\n        try:\n            _DIAG_DONE\n        except NameError:\n            _DIAG_DONE = False\n        if not _DIAG_DONE:\n            _DIAG_DONE = True\n            try:\n                from System.Reflection import BindingFlags as BF\n                t = vol_surf.GetType()\n                log.append(\"    [diag] Tipo: {}\".format(t.FullName))\n                flags = (BF.Instance | BF.Public | BF.NonPublic |\n                         BF.FlattenHierarchy)\n                found = []\n                for m in t.GetMethods(flags):\n                    nm = m.Name\n                    if \"Contour\" in nm or \"Extract\" in nm:\n                        ps = m.GetParameters()\n                        sig = \", \".join([p.ParameterType.Name for p in ps])\n                        found.append(\"{}({})\".format(nm, sig))\n                log.append(\"    [diag] Metodos Extract*/Contour*:\")\n                for s in sorted(set(found))[:15]:\n                    log.append(\"      {}\".format(s))\n            except Exception as ex2:\n                log.append(\"    [diag] Error en diagnostico: {}\".format(ex2))\n        try:\n            tr.GetObject(vol_id, OpenMode.ForWrite).Erase()\n        except:\n            pass\n        return []\n\n    # 3) Mover polylines a la capa destino + recoger IDs + longitudes\n    polys_info = []   # (oid, length)\n    for cid in contour_ids_coll:\n        try:\n            pl = tr.GetObject(cid, OpenMode.ForWrite)\n            if not isinstance(pl, Polyline):\n                continue\n            pl.Layer = target_layer_name\n            polys_info.append((cid, float(pl.Length)))\n        except Exception as ex:\n            log.append(\"    AVISO moviendo polyline a capa: {}\".format(ex))\n\n    # 4) Borrar volumen temporal\n    try:\n        tr.GetObject(vol_id, OpenMode.ForWrite).Erase()\n    except Exception as ex:\n        log.append(\"    AVISO borrando volumen temporal: {}\".format(ex))\n\n    # 5) Ordenar por longitud descendente (el mayor -> Outer)\n    polys_info.sort(key=lambda x: x[1], reverse=True)\n    return [oid for (oid, _) in polys_info]\n\n\ndef add_boundaries_from_polylines(tr, surf, poly_ids, log):\n    \"\"\"Anyade cada polyline como boundary de surf. La primera Outer,\n    el resto Show. Anyade al log el recuento.\"\"\"\n    if not poly_ids:\n        return 0\n    added = 0\n    for idx, pid in enumerate(poly_ids):\n        try:\n            pl = tr.GetObject(pid, OpenMode.ForRead)\n            if not isinstance(pl, Polyline):\n                continue\n            # Point3dCollection con los vertices de la polyline\n            pc = Point3dCollection()\n            n = pl.NumberOfVertices\n            for i in range(n):\n                p3 = pl.GetPoint3dAt(i)\n                pc.Add(Point3d(p3.X, p3.Y, 0.0))\n            # Cerrar si no lo esta\n            first = pl.GetPoint3dAt(0)\n            last  = pl.GetPoint3dAt(n - 1)\n            if (first.X, first.Y) != (last.X, last.Y):\n                pc.Add(Point3d(first.X, first.Y, 0.0))\n            btype = SurfaceBoundaryType.Outer if idx == 0 else SurfaceBoundaryType.Show\n            surf.BoundariesDefinition.AddBoundaries(pc, 1.0, btype, True)\n            added += 1\n        except Exception as ex:\n            log.append(\"    AVISO anyadiendo boundary #{}: {}\".format(idx, ex))\n    return added\n\n\ndef iter_dbcollection(coll):\n    \"\"\"Materializa una coleccion .NET (p.ej. DBObjectCollection) en una\n    lista Python. Usa GetEnumerator (patron robusto en pythonnet) con\n    fallback a indexacion por entero.\"\"\"\n    items = []\n    if coll is None:\n        return items\n    try:\n        e = coll.GetEnumerator()\n        while e.MoveNext():\n            items.append(e.Current)\n        return items\n    except Exception:\n        pass\n    try:\n        cnt = coll.Count\n        for i in range(cnt):\n            items.append(coll[i])\n    except Exception:\n        pass\n    return items\n\n\ndef weed_points(pts, tol):\n    \"\"\"Elimina vertices consecutivos a menos de 'tol' del anterior\n    (quita duplicados / micro-segmentos). Devuelve la lista filtrada.\"\"\"\n    if not pts:\n        return pts\n    out = [pts[0]]\n    t2 = tol * tol\n    for p in pts[1:]:\n        lx, ly = out[-1]\n        if (p[0] - lx) ** 2 + (p[1] - ly) ** 2 >= t2:\n            out.append(p)\n    return out\n\n\ndef offset_polyline_inward(tr, db, btr, pl_id, offset_dist, log):\n    \"\"\"Desfasa la polilinea CERRADA pl_id 'offset_dist' hacia dentro.\n    Genera el offset a +offset_dist y a -offset_dist y se queda con el de\n    MENOR area (el interior). Anyade la(s) curva(s) al ModelSpace en la\n    misma capa (color ByLayer) y BORRA la original.\n    Devuelve la lista de ObjectId creados, o [] si el offset falla o si\n    ninguna opcion reduce el area (en ese caso NO borra la original).\n    No escribe en el log por cada fallo (lo resume offset_manchas).\"\"\"\n    if not offset_dist or offset_dist <= 0:\n        return []\n    try:\n        pl = tr.GetObject(pl_id, OpenMode.ForRead)\n    except Exception:\n        return []\n    if not isinstance(pl, Polyline):\n        return []\n    layer_name = pl.Layer\n    try:\n        area_orig = abs(float(pl.Area))\n    except Exception:\n        area_orig = None\n    best = None\n    for d_off in (offset_dist, -offset_dist):\n        try:\n            curves = pl.GetOffsetCurves(d_off)\n        except Exception:\n            curves = None\n        cur_list = iter_dbcollection(curves)\n        if not cur_list:\n            continue\n        total = 0.0\n        for c in cur_list:\n            try:\n                total += abs(float(c.Area))\n            except Exception:\n                pass\n        if best is None or total < best[0]:\n            if best is not None:\n                for c in best[1]:\n                    try:\n                        c.Dispose()\n                    except Exception:\n                        pass\n            best = (total, cur_list)\n        else:\n            for c in cur_list:\n                try:\n                    c.Dispose()\n                except Exception:\n                    pass\n    if best is None:\n        return []\n    if best[0] < 1e-9 or (area_orig is not None and best[0] >= area_orig - 1e-9):\n        for c in best[1]:\n            try:\n                c.Dispose()\n            except Exception:\n                pass\n        return []\n    new_ids = []\n    for c in best[1]:\n        try:\n            btr.AppendEntity(c)\n            tr.AddNewlyCreatedDBObject(c, True)\n            c.Layer = layer_name\n            try:\n                c.ColorIndex = 256\n            except Exception:\n                pass\n            new_ids.append(c.ObjectId)\n        except Exception:\n            pass\n    if new_ids:\n        try:\n            tr.GetObject(pl_id, OpenMode.ForWrite).Erase()\n        except Exception:\n            pass\n    return new_ids\n\n\ndef clean_and_offset_mancha(tr, db, btr, pl_id, offset_dist, weed_tol, log):\n    \"\"\"Limpia la mancha y la desfasa hacia dentro. Pasos:\n      1) lee vertices, quita el de cierre si duplica el primero,\n      2) weed de vertices casi duplicados (tol = weed_tol),\n      3) crea una polilinea NUEVA, limpia y CERRADA (cierra las abiertas),\n      4) borra la original y desfasa la limpia 'offset_dist' hacia dentro.\n    Devuelve (ids, modo) con modo en:\n      'offset'     -> desfasada con el valor completo de IN[4],\n      'offset_red' -> el valor completo colapsaba; desfasada con un valor\n                      REDUCIDO de la cascada (x0.5, x0.2, x0.1 de IN[4]),\n      'weed'       -> ningun offset de la cascada funciono; se usa la\n                      version solo-limpia (sin separar),\n      'drop'       -> degenerada (<3 vertices tras limpiar); se descarta.\n    La cascada garantiza que las manchas estrechas tambien queden\n    SEPARADAS (aunque sea poco), evitando aristas coincidentes\n    desmonte/terraplen que disparan el fallo de paste en FASE 4.\n    El weed + regenerado equivale a OVERKILL: quita duplicados y\n    micro-segmentos, principal causa del 'Error performing edit' al pegar.\"\"\"\n    try:\n        pl = tr.GetObject(pl_id, OpenMode.ForRead)\n    except Exception:\n        return [], 'drop'\n    if not isinstance(pl, Polyline):\n        return [], 'drop'\n    layer_name = pl.Layer\n    try:\n        elev = float(pl.Elevation)\n    except Exception:\n        elev = 0.0\n    try:\n        nv = pl.NumberOfVertices\n        pts = []\n        for i in range(nv):\n            p = pl.GetPoint2dAt(i)\n            pts.append((p.X, p.Y))\n    except Exception:\n        return [], 'drop'\n    if len(pts) >= 2 and abs(pts[0][0] - pts[-1][0]) < 1e-9 \\\n            and abs(pts[0][1] - pts[-1][1]) < 1e-9:\n        pts = pts[:-1]\n    pts = weed_points(pts, weed_tol)\n    if len(pts) >= 2 and (pts[0][0] - pts[-1][0]) ** 2 \\\n            + (pts[0][1] - pts[-1][1]) ** 2 < weed_tol * weed_tol:\n        pts = pts[:-1]\n    if len(pts) < 3:\n        try:\n            tr.GetObject(pl_id, OpenMode.ForWrite).Erase()\n        except Exception:\n            pass\n        return [], 'drop'\n    clean_pl = Polyline()\n    for i, (x, y) in enumerate(pts):\n        clean_pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n    btr.AppendEntity(clean_pl)\n    tr.AddNewlyCreatedDBObject(clean_pl, True)\n    clean_pl.Closed = True\n    try:\n        clean_pl.Elevation = elev\n    except Exception:\n        pass\n    clean_pl.Layer = layer_name\n    try:\n        clean_pl.ColorIndex = 256\n    except Exception:\n        pass\n    clean_id = clean_pl.ObjectId\n    try:\n        tr.GetObject(pl_id, OpenMode.ForWrite).Erase()\n    except Exception:\n        pass\n    for fac in (1.0, 0.5, 0.2, 0.1):\n        d_try = offset_dist * fac\n        if d_try <= 0:\n            break\n        new_ids = offset_polyline_inward(tr, db, btr, clean_id, d_try, log)\n        if new_ids:\n            return new_ids, ('offset' if fac >= 0.999 else 'offset_red')\n    return [clean_id], 'weed'\n\n\ndef offset_manchas(tr, db, pids, offset_dist, weed_tol, filtro_pct, log):\n    \"\"\"Filtra por area, limpia y desfasa cada polilinea de 'pids'.\n    1) FILTRO: si filtro_pct > 0, BORRA las manchas con area menor que\n       filtro_pct% del area MEDIA de las manchas de esta superficie.\n       Son astillas junto al contorno cero, con efecto despreciable en\n       el MDT modificado y principal fuente de geometria degenerada.\n    2) LIMPIEZA + OFFSET en cascada (ver clean_and_offset_mancha).\n    Devuelve (ids_ordenados_por_longitud_desc, stats) con stats:\n      n_off, n_red, n_weed, n_drop, n_small, area_drop, area_tot,\n      area_kept_orig (area original de manchas conservadas) y\n      area_kept_fin (area tras el offset; mide la reduccion real).\n    Solo registra el resumen; el detalle por mancha NO va al log.\"\"\"\n    try:\n        btr = tr.GetObject(\n            SymbolUtilityServices.GetBlockModelSpaceId(db), OpenMode.ForWrite)\n    except Exception:\n        btr = None\n    stats = {'n_off': 0, 'n_red': 0, 'n_weed': 0, 'n_drop': 0,\n             'n_small': 0, 'area_drop': 0.0, 'area_tot': 0.0,\n             'area_kept_orig': 0.0, 'area_kept_fin': 0.0}\n    areas = {}\n    for pid in pids:\n        a = 0.0\n        try:\n            o = tr.GetObject(pid, OpenMode.ForRead)\n            a = abs(float(o.Area))\n        except Exception:\n            a = 0.0\n        areas[pid] = a\n        stats['area_tot'] += a\n    umbral = 0.0\n    if filtro_pct > 0 and len(pids) > 0:\n        media = stats['area_tot'] / float(len(pids))\n        umbral = media * filtro_pct / 100.0\n    result = []\n    if btr is not None:\n        for pid in pids:\n            if umbral > 0.0 and areas.get(pid, 0.0) < umbral:\n                try:\n                    tr.GetObject(pid, OpenMode.ForWrite).Erase()\n                except Exception:\n                    pass\n                stats['n_small'] += 1\n                stats['area_drop'] += areas.get(pid, 0.0)\n                continue\n            stats['area_kept_orig'] += areas.get(pid, 0.0)\n            ids, modo = clean_and_offset_mancha(\n                tr, db, btr, pid, offset_dist, weed_tol, log)\n            if modo == 'offset':\n                result.extend(ids)\n                stats['n_off'] += 1\n            elif modo == 'offset_red':\n                result.extend(ids)\n                stats['n_red'] += 1\n            elif modo == 'weed':\n                result.extend(ids)\n                stats['n_weed'] += 1\n            else:\n                stats['n_drop'] += 1\n    info = []\n    for oid in result:\n        try:\n            o = tr.GetObject(oid, OpenMode.ForRead)\n            info.append((oid, float(o.Length)))\n            try:\n                stats['area_kept_fin'] += abs(float(o.Area))\n            except Exception:\n                pass\n        except Exception:\n            info.append((oid, 0.0))\n    info.sort(key=lambda x: x[1], reverse=True)\n    return [oid for (oid, _) in info], stats\n\n\ndef antilot_offset_capa(tr, db, layer_name, paso, log):\n    \"\"\"ANTILOTERIA paso a: desfasa 'paso' m hacia DENTRO todas las\n    polylines de mancha de la capa dada (borra la original al desfasar;\n    si una no puede desfasarse, se conserva tal cual). Devuelve\n    (ids_ordenados_por_longitud_desc, n_desfasadas, n_total,\n    area_total_m2 de las polylines resultantes).\"\"\"\n    ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n    btr = tr.GetObject(ms_id, OpenMode.ForWrite)\n    pids = []\n    for oid in btr:\n        try:\n            obj = tr.GetObject(oid, OpenMode.ForRead)\n        except Exception:\n            continue\n        if isinstance(obj, Polyline) and obj.Layer == layer_name:\n            pids.append(oid)\n    result = []\n    n_off = 0\n    for pid in pids:\n        new_ids = offset_polyline_inward(tr, db, btr, pid, paso, log)\n        if new_ids:\n            result.extend(new_ids)\n            n_off += 1\n        else:\n            result.append(pid)\n    info = []\n    area_total = 0.0\n    for oid in result:\n        try:\n            o = tr.GetObject(oid, OpenMode.ForRead)\n            info.append((oid, float(o.Length)))\n            try:\n                area_total += abs(float(o.Area))\n            except Exception:\n                pass\n        except Exception:\n            info.append((oid, 0.0))\n    info.sort(key=lambda x: x[1], reverse=True)\n    return [oid for (oid, _) in info], n_off, len(pids), area_total\n\n\ndef antilot_recrear_superficie(tr, db, sname, old_id, trk_id, delta,\n                               style_id, poly_ids, log):\n    \"\"\"ANTILOTERIA paso b: borra la superficie 'sname' y la recrea con el\n    MISMO procedimiento de FASE 1 (paste Trackers de su zona + raise) y\n    boundaries desde poly_ids (mayor = Outer, resto = Show). Devuelve el\n    nuevo ObjectId, o None si algo falla.\"\"\"\n    try:\n        try:\n            tr.GetObject(old_id, OpenMode.ForWrite).Erase()\n        except Exception as ex_e:\n            log.append(\"    AVISO borrando {}: {}\".format(\n                sname, str(ex_e)[:80]))\n        new_id = TinSurface.Create(db, sname)\n        surf = tr.GetObject(new_id, OpenMode.ForWrite)\n        if style_id is not None:\n            surf.StyleId = style_id\n        surf.PasteSurface(trk_id)\n        if delta is not None:\n            surf.RaiseSurface(float(delta))\n        added = add_boundaries_from_polylines(tr, surf, poly_ids, log)\n        log.append(\"    {} recreada con {} boundaries\".format(sname, added))\n        return new_id\n    except Exception as ex_r:\n        log.append(\"    ERROR recreando {}: {}\".format(\n            sname, str(ex_r)[:120]))\n        return None\n\n\n\n\ndef pegar_grupo(db, target_id, target_name, items, antilot_max, antilot_paso,\n                deltas_zona, trk_ids, des_ids, ter_ids, no_display_id,\n                area_fin_surf, extra_acum, log):\n    \"\"\"Pega una lista de superficies en target_id (una transaccion por\n    pegado), con reintento tras Rebuild y rescate ANTILOTERIA solo para\n    items de zona (zn/tipo definidos). items = [(src_id, sname, zn,\n    tipo)], zn=None para fuentes no-zona (MDT, agrupaciones). Actualiza\n    area_fin_surf[sname] con el area real de las manchas tras cada\n    rescate y extra_acum[sname] con el offset extra acumulado.\n    Devuelve (n_pegadas, n_fallos_def, n_rescatadas,\n    fallos_def) con fallos_def = [(sname, zn, tipo)].\"\"\"\n    n_pasted = 0\n    fallidos = []\n    for src_id, sname, p_zn, p_tipo in items:\n        if src_id is None:\n            continue\n        tr_p = db.TransactionManager.StartTransaction()\n        ok = False\n        try:\n            cs = tr_p.GetObject(target_id, OpenMode.ForWrite)\n            cs.PasteSurface(src_id)\n            tr_p.Commit()\n            ok = True\n        except Exception as ex_p:\n            log.append(\"    AVISO pegando {} en {}: {} (se reintentara)\".format(\n                sname, target_name, str(ex_p)[:110]))\n        finally:\n            tr_p.Dispose()\n        if ok:\n            n_pasted += 1\n            log.append(\"    + {}\".format(sname))\n        else:\n            fallidos.append((src_id, sname, p_zn, p_tipo))\n\n    n_fail = 0\n    rescatadas = 0\n    fallidos2 = []\n    if fallidos:\n        tr_r0 = db.TransactionManager.StartTransaction()\n        try:\n            try:\n                tr_r0.GetObject(target_id, OpenMode.ForWrite).Rebuild()\n            except Exception:\n                pass\n            tr_r0.Commit()\n        finally:\n            tr_r0.Dispose()\n        log.append(\"  Reintentando {} pegado(s) fallido(s) en {} tras Rebuild...\".format(\n            len(fallidos), target_name))\n        for src_id, sname, p_zn, p_tipo in fallidos:\n            tr_p2 = db.TransactionManager.StartTransaction()\n            ok2 = False\n            try:\n                cs2 = tr_p2.GetObject(target_id, OpenMode.ForWrite)\n                cs2.PasteSurface(src_id)\n                tr_p2.Commit()\n                ok2 = True\n            except Exception as ex_p2:\n                log.append(\"    AVISO reintento {}: {}\".format(\n                    sname, str(ex_p2)[:110]))\n            finally:\n                tr_p2.Dispose()\n            if ok2:\n                n_pasted += 1\n                log.append(\"    + {} (reintento OK)\".format(sname))\n            else:\n                fallidos2.append((src_id, sname, p_zn, p_tipo))\n\n    fallos_def = []\n    for src_id, sname, p_zn, p_tipo in fallidos2:\n        rescatada = False\n        if p_zn is not None and p_tipo in (\"D\", \"T\") and antilot_max > 0:\n            cur_id = src_id\n            dz = deltas_zona.get(p_zn, (None, None))\n            delta = dz[0] if p_tipo == \"D\" else dz[1]\n            capa = (DES_LAYER_FMT.format(p_zn) if p_tipo == \"D\"\n                    else TER_LAYER_FMT.format(p_zn))\n            trk_id_z = trk_ids.get(p_zn)\n            if trk_id_z is None:\n                log.append(\"  AVISO antiloteria {}: sin Trackers_Zona{:02d}, no se puede recrear.\".format(\n                    sname, p_zn))\n            else:\n                for intento in range(1, antilot_max + 1):\n                    tr_a = db.TransactionManager.StartTransaction()\n                    new_id = None\n                    area_capa = 0.0\n                    try:\n                        poly_ids, n_off_a, n_tot_a, area_capa = antilot_offset_capa(\n                            tr_a, db, capa, antilot_paso, log)\n                        extra_acum[sname] = extra_acum.get(sname, 0.0) + antilot_paso\n                        log.append(\"  Antiloteria {} intento {}: offset extra +{:.2f} m acumulado ({} de {} manchas desfasadas)\".format(\n                            sname, intento, extra_acum[sname],\n                            n_off_a, n_tot_a))\n                        if poly_ids:\n                            new_id = antilot_recrear_superficie(\n                                tr_a, db, sname, cur_id, trk_id_z, delta,\n                                no_display_id, poly_ids, log)\n                        else:\n                            log.append(\"    AVISO antiloteria {}: sin manchas en capa '{}'.\".format(\n                                sname, capa))\n                        if new_id is not None:\n                            tr_a.Commit()\n                    except Exception as ex_a:\n                        log.append(\"    ERROR antiloteria {}: {}\".format(\n                            sname, str(ex_a)[:120]))\n                        new_id = None\n                    finally:\n                        tr_a.Dispose()\n                    if new_id is None:\n                        break\n                    cur_id = new_id\n                    if p_tipo == \"D\":\n                        des_ids[p_zn] = new_id\n                    else:\n                        ter_ids[p_zn] = new_id\n                    if area_capa > 0:\n                        ant_a = area_fin_surf.get(sname, 0.0)\n                        area_fin_surf[sname] = area_capa\n                        log.append(\"    area manchas {} tras rescate: {:.0f} m2 (antes {:.0f} m2)\".format(\n                            sname, area_capa, ant_a))\n                    tr_p3 = db.TransactionManager.StartTransaction()\n                    ok3 = False\n                    try:\n                        cs3 = tr_p3.GetObject(target_id, OpenMode.ForWrite)\n                        cs3.PasteSurface(new_id)\n                        tr_p3.Commit()\n                        ok3 = True\n                    except Exception as ex_p3:\n                        log.append(\"    AVISO pegando {} (antiloteria intento {}): {}\".format(\n                            sname, intento, str(ex_p3)[:100]))\n                    finally:\n                        tr_p3.Dispose()\n                    if ok3:\n                        n_pasted += 1\n                        rescatadas += 1\n                        rescatada = True\n                        log.append(\"    + {} (antiloteria intento {} OK)\".format(\n                            sname, intento))\n                        break\n        if not rescatada:\n            n_fail += 1\n            fallos_def.append((sname, p_zn, p_tipo))\n    if fallidos2 and antilot_max > 0:\n        log.append(\"  Antiloteria en {}: {} rescatada(s) de {}.\".format(\n            target_name, rescatadas, len(fallidos2)))\n    log.append(\"  Superficies pegadas en '{}': {} (fallos definitivos: {})\".format(\n        target_name, n_pasted, n_fail))\n    return n_pasted, n_fail, rescatadas, fallos_def\n\n\n\ndef pegar_grupo_rondas(db, target_id, target_name, items, rondas_max,\n                       antilot_max, antilot_paso, deltas_zona, trk_ids,\n                       des_ids, ter_ids, no_display_id, area_fin_surf,\n                       extra_acum, log):\n    \"\"\"Ejecuta pegar_grupo por RONDAS: los fallos definitivos de una\n    ronda se reintentan en la siguiente tras Rebuild del destino. El\n    estado del destino cambia con cada pegado nuevo y eso rebaraja la\n    coincidencia que dispara el bug (evidencia r11: zonas que agotaron\n    la antiloteria contra su agrupacion incompleta pegaron a la primera\n    contra un destino mas completo). Para al completar, al agotar\n    rondas_max o si una ronda no consigue ningun pegado. Devuelve\n    (n_pegadas, n_rescatadas, pendientes) con pendientes =\n    [(sname, zn, tipo)].\"\"\"\n    base_ids = {}\n    pend = []\n    for it in items:\n        if it[0] is None:\n            continue\n        base_ids[it[1]] = it[0]\n        pend.append(it)\n    total_p = 0\n    total_r = 0\n    ronda = 0\n    fallos = []\n    while pend and ronda < rondas_max:\n        ronda += 1\n        if ronda > 1:\n            tr_rb = db.TransactionManager.StartTransaction()\n            try:\n                try:\n                    tr_rb.GetObject(target_id, OpenMode.ForWrite).Rebuild()\n                except Exception:\n                    pass\n                tr_rb.Commit()\n            finally:\n                tr_rb.Dispose()\n            log.append(\"  -- Ronda {} en '{}': {} pendiente(s) --\".format(\n                ronda, target_name, len(pend)))\n        n_p, _nf, n_r, fallos = pegar_grupo(\n            db, target_id, target_name, pend,\n            antilot_max, antilot_paso, deltas_zona, trk_ids,\n            des_ids, ter_ids, no_display_id, area_fin_surf,\n            extra_acum, log)\n        total_p += n_p\n        total_r += n_r\n        pend2 = []\n        for (snf, znf, tpf) in fallos:\n            if znf is not None and tpf == \"D\":\n                sid_f = des_ids.get(znf)\n            elif znf is not None and tpf == \"T\":\n                sid_f = ter_ids.get(znf)\n            else:\n                sid_f = base_ids.get(snf)\n            if sid_f is not None:\n                pend2.append((sid_f, snf, znf, tpf))\n        pend = pend2\n        if n_p == 0:\n            break\n    return total_p, total_r, fallos\n\n\ntry:\n    doc  = AcadApp.DocumentManager.MdiActiveDocument\n    db   = doc.Database\n    cdoc = CivilApplication.ActiveDocument\n\n    dlock = doc.LockDocument()\n    try:\n        tracker_surf_id = None\n        mdt_surf_id     = None\n        no_display_id   = None\n        contours        = []\n        vol_by_zone     = {}\n        created_names   = []\n        errors_count    = 0\n        manchas_offset      = 0\n        manchas_offset_red  = 0\n        manchas_conservadas = 0\n        manchas_drop        = 0\n        manchas_small       = 0\n        area_filtrada       = 0.0\n        area_manchas_tot    = 0.0\n        area_off_orig       = 0.0\n        area_off_fin        = 0.0\n        boundaries_ok_tot   = 0\n        boundaries_fail_tot = 0\n        pegadas_ok          = 0\n        pegadas_fail        = 0\n        antilot_rescatadas  = 0\n        area_fin_surf       = {}\n        extra_acum          = {}\n\n        # ===================================================== #\n        # FASE 0: Localizar superficies, estilo y contornos\n        # ===================================================== #\n        tr0 = db.TransactionManager.StartTransaction()\n        try:\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn == tracker_surf_name:\n                    tracker_surf_id = sid\n                elif sn == mdt_surf_name:\n                    mdt_surf_id = sid\n                else:\n                    prefix = VOLUME_PREFIX + \"_Zona\"\n                    if sn.startswith(prefix):\n                        tail = sn[len(prefix):]\n                        if len(tail) >= 2 and tail[:2].isdigit():\n                            zn = int(tail[:2])\n                            vol_by_zone[zn] = sid\n\n            if tracker_surf_id is None:\n                raise Exception(\"Superficie de trackers '{}' no encontrada.\".format(\n                    tracker_surf_name))\n            if mdt_surf_id is None:\n                raise Exception(\"Superficie MDT '{}' no encontrada.\".format(\n                    mdt_surf_name))\n\n            log.append(\"Superficies de volumen detectadas: {}\".format(\n                len(vol_by_zone)))\n\n            no_display_id = find_style_id(cdoc, [\n                \"_No Display\", \"_no display\", \"_NO DISPLAY\",\n                \"_Sin Display\", \"_Sin Visualizacion\",\n            ])\n            if no_display_id is None:\n                log.append(\"AVISO: estilo '_No Display' no encontrado.\")\n            else:\n                log.append(\"Estilo de superficie: '_No Display' OK.\")\n\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            btr = tr0.GetObject(ms_id, OpenMode.ForRead)\n            for oid in btr:\n                obj = tr0.GetObject(oid, OpenMode.ForRead)\n                if not isinstance(obj, Polyline):\n                    continue\n                if obj.Layer != contour_layer:\n                    continue\n                n = obj.NumberOfVertices\n                if n < 3:\n                    continue\n                pts = []\n                for i in range(n):\n                    p = obj.GetPoint2dAt(i)\n                    pts.append((p.X, p.Y))\n                contours.append(pts)\n\n            if not contours:\n                raise Exception(\"Sin contornos cerrados en '{}'.\".format(\n                    contour_layer))\n            contours.sort(key=lambda c: min(p[0] for p in c))\n            log.append(\"Contornos encontrados: {}\".format(len(contours)))\n\n            # Borrar en orden de dependencia: PRIMERO la combinada\n            # (IN[3]), DESPUES las agrupaciones Desmonte_Total /\n            # Terraplen_Total y por ultimo (mas abajo) las superficies\n            # por zona: cada nivel referencia por Paste al inferior y\n            # debe borrarse antes que sus fuentes.\n            borrar_orden = []\n            if combined_name:\n                borrar_orden.append(combined_name)\n            borrar_orden.extend([DES_TOTAL_NAME, TER_TOTAL_NAME])\n            for nombre_b in borrar_orden:\n                prev_b = []\n                for sid in cdoc.GetSurfaceIds():\n                    try:\n                        sc = tr0.GetObject(sid, OpenMode.ForRead)\n                        if sc.Name == nombre_b:\n                            prev_b.append(sid)\n                    except Exception:\n                        pass\n                for sid in prev_b:\n                    try:\n                        tr0.GetObject(sid, OpenMode.ForWrite).Erase()\n                    except Exception:\n                        pass\n                if prev_b:\n                    log.append(\"Superficie previa '{}' borrada.\".format(nombre_b))\n\n            # Limpieza de ejecuciones previas:\n            # - Superficies Trackers_Zona*, Desmonte_Zona*, Terraplen_Zona*\n            # - Superficies temporales __tmp_vol_*\n            prefixes = (\"Trackers_Zona\", \"Desmonte_Zona\",\n                        \"Terraplen_Zona\", TMP_VOL_PREFIX)\n            to_erase = []\n            for sid in cdoc.GetSurfaceIds():\n                s = tr0.GetObject(sid, OpenMode.ForRead)\n                try:\n                    sn = s.Name\n                except:\n                    continue\n                if sn.startswith(prefixes):\n                    to_erase.append(sid)\n            for sid in to_erase:\n                tr0.GetObject(sid, OpenMode.ForWrite).Erase()\n            if to_erase:\n                log.append(\"Superficies previas borradas: {}\".format(len(to_erase)))\n\n            tr0.Commit()\n        finally:\n            tr0.Dispose()\n        _tlog(\"FASE 0 - localizar superficies/contornos y limpiar\", log)\n\n        # ===================================================== #\n        # FASE 1: Crear superficies por zona (+ raise/lower)\n        # ===================================================== #\n        tr = db.TransactionManager.StartTransaction()\n        trk_ids = {}   # zn -> ObjectId Trackers_ZonaXX\n        des_ids = {}   # zn -> ObjectId Desmonte_ZonaXX\n        ter_ids = {}   # zn -> ObjectId Terraplen_ZonaXX\n        deltas_zona = {}  # zn -> (raise_desmonte, raise_terraplen)\n        try:\n            for i, pts in enumerate(contours):\n                zn = i + 1\n                trk_name = \"Trackers_Zona{:02d}\".format(zn)\n                des_name = \"Desmonte_Zona{:02d}\".format(zn)\n                ter_name = \"Terraplen_Zona{:02d}\".format(zn)\n\n                log.append(\"\")\n                log.append(\">>> Zona {:02d}\".format(zn))\n\n                raise_d, raise_t = None, None\n                vol_id = vol_by_zone.get(zn)\n                if vol_id is None:\n                    log.append(\"  AVISO: sin Volumen_MDT_Zona{:02d}.\".format(zn))\n                else:\n                    try:\n                        vol_surf = tr.GetObject(vol_id, OpenMode.ForRead)\n                        raise_d, raise_t = get_deltas_from_volume(vol_surf)\n                        if raise_d is not None:\n                            log.append(\"  Delta desmonte : {:+.3f} m\".format(raise_d))\n                        else:\n                            log.append(\"  AVISO: sin intervalo de desmonte.\")\n                        if raise_t is not None:\n                            log.append(\"  Delta terraplen: {:+.3f} m\".format(raise_t))\n                        else:\n                            log.append(\"  AVISO: sin intervalo de terraplen.\")\n                    except Exception as ex_v:\n                        log.append(\"  ERROR leyendo volumen: {}\".format(ex_v))\n\n                deltas_zona[zn] = (raise_d, raise_t)\n\n                pc = Point3dCollection()\n                for (x, y) in pts:\n                    pc.Add(Point3d(x, y, 0.0))\n                if (pts[0][0], pts[0][1]) != (pts[-1][0], pts[-1][1]):\n                    pc.Add(Point3d(pts[0][0], pts[0][1], 0.0))\n\n                # ---- 1) Trackers_ZonaXX ----\n                trk_id = None\n                try:\n                    trk_id = TinSurface.Create(db, trk_name)\n                    trk_surf = tr.GetObject(trk_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        trk_surf.StyleId = no_display_id\n                    trk_surf.PasteSurface(tracker_surf_id)\n                    trk_surf.BoundariesDefinition.AddBoundaries(\n                        pc, 1.0, SurfaceBoundaryType.Outer, True)\n                    log.append(\"  OK {}\".format(trk_name))\n                    created_names.append(trk_name)\n                    trk_ids[zn] = trk_id\n                except Exception as ex_t:\n                    log.append(\"  ERROR {}: {}\".format(trk_name, ex_t))\n                    errors_count += 1\n                    continue\n\n                # ---- 2) Desmonte_ZonaXX ----\n                try:\n                    des_id = TinSurface.Create(db, des_name)\n                    des_surf = tr.GetObject(des_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        des_surf.StyleId = no_display_id\n                    des_surf.PasteSurface(trk_id)\n                    if raise_d is not None:\n                        des_surf.RaiseSurface(float(raise_d))\n                        log.append(\"  OK {}  (raise {:+.3f})\".format(\n                            des_name, raise_d))\n                    else:\n                        log.append(\"  OK {}  (sin raise)\".format(des_name))\n                    created_names.append(des_name)\n                    des_ids[zn] = des_id\n                except Exception as ex_d:\n                    log.append(\"  ERROR {}: {}\".format(des_name, ex_d))\n                    errors_count += 1\n\n                # ---- 3) Terraplen_ZonaXX ----\n                try:\n                    ter_id = TinSurface.Create(db, ter_name)\n                    ter_surf = tr.GetObject(ter_id, OpenMode.ForWrite)\n                    if no_display_id is not None:\n                        ter_surf.StyleId = no_display_id\n                    ter_surf.PasteSurface(trk_id)\n                    if raise_t is not None:\n                        ter_surf.RaiseSurface(float(raise_t))\n                        log.append(\"  OK {}  (raise {:+.3f})\".format(\n                            ter_name, raise_t))\n                    else:\n                        log.append(\"  OK {}  (sin raise)\".format(ter_name))\n                    created_names.append(ter_name)\n                    ter_ids[zn] = ter_id\n                except Exception as ex_r:\n                    log.append(\"  ERROR {}: {}\".format(ter_name, ex_r))\n                    errors_count += 1\n\n            tr.Commit()\n        finally:\n            tr.Dispose()\n        _tlog(\"FASE 1 - crear superficies por zona\", log)\n\n        # ===================================================== #\n        # FASE 2: Manchas (extraer contornos) + boundaries\n        # ===================================================== #\n        # Transaccion nueva: las superficies ya estan commiteadas y\n        # ExtractContoursAt crea polylines en ModelSpace.\n        log.append(\"\")\n        log.append(\"--- FASE 2: manchas + limpieza + offset + boundaries ---\")\n\n        tr2 = db.TransactionManager.StartTransaction()\n        try:\n            for zn in sorted(set(list(des_ids.keys()) + list(ter_ids.keys()))):\n                log.append(\"\")\n                log.append(\">>> Zona {:02d} (manchas)\".format(zn))\n\n                # ---- Desmonte ----\n                des_id = des_ids.get(zn)\n                if des_id is not None:\n                    des_layer = DES_LAYER_FMT.format(zn)\n                    des_name_short = \"Desmonte_Zona{:02d}\".format(zn)\n                    try:\n                        ensure_layer(tr2, db, des_layer, DES_COLOR_INDEX)\n                        n_old = erase_polylines_in_layer(tr2, db, des_layer)\n                        if n_old:\n                            log.append(\"  Capa '{}': {} polylines previas borradas\".format(\n                                des_layer, n_old))\n                        tmp_name = \"{}des_{:02d}\".format(TMP_VOL_PREFIX, zn)\n                        pids = extract_stain_boundaries(\n                            tr2, db, cdoc, des_id, des_name_short,\n                            mdt_surf_id, tmp_name, des_layer, log)\n                        log.append(\"  {} -> {} polyline(s) de mancha\".format(\n                            des_name_short, len(pids)))\n                        # Limpieza (weed + cerrar) + offset hacia dentro\n                        # (valor IN[4]) ANTES de usar como boundary: regenera\n                        # geometria limpia y separa aristas; mitiga el\n                        # \"Error performing edit\" al pegar en la combinada.\n                        off_pids, st_m = offset_manchas(\n                            tr2, db, pids, offset_dist, WEED_TOL,\n                            filtro_pct, log)\n                        manchas_offset += st_m['n_off'] + st_m['n_red']\n                        manchas_offset_red += st_m['n_red']\n                        manchas_conservadas += st_m['n_weed']\n                        manchas_drop += st_m['n_drop']\n                        manchas_small += st_m['n_small']\n                        area_filtrada += st_m['area_drop']\n                        area_manchas_tot += st_m['area_tot']\n                        area_off_orig += st_m['area_kept_orig']\n                        area_off_fin += st_m['area_kept_fin']\n                        area_fin_surf[des_name_short] = st_m['area_kept_fin']\n                        pct_f = 0.0\n                        if st_m['area_tot'] > 0:\n                            pct_f = 100.0 * st_m['area_drop'] / st_m['area_tot']\n                        log.append(\"  {} -> filtro: {} peq. ({:.1f}% area); limpieza: {} offset, {} offset-red, {} weed, {} drop\".format(\n                            des_name_short, st_m['n_small'], pct_f, st_m['n_off'],\n                            st_m['n_red'], st_m['n_weed'], st_m['n_drop']))\n                        red_o = 0.0\n                        if st_m['area_kept_orig'] > 0:\n                            red_o = 100.0 * (st_m['area_kept_orig'] - st_m['area_kept_fin']) / st_m['area_kept_orig']\n                        log.append(\"  {} -> area manchas: {:.0f} m2 -> {:.0f} m2 (reduccion por offset: {:.2f}%)\".format(\n                            des_name_short, st_m['area_kept_orig'], st_m['area_kept_fin'], red_o))\n                        if off_pids:\n                            des_surf = tr2.GetObject(des_id, OpenMode.ForWrite)\n                            added = add_boundaries_from_polylines(tr2, des_surf, off_pids, log)\n                            boundaries_ok_tot += added\n                            boundaries_fail_tot += max(0, len(off_pids) - added)\n                            log.append(\"  {}: {} boundaries anyadidas\".format(\n                                des_name_short, added))\n                    except Exception as ex_d2:\n                        log.append(\"  ERROR manchas desmonte Zona{:02d}: {}\".format(\n                            zn, ex_d2))\n                        errors_count += 1\n\n                # ---- Terraplen ----\n                ter_id = ter_ids.get(zn)\n                if ter_id is not None:\n                    ter_layer = TER_LAYER_FMT.format(zn)\n                    ter_name_short = \"Terraplen_Zona{:02d}\".format(zn)\n                    try:\n                        ensure_layer(tr2, db, ter_layer, TER_COLOR_INDEX)\n                        n_old = erase_polylines_in_layer(tr2, db, ter_layer)\n                        if n_old:\n                            log.append(\"  Capa '{}': {} polylines previas borradas\".format(\n                                ter_layer, n_old))\n                        tmp_name = \"{}ter_{:02d}\".format(TMP_VOL_PREFIX, zn)\n                        pids = extract_stain_boundaries(\n                            tr2, db, cdoc, ter_id, ter_name_short,\n                            mdt_surf_id, tmp_name, ter_layer, log)\n                        log.append(\"  {} -> {} polyline(s) de mancha\".format(\n                            ter_name_short, len(pids)))\n                        # Limpieza (weed + cerrar) + offset hacia dentro\n                        # (valor IN[4]) ANTES de usar como boundary: regenera\n                        # geometria limpia y separa aristas; mitiga el\n                        # \"Error performing edit\" al pegar en la combinada.\n                        off_pids, st_m = offset_manchas(\n                            tr2, db, pids, offset_dist, WEED_TOL,\n                            filtro_pct, log)\n                        manchas_offset += st_m['n_off'] + st_m['n_red']\n                        manchas_offset_red += st_m['n_red']\n                        manchas_conservadas += st_m['n_weed']\n                        manchas_drop += st_m['n_drop']\n                        manchas_small += st_m['n_small']\n                        area_filtrada += st_m['area_drop']\n                        area_manchas_tot += st_m['area_tot']\n                        area_off_orig += st_m['area_kept_orig']\n                        area_off_fin += st_m['area_kept_fin']\n                        area_fin_surf[ter_name_short] = st_m['area_kept_fin']\n                        pct_f = 0.0\n                        if st_m['area_tot'] > 0:\n                            pct_f = 100.0 * st_m['area_drop'] / st_m['area_tot']\n                        log.append(\"  {} -> filtro: {} peq. ({:.1f}% area); limpieza: {} offset, {} offset-red, {} weed, {} drop\".format(\n                            ter_name_short, st_m['n_small'], pct_f, st_m['n_off'],\n                            st_m['n_red'], st_m['n_weed'], st_m['n_drop']))\n                        red_o = 0.0\n                        if st_m['area_kept_orig'] > 0:\n                            red_o = 100.0 * (st_m['area_kept_orig'] - st_m['area_kept_fin']) / st_m['area_kept_orig']\n                        log.append(\"  {} -> area manchas: {:.0f} m2 -> {:.0f} m2 (reduccion por offset: {:.2f}%)\".format(\n                            ter_name_short, st_m['area_kept_orig'], st_m['area_kept_fin'], red_o))\n                        if off_pids:\n                            ter_surf = tr2.GetObject(ter_id, OpenMode.ForWrite)\n                            added = add_boundaries_from_polylines(tr2, ter_surf, off_pids, log)\n                            boundaries_ok_tot += added\n                            boundaries_fail_tot += max(0, len(off_pids) - added)\n                            log.append(\"  {}: {} boundaries anyadidas\".format(\n                                ter_name_short, added))\n                    except Exception as ex_t2:\n                        log.append(\"  ERROR manchas terraplen Zona{:02d}: {}\".format(\n                            zn, ex_t2))\n                        errors_count += 1\n\n            tr2.Commit()\n        finally:\n            tr2.Dispose()\n        _tlog(\"FASE 2 - manchas + limpieza + offset + boundaries\", log)\n\n        # ===================================================== #\n        # FASE 3: Cambiar estilo de Volumen_MDT_ZonaXX a 'elevaciones'\n        # ===================================================== #\n        log.append(\"\")\n        log.append(\"--- FASE 3: estilo de Volumen_MDT ---\")\n        tr3 = db.TransactionManager.StartTransaction()\n        try:\n            # Buscar el estilo (prioridad al nombre exacto 'elevaciones')\n            vol_style_id = find_style_id(cdoc, [\n                \"elevaciones\",\n                \"Elevaciones\",\n                \"ELEVACIONES\",\n                \"Elevation Banding 2D\",\n                \"Elevation Banding 3D\",\n            ])\n            if vol_style_id is None:\n                log.append(\"  AVISO: estilo 'elevaciones' no encontrado. \"\n                           \"Se deja el estilo actual de cada volumen.\")\n            else:\n                log.append(\"  Estilo 'elevaciones' localizado.\")\n                n_updated = 0\n                for zn, vid in sorted(vol_by_zone.items()):\n                    vname = \"Volumen_MDT_Zona{:02d}\".format(zn)\n                    try:\n                        vsurf = tr3.GetObject(vid, OpenMode.ForWrite)\n                        vsurf.StyleId = vol_style_id\n                        log.append(\"  OK {} -> estilo 'elevaciones'\".format(vname))\n                        n_updated += 1\n                    except Exception as ex_s:\n                        log.append(\"  ERROR {} al aplicar estilo: {}\".format(\n                            vname, ex_s))\n                        errors_count += 1\n                log.append(\"  Volumenes actualizados: {} de {}\".format(\n                    n_updated, len(vol_by_zone)))\n            tr3.Commit()\n        finally:\n            tr3.Dispose()\n        _tlog(\"FASE 3 - estilo Volumen_MDT\", log)\n\n        # ===================================================== #\n        # FASE 4: Agrupaciones Desmonte_Total / Terraplen_Total + combinada\n        # ===================================================== #\n        # Jerarquia: zona -> agrupacion -> definitiva.\n        #   1) Desmonte_Total  = paste de todos los Desmonte_ZonaXX\n        #   2) Terraplen_Total = paste de todos los Terraplen_ZonaXX\n        #   3) Combinada (IN[3]) = [MDT si IN[6]=S] + Desmonte_Total +\n        #      Terraplen_Total -> MDT MODIFICADO.\n        # JERARQUIA ESTRICTA: la combinada se construye SOLO con las dos\n        # agrupaciones (+MDT). Las agrupaciones empiezan VACIAS (sin MDT\n        # base) y los pegados zona->agrupacion fallan mas; se cubren con\n        # reintento + ANTILOTERIA y con RONDAS adicionales (el estado del\n        # destino cambia entre rondas y rebaraja el bug). Si tras las\n        # rondas una agrupacion queda incompleta, NO se crea la combinada\n        # (mejor fallo claro que jerarquia rota) y se listan las zonas\n        # pendientes para subir IN[7] o re-ejecutar.\n        log.append(\"\")\n        log.append(\"--- FASE 4: agrupaciones + superficie combinada ---\")\n        log.append(\"  Jerarquia: zona -> {} / {} -> '{}'\".format(\n            DES_TOTAL_NAME, TER_TOTAL_NAME, combined_name))\n        log.append(\"  Modo  : {}\".format(\n            \"MDT base + manchas (MDT MODIFICADO)\" if pegar_mdt\n            else \"solo union de manchas\"))\n        if not combined_name:\n            log.append(\"  AVISO: IN[3] vacio; se omite la superficie combinada.\")\n        else:\n            def _crear_superficie(nombre):\n                sid_new = None\n                tr_cx = db.TransactionManager.StartTransaction()\n                try:\n                    try:\n                        sid_new = TinSurface.Create(db, nombre)\n                        sx = tr_cx.GetObject(sid_new, OpenMode.ForWrite)\n                        if no_display_id is not None:\n                            sx.StyleId = no_display_id\n                        tr_cx.Commit()\n                    except Exception as ex_cx:\n                        log.append(\"  ERROR creando superficie '{}': {}\".format(\n                            nombre, str(ex_cx)[:140]))\n                        sid_new = None\n                finally:\n                    tr_cx.Dispose()\n                return sid_new\n\n            def _rebuild_surf(sid_r, nombre):\n                tr_rx = db.TransactionManager.StartTransaction()\n                try:\n                    try:\n                        tr_rx.GetObject(sid_r, OpenMode.ForWrite).Rebuild()\n                        log.append(\"  Rebuild de '{}' OK.\".format(nombre))\n                    except Exception as ex_rx:\n                        log.append(\"  AVISO Rebuild '{}': {}\".format(\n                            nombre, str(ex_rx)[:110]))\n                    tr_rx.Commit()\n                finally:\n                    tr_rx.Dispose()\n\n            zonas_orden = sorted(set(list(des_ids.keys()) + list(ter_ids.keys())))\n            RONDAS_MAX = 3   # rondas de pegado por agrupacion\n\n            # 1) Agrupacion Desmonte_Total (debe quedar COMPLETA)\n            log.append(\"  >> Agrupacion '{}'\".format(DES_TOTAL_NAME))\n            des_total_id = _crear_superficie(DES_TOTAL_NAME)\n            pend_des = []\n            if des_total_id is not None:\n                items_des = [(des_ids.get(zn), \"Desmonte_Zona{:02d}\".format(zn), zn, \"D\")\n                             for zn in zonas_orden if des_ids.get(zn) is not None]\n                n_p, n_r, pend_des = pegar_grupo_rondas(\n                    db, des_total_id, DES_TOTAL_NAME, items_des, RONDAS_MAX,\n                    antilot_max, antilot_paso, deltas_zona, trk_ids,\n                    des_ids, ter_ids, no_display_id, area_fin_surf,\n                    extra_acum, log)\n                pegadas_ok += n_p\n                antilot_rescatadas += n_r\n                _rebuild_surf(des_total_id, DES_TOTAL_NAME)\n\n            # 2) Agrupacion Terraplen_Total (debe quedar COMPLETA)\n            log.append(\"  >> Agrupacion '{}'\".format(TER_TOTAL_NAME))\n            ter_total_id = _crear_superficie(TER_TOTAL_NAME)\n            pend_ter = []\n            if ter_total_id is not None:\n                items_ter = [(ter_ids.get(zn), \"Terraplen_Zona{:02d}\".format(zn), zn, \"T\")\n                             for zn in zonas_orden if ter_ids.get(zn) is not None]\n                n_p, n_r, pend_ter = pegar_grupo_rondas(\n                    db, ter_total_id, TER_TOTAL_NAME, items_ter, RONDAS_MAX,\n                    antilot_max, antilot_paso, deltas_zona, trk_ids,\n                    des_ids, ter_ids, no_display_id, area_fin_surf,\n                    extra_acum, log)\n                pegadas_ok += n_p\n                antilot_rescatadas += n_r\n                _rebuild_surf(ter_total_id, TER_TOTAL_NAME)\n\n            # 3) Combinada SOLO si ambas agrupaciones estan completas\n            faltan = [s for (s, _z, _t) in (pend_des + pend_ter)]\n            if des_total_id is None or ter_total_id is None or faltan:\n                errors_count += max(len(faltan), 1)\n                pegadas_fail += len(faltan)\n                log.append(\"  ERROR: jerarquia estricta: agrupacion(es) incompleta(s); NO se crea '{}'.\".format(\n                    combined_name))\n                if faltan:\n                    log.append(\"  Zonas que no entraron en su agrupacion: {}\".format(\n                        \", \".join(faltan)))\n                log.append(\"  Sugerencia: sube intentos de antiloteria (IN[7]) o re-ejecuta el script.\")\n            else:\n                log.append(\"  >> Combinada '{}'\".format(combined_name))\n                comb_id = _crear_superficie(combined_name)\n                if comb_id is not None:\n                    items_comb = []\n                    if pegar_mdt:\n                        if mdt_surf_id is None:\n                            log.append(\"  AVISO: MDT '{}' no encontrado; combinada sin base.\".format(\n                                mdt_surf_name))\n                        else:\n                            items_comb.append((mdt_surf_id,\n                                               \"{} (MDT base)\".format(mdt_surf_name),\n                                               None, None))\n                    items_comb.append((des_total_id, DES_TOTAL_NAME, None, None))\n                    items_comb.append((ter_total_id, TER_TOTAL_NAME, None, None))\n                    n_p, _nr, pend_comb = pegar_grupo_rondas(\n                        db, comb_id, combined_name, items_comb, 2,\n                        0, antilot_paso, deltas_zona, trk_ids,\n                        des_ids, ter_ids, no_display_id, area_fin_surf,\n                        extra_acum, log)\n                    pegadas_ok += n_p\n                    for (s_c, _zc, _tc) in pend_comb:\n                        log.append(\"  ERROR: '{}' no pego en la combinada; re-ejecuta o pega manualmente.\".format(s_c))\n                        pegadas_fail += 1\n                        errors_count += 1\n                    _rebuild_surf(comb_id, combined_name)\n        _tlog(\"FASE 4 - agrupaciones + superficie combinada\", log)\n\n        # ===================================================== #\n        # Resumen\n        # ===================================================== #\n        log.append(\"\")\n        log.append(\"=\" * 50)\n        n_zones = len(contours)\n        expected = n_zones * 3\n        log.append(\"RESUMEN\")\n        log.append(\"  Zonas procesadas : {}\".format(n_zones))\n        log.append(\"  Superficies OK   : {} de {}\".format(\n            len(created_names), expected))\n        log.append(\"  ERRORES          : {}\".format(errors_count))\n        log.append(\"  Manchas: {} offset ({} con offset reducido), {} weed (sin separar), {} descartadas\".format(\n            manchas_offset, manchas_offset_red, manchas_conservadas, manchas_drop))\n        pct_filtro_g = 0.0\n        if area_manchas_tot > 0:\n            pct_filtro_g = 100.0 * area_filtrada / area_manchas_tot\n        log.append(\"  Filtro de area : {} manchas pequenyas eliminadas ({:.2f}% del area total de manchas)\".format(\n            manchas_small, pct_filtro_g))\n        red_off_g = 0.0\n        if area_off_orig > 0:\n            red_off_g = 100.0 * (area_off_orig - area_off_fin) / area_off_orig\n        log.append(\"  Offset manchas (FASE 2): area {:.0f} m2 -> {:.0f} m2 (reduccion: {:.2f}%)\".format(\n            area_off_orig, area_off_fin, red_off_g))\n        area_real_fin = 0.0\n        for _v_a in area_fin_surf.values():\n            area_real_fin += _v_a\n        if antilot_rescatadas > 0 and area_off_orig > 0 and area_real_fin > 0:\n            red_real_g = 100.0 * (area_off_orig - area_real_fin) / area_off_orig\n            log.append(\"  Area REAL final (post-rescates): {:.0f} m2 (reduccion total: {:.2f}%)\".format(\n                area_real_fin, red_real_g))\n        log.append(\"  Antiloteria    : {} superficie(s) rescatada(s)\".format(\n            antilot_rescatadas))\n        log.append(\"  Tiempo total     : {}\".format(\n            _fmt_hms(time.perf_counter() - _T_START)))\n        log.append(\"\")\n        log.append(\"SIGUIENTE PASO (manual): en Prospector > Surfaces\")\n        log.append(\"crear una carpeta por zona (Zona01, Zona02, ...) y\")\n        log.append(\"arrastrar Trackers_ZonaXX, Desmonte_ZonaXX,\")\n        log.append(\"Terraplen_ZonaXX y Volumen_MDT_ZonaXX a cada una.\")\n\n    finally:\n        dlock.Dispose()\n\n    OUT = \"\\n\".join(log)\n\nexcept Exception as ex:\n    log.append(\"\")\n    log.append(\"[tiempo] ABORTADO tras {}\".format(_fmt_hms(time.perf_counter() - _T_START)))\n    log.append(\"ERROR FATAL: {}\".format(ex))\n    log.append(traceback.format_exc())\n    OUT = \"\\n\".join(log)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "8eecb91cdbb24b11bcc7a6ea0f8cf333",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "127bbed7148449f591764a10de073a27",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "271d439f729a4c5bb08569cb4a29e311",
+          "Name": "IN[1]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7f7535741c994db19c4c2fc19eeef4d2",
+          "Name": "IN[2]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "857408c46ccd41f3ad57c17b90b17b64",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "adbc844047154d45948a5607260b91f0",
+          "Name": "IN[4]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "22815dcae0ae4f6dbdc892eebb2a72b2",
+          "Name": "IN[5]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ba046156f45440fd91f5b9ba253c61e5",
+          "Name": "IN[6]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e01865bd02b54f1e8a41a158a2ee17d0",
+          "Name": "IN[7]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8a93d663f0cc4ecf82981b0ca10237f4",
+          "Name": "IN[8]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4c5a7c5b17ff4a77974763d8bed339dc",
+          "Name": "IN[9]",
+          "Description": "barrera NORMALIZAR (ignorada)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f40f42e2b07f4a00bcab8992d2431be7",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "591667e7298141e898a779313fba2089",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "d2e576b755c84aabb9aa414a5e7c8d72",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "175aaa18127a4a68a29ee13756bf4e0c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "09b9192e14f34602bedb907a54cae81d",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "6c0a26f3f8dd4abd96c8ab5b6d0e85cd",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_Modificado"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "6bbeee9a001a46cf8dfe8be27f4dd8ca",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "483f16a3dbd147fe8920b57c2bf41fd0",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "0.10"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "cd7816c93c564a0b8ccfe6bd72178ec2",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8e9f13d481ec4a7d84f06319dd8a7b5d",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "10"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "424dbd34af444c97b6d5d64745ba38a7",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "67e42a5ac6d14442985ce068217e623c",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "S"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "0d8a8a80893f41f8bf0bdc2bf0db2076",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b734fe8e352645f68581d6b69ed7be02",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "3"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a2cb5ea62afc4fa5965032cff6ce0050",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d14255cfa34b4ea993ce95f351f890d3",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "0.05"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "c528b47ec0dd42ada6e1824cd5e003dd",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3ca2f62ae1a74a34860e48be337fa6b4",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "5"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# NODO CONFIG (modo sombra: valida y muestra la config, pero\n# los parametros del script siguen viniendo de los inputs de siempre)\nimport os\nimport sys\nimport importlib\n\n# Localizador de pipeline.py sin rutas fijas. Orden:\n#   1) instalado con instalar.bat (site-packages del Python de Dynamo)\n#   2) variable de entorno PIPELINE_HOME\n#   3) carpeta del proyecto (hasta 3 niveles sobre el DWG activo)\ndef _cargar_pipeline():\n    probadas = []\n    try:\n        import pipeline as _m\n        importlib.reload(_m)\n        return _m, \"pipeline.py: importado desde \" + str(\n            getattr(_m, \"__file__\", \"?\"))\n    except ImportError:\n        probadas.append(\"import directo (site-packages de Dynamo)\")\n    candidatas = []\n    ph = os.environ.get(\"PIPELINE_HOME\", \"\")\n    if ph:\n        candidatas.append(ph)\n    try:\n        import clr\n        clr.AddReference(\"AcMgd\")\n        from Autodesk.AutoCAD.ApplicationServices import (\n            Application as _A)\n        _doc = _A.DocumentManager.MdiActiveDocument\n        if _doc is not None:\n            _c = os.path.dirname(os.path.abspath(str(_doc.Name)))\n            for _ in range(3):\n                candidatas.append(_c)\n                _p = os.path.dirname(_c)\n                if _p == _c:\n                    break\n                _c = _p\n    except Exception as ex:\n        probadas.append(\"DWG activo no disponible: \" + str(ex)[:80])\n    for _r in candidatas:\n        probadas.append(_r)\n        if _r and os.path.exists(os.path.join(_r, \"pipeline.py\")):\n            if _r not in sys.path:\n                sys.path.insert(0, _r)\n            import pipeline as _m\n            importlib.reload(_m)\n            return _m, \"pipeline.py: cargado desde \" + _r\n    log = [\"KO: no se encontro pipeline.py. Rutas probadas:\"]\n    log += [\"  - \" + p for p in probadas]\n    log.append(\"Solucion: doble clic en instalar.bat, o copia pipeline.py \"\n               \"a la carpeta del proyecto (junto a config_proyecto.xlsx), \"\n               \"o define la variable de entorno PIPELINE_HOME.\")\n    return None, \"\\n\".join(log)\n\n\npipeline, _msg_carga = _cargar_pipeline()\n\nif pipeline is None:\n    OUT = [False, _msg_carga, \"\", \"\"]\nelse:\n    OUT = pipeline.nodo_config(str(IN[0]))\n    try:\n        OUT[1] = _msg_carga + \"\\n\" + OUT[1]\n    except Exception:\n        pass\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "3e24d91bb92146b5a9baf20a98ffdc83",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "9dd68b9cfd754f33812986bfd7a058c9",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# Extrae el log (indice 1) de la salida CONFIG para el Watch\nOUT = IN[0][1] if IN[0] is not None else \"(sin salida CONFIG)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "8314218d95454527b2a249ded9be6cb2",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "f4c81d9935e6466dad0cf95703b72d58",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "72c82eb3331a4abe96c1bf7df17bb951",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "28c7bba5abbd4c6e930a9c8c59408f19",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "0e2b740dde424a29b7ac268518092dc3",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bc8906555e734d8cb5d6a89c54325a21",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "06fcb1ee8ac44ba4bf9e1c40befad38a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ea1551641e354557a9d2f8e783dfe1b4",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": ""
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "56ba464c864548d98355b82b7e345e21",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b21075523c5741cc9b27c0623e7146ed",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "40cf1ebefaa44d4fbe37c40a9e72bbf2",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fe45ed75d6d74f57acff419ffe757dd5",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "N/A"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# NODO CIERRE: escribe estado_pipeline.json y el log en Logs/\nimport os\nimport sys\nimport importlib\n\n# Localizador de pipeline.py sin rutas fijas. Orden:\n#   1) instalado con instalar.bat (site-packages del Python de Dynamo)\n#   2) variable de entorno PIPELINE_HOME\n#   3) carpeta del proyecto (hasta 3 niveles sobre el DWG activo)\ndef _cargar_pipeline():\n    probadas = []\n    try:\n        import pipeline as _m\n        importlib.reload(_m)\n        return _m, \"pipeline.py: importado desde \" + str(\n            getattr(_m, \"__file__\", \"?\"))\n    except ImportError:\n        probadas.append(\"import directo (site-packages de Dynamo)\")\n    candidatas = []\n    ph = os.environ.get(\"PIPELINE_HOME\", \"\")\n    if ph:\n        candidatas.append(ph)\n    try:\n        import clr\n        clr.AddReference(\"AcMgd\")\n        from Autodesk.AutoCAD.ApplicationServices import (\n            Application as _A)\n        _doc = _A.DocumentManager.MdiActiveDocument\n        if _doc is not None:\n            _c = os.path.dirname(os.path.abspath(str(_doc.Name)))\n            for _ in range(3):\n                candidatas.append(_c)\n                _p = os.path.dirname(_c)\n                if _p == _c:\n                    break\n                _c = _p\n    except Exception as ex:\n        probadas.append(\"DWG activo no disponible: \" + str(ex)[:80])\n    for _r in candidatas:\n        probadas.append(_r)\n        if _r and os.path.exists(os.path.join(_r, \"pipeline.py\")):\n            if _r not in sys.path:\n                sys.path.insert(0, _r)\n            import pipeline as _m\n            importlib.reload(_m)\n            return _m, \"pipeline.py: cargado desde \" + _r\n    log = [\"KO: no se encontro pipeline.py. Rutas probadas:\"]\n    log += [\"  - \" + p for p in probadas]\n    log.append(\"Solucion: doble clic en instalar.bat, o copia pipeline.py \"\n               \"a la carpeta del proyecto (junto a config_proyecto.xlsx), \"\n               \"o define la variable de entorno PIPELINE_HOME.\")\n    return None, \"\\n\".join(log)\n\n\npipeline, _msg_carga = _cargar_pipeline()\n\nif pipeline is None:\n    OUT = [False, _msg_carga + \"\\n\"\n           + (str(IN[1]) if IN[1] is not None else \"\")]\nelse:\n    def _abool(v):\n        if isinstance(v, str):\n            return v.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n        return bool(v)\n\n    fase = str(IN[0])\n    log_script = IN[1] if IN[1] is not None else \"\"\n    resultados = IN[2]\n    aplicado = _abool(IN[3]) if IN[3] is not None else False\n    ok_script = _abool(IN[4]) if IN[4] is not None else True\n    auditoria = str(IN[5]) if IN[5] is not None else \"N/A\"\n    # IN[6]: barrera de sincronizacion (ignorada)\n\n    OUT = pipeline.nodo_cierre(fase, log_script,\n                               resultados=resultados,\n                               aplicado=aplicado,\n                               ok=ok_script,\n                               auditoria_z=auditoria)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "e4b4d2967b614647b81a6cadee774421",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "1463fd39c9bf4246a7d0b909ec1fd7a2",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "52f46d6ffd954d8ebb3e531379ba7abe",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b386cb4e819c4813997a674aedc28bd0",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "6463253dbc62409c8d86462c9c2fdb94",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "7f9126d945c34c9381c8f92f5e247d1e",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1fcf1cc43c2e4e09b11608a2534582a6",
+          "Name": "IN[5]",
+          "Description": "Input #5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "079001a0d3ea4f0d84ad386afde9948d",
+          "Name": "IN[6]",
+          "Description": "Input #6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "c2721ba7113949da9a50647531cd8256",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# Extrae el log (indice 1) de la salida CONFIG para el Watch\nOUT = IN[0][1] if IN[0] is not None else \"(sin salida CONFIG)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "e2bd399f492944829392c9032d1e12ff",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "b32133f820cb4d45ab20179e6ce72a1c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "98cb41a7a82b4b4c840e847707084ee2",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "0c4435739bdd4c33b7c93f6bfa550246",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "47068dec1df1438db4038e7eab553334",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9be16b7f7a144492bad16d8ee5925f2a",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'superficie_trackers' desde config (indice 4).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 4\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[4]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "19ad911aa71441c59a796d8660cdd940",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "3ecfe2e855dd4838af6f445f1a1da179",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4514d4a811e448ef9e0a4326de2f712a",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'superficie_mdt' desde config (indice 5).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 5\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[5]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "0939350fc57f4d3d8f4488612e6e5b11",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "5485012394044a8dae390cd515e4ab49",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "b8bdc2f6f4b04d34a4f90b4f0bb61323",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'capa_contornos' desde config (indice 6).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 6\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[6]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "12a2daa39d6146ba911b69156a82fc3d",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "afb6dd47f9d74a7f977f8da291841b75",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fad459814d1b4ad080b4dfa480c3e7cd",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'superficie_combinada' desde config (indice 7).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 7\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[7]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "1da5b7d5a71f4e71aeeb3009c4c66179",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "f5aa4aa9928643969d3c515a44122dca",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4e3db43d5f3648429514a187351974fd",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'offset_manchas_m' desde config (indice 8).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 8\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[8]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "9d027c780bac4cadbd9b59d24b1bd582",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "d8754208d9144132a6da02cb30432bad",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "437a3d0706c9447a951a8f50aa6aac1d",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'filtro_manchas_pct' desde config (indice 9).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 9\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[9]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "728f0545c4af4addbb8104af1057de9b",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "e8dcc01399cf4f6b8be4bae9c9bf379d",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fe58230a6cdd46169e17b0725764ea18",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'pegar_mdt_base' desde config (indice 10).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 10\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[10]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "d656bd9101ef47a0937713623771726d",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "55c84211d8764d62a8a46bc3cae262b2",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "8544d0ed002941f0952dc04f3a224442",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'intentos_offset' desde config (indice 11).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 11\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[11]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "f3dc6aa4216344768f15c5fcb9fc79e6",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "3b75823d2048483983a80d6e77794b9c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "81cf4a1f053e4a508d676e95c1f2a203",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'paso_offset_m' desde config (indice 12).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 12\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[12]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "02afae2124ea49d788cb2653829e180f",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "57b2af89305349d19a18f6aed6e6e952",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4bcf89369be346f29c6a10815c53b7e5",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "e900bb08ddb84de19284366f649bbf69",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "3f3df1ce168a4b9786551cde69a37adc",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# NORMALIZAR GEOMETRIA v01  -  nodo previo comun a los scripts del pipeline\n# =============================================================================\n# Los scripts leen contornos, ejes y trackers como LWPOLYLINE. En la practica\n# esas capas llegan con LINE sueltas (layouts, DXF), POLYLINE 2D antiguas o\n# POLYLINE 3D. Este nodo las normaliza ANTES de que corra el script:\n#\n#   - LINE      : se encadenan por extremos (tolerancia de empalme TOL_EMPALME)\n#                 y cada cadena pasa a ser UNA LWPOLYLINE. Si la cadena cierra\n#                 sobre si misma (hueco <= TOL_CIERRE) se marca Closed.\n#                 Una LINE aislada -> LWPOLYLINE de 2 vertices.\n#   - POLYLINE2D / POLYLINE3D : se reescriben como LWPOLYLINE plana (Z ignorada),\n#                 conservando el flag Closed.\n#   - LWPOLYLINE: no se toca.\n#\n# Los originales NO se borran: se mueven a la capa '<capa>_ORIG' (se crea si\n# no existe y se deja apagada). Es reversible: mover de vuelta y borrar las\n# LWPOLYLINE nuevas.\n#\n# ENTRADAS (numero variable): IN[0..n-2] nombres de capa (str; vacios se\n#   ignoran; tambien acepta listas de str). El ULTIMO input IN[n-1] es\n#   APLICAR: True convierte; False solo informa (dry-run).\n# SALIDA: OUT = [log_str, n_convertidas]. Conectar OUT como barrera al primer\n#   nodo de trabajo del script para forzar que esto corra antes.\n# =============================================================================\nimport math\nimport time\nimport traceback\n\nimport clr\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, Polyline2d, Polyline3d, Line,\n    SymbolUtilityServices, LayerTableRecord, ObjectId)\nfrom Autodesk.AutoCAD.Geometry import Point2d\n\nTOL_EMPALME = 0.05   # m: dos extremos a menos de esto se consideran unidos\nTOL_CIERRE = 0.50    # m: regla del proyecto para contornos visualmente cerrados\n\n# [DYNAMO-DAG] todo dentro de run(): nunca SystemExit a nivel de modulo\ndef run():\n    # ------------------------------ entradas -----------------------------------\n    _ins = list(IN)\n    if not _ins:\n        return [\"NORMALIZAR: sin entradas\", 0]\n    _ap = _ins[-1]\n    if isinstance(_ap, str):\n        APLICAR = _ap.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n    else:\n        APLICAR = bool(_ap)\n    capas = []\n    for v in _ins[:-1]:\n        if v is None:\n            continue\n        if isinstance(v, (list, tuple)):\n            for x in v:\n                if x is not None and str(x).strip():\n                    capas.append(str(x).strip())\n        elif str(v).strip():\n            capas.append(str(v).strip())\n    # dedup conservando orden\n    _vist = set()\n    capas = [c for c in capas if not (c in _vist or _vist.add(c))]\n\n    L = []\n\n\n    def w(s=\"\"):\n        L.append(str(s))\n\n\n    t_ini = time.perf_counter()\n    w(\"=\" * 72)\n    w(\" NORMALIZAR GEOMETRIA v01  -  {}\".format(\n        \"APLICAR (convierte)\" if APLICAR else \"DRY-RUN (solo informa)\"))\n    w(\"=\" * 72)\n    w(\"capas: {}\".format(\", \".join(capas) if capas else \"(ninguna)\"))\n    w(\"tolerancias: empalme {:.2f} m, cierre {:.2f} m\".format(TOL_EMPALME, TOL_CIERRE))\n\n    if not capas:\n        w(\"Nada que hacer.\")\n        w(\"\")\n        w(\"==== RESUMEN DE TIEMPOS ====\")\n        w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n        return [\"\\n\".join(L), 0]\n\n\n    def _key(p):\n        \"\"\"Celda de rejilla para agrupar extremos con tolerancia.\"\"\"\n        return (int(math.floor(p[0] / TOL_EMPALME)),\n                int(math.floor(p[1] / TOL_EMPALME)))\n\n\n    def _cerca(a, b):\n        return math.hypot(a[0] - b[0], a[1] - b[1]) <= TOL_EMPALME\n\n\n    def encadenar(segs):\n        \"\"\"segs: lista de (p_ini, p_fin) 2D. Devuelve lista de (pts, cerrada).\n        Recorre cada segmento una sola vez; en bifurcaciones toma el primer\n        vecino libre (suficiente para contornos y ejes; los nudos raros se\n        reportan como cadenas abiertas y el usuario los ve en el log).\"\"\"\n        n = len(segs)\n        usado = [False] * n\n        idx = {}\n        for i, (a, b) in enumerate(segs):\n            for p in (a, b):\n                k = _key(p)\n                for dx in (-1, 0, 1):\n                    for dy in (-1, 0, 1):\n                        idx.setdefault((k[0] + dx, k[1] + dy), []).append(i)\n        # dedup listas\n        for k in idx:\n            vist = set()\n            idx[k] = [i for i in idx[k] if not (i in vist or vist.add(i))]\n\n        def vecino_libre(p, excluir):\n            for j in idx.get(_key(p), []):\n                if usado[j] or j == excluir:\n                    continue\n                a, b = segs[j]\n                if _cerca(p, a):\n                    return j, b\n                if _cerca(p, b):\n                    return j, a\n            return None, None\n\n        cadenas = []\n        for i in range(n):\n            if usado[i]:\n                continue\n            usado[i] = True\n            a, b = segs[i]\n            pts = [a, b]\n            # extender por el final\n            cur = b\n            last = i\n            while True:\n                j, nxt = vecino_libre(cur, last)\n                if j is None:\n                    break\n                usado[j] = True\n                pts.append(nxt)\n                cur = nxt\n                last = j\n                if _cerca(cur, pts[0]) and len(pts) > 3:\n                    break\n            # extender por el principio (si no cerro)\n            if not _cerca(pts[-1], pts[0]):\n                cur = pts[0]\n                last = i\n                while True:\n                    j, nxt = vecino_libre(cur, last)\n                    if j is None:\n                        break\n                    usado[j] = True\n                    pts.insert(0, nxt)\n                    cur = nxt\n                    last = j\n                    if _cerca(pts[0], pts[-1]) and len(pts) > 3:\n                        break\n            cerrada = False\n            if len(pts) >= 4 and math.hypot(pts[0][0] - pts[-1][0],\n                                            pts[0][1] - pts[-1][1]) <= TOL_CIERRE:\n                cerrada = True\n                # si el ultimo punto duplica al primero, quitarlo\n                if _cerca(pts[0], pts[-1]):\n                    pts = pts[:-1]\n            cadenas.append((pts, cerrada))\n        return cadenas\n\n\n    def pts_polyline2d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    def pts_polyline3d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    adoc = Application.DocumentManager.MdiActiveDocument\n    db = adoc.Database\n    n_total_conv = 0\n    tiempos = []\n\n    dlock = adoc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            ms = tr.GetObject(ms_id, OpenMode.ForWrite if APLICAR else OpenMode.ForRead)\n            lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n\n            # ---- inventario por capa -----------------------------------------\n            t0 = time.perf_counter()\n            por_capa = {c: {\"lw\": 0, \"line\": [], \"p2d\": [], \"p3d\": [], \"otros\": {}}\n                        for c in capas}\n            for oid in ms:\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                except Exception:\n                    continue\n                lay = ent.Layer\n                if lay not in por_capa:\n                    continue\n                d = por_capa[lay]\n                if isinstance(ent, Polyline):\n                    d[\"lw\"] += 1\n                elif isinstance(ent, Line):\n                    d[\"line\"].append(oid)\n                elif isinstance(ent, Polyline2d):\n                    d[\"p2d\"].append(oid)\n                elif isinstance(ent, Polyline3d):\n                    d[\"p3d\"].append(oid)\n                else:\n                    try:\n                        tn = ent.GetType().Name\n                    except Exception:\n                        tn = type(ent).__name__\n                    d[\"otros\"][tn] = d[\"otros\"].get(tn, 0) + 1\n            tiempos.append((\"inventario\", time.perf_counter() - t0))\n\n            w(\"\")\n            w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  otros\".format(\n                \"capa\", \"LWPL\", \"LINE\", \"PL2D\", \"PL3D\"))\n            w(\"-\" * 72)\n            for c in capas:\n                d = por_capa[c]\n                otros = \", \".join(\"{} x {}\".format(v, k) for k, v in\n                                  sorted(d[\"otros\"].items())) or \"-\"\n                existe = lt.Has(c)\n                w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  {}{}\".format(\n                    c[:28], d[\"lw\"], len(d[\"line\"]), len(d[\"p2d\"]),\n                    len(d[\"p3d\"]), otros, \"\" if existe else \"   !! CAPA NO EXISTE\"))\n\n            # ---- conversion ---------------------------------------------------\n            t0 = time.perf_counter()\n            for c in capas:\n                d = por_capa[c]\n                pendientes = len(d[\"line\"]) + len(d[\"p2d\"]) + len(d[\"p3d\"])\n                if pendientes == 0:\n                    continue\n                w(\"\")\n                w(\"[{}]\".format(c))\n\n                nuevas = []   # (pts, cerrada, origen)\n                # LINE -> cadenas\n                if d[\"line\"]:\n                    segs = []\n                    for oid in d[\"line\"]:\n                        ent = tr.GetObject(oid, OpenMode.ForRead)\n                        a = ent.StartPoint\n                        b = ent.EndPoint\n                        segs.append(((a.X, a.Y), (b.X, b.Y)))\n                    cadenas = encadenar(segs)\n                    n_cer = sum(1 for _, z in cadenas if z)\n                    w(\"  LINE: {} segmentos -> {} cadenas ({} cerradas, {} abiertas)\"\n                      .format(len(segs), len(cadenas), n_cer, len(cadenas) - n_cer))\n                    for pts, cerrada in cadenas:\n                        nuevas.append((pts, cerrada, \"LINE\"))\n                for oid in d[\"p2d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline2d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL2D\"))\n                    else:\n                        w(\"  PL2D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n                for oid in d[\"p3d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline3d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL3D\"))\n                    else:\n                        w(\"  PL3D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n\n                for pts, cerrada, origen in nuevas:\n                    w(\"  {} -> LWPOLYLINE {} vertices{}\".format(\n                        origen, len(pts), \" (cerrada)\" if cerrada else \"\"))\n\n                if not APLICAR:\n                    w(\"  dry-run: {} LWPOLYLINE se crearian; {} originales irian a '{}_ORIG'\"\n                      .format(len(nuevas), pendientes, c))\n                    continue\n\n                # capa destino de la geometria original\n                capa_orig = c + \"_ORIG\"\n                if lt.Has(capa_orig):\n                    id_orig = lt.get_Item(capa_orig)\n                else:\n                    lt.UpgradeOpen()\n                    ltr = LayerTableRecord()\n                    ltr.Name = capa_orig\n                    ltr.IsOff = True\n                    id_orig = lt.Add(ltr)\n                    tr.AddNewlyCreatedDBObject(ltr, True)\n                    lt.DowngradeOpen()\n                    w(\"  capa '{}' creada (apagada)\".format(capa_orig))\n                id_capa = lt.get_Item(c)\n\n                n_new = 0\n                for pts, cerrada, origen in nuevas:\n                    pl = Polyline()\n                    for i, (x, y) in enumerate(pts):\n                        pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n                    pl.Closed = cerrada\n                    pl.LayerId = id_capa\n                    ms.AppendEntity(pl)\n                    tr.AddNewlyCreatedDBObject(pl, True)\n                    n_new += 1\n                n_mov = 0\n                for oid in d[\"line\"] + d[\"p2d\"] + d[\"p3d\"]:\n                    try:\n                        ent = tr.GetObject(oid, OpenMode.ForWrite)\n                        ent.LayerId = id_orig\n                        n_mov += 1\n                    except Exception as ex:\n                        w(\"  KO moviendo handle: {}\".format(str(ex)[:80]))\n                w(\"  creadas {} LWPOLYLINE; {} originales movidas a '{}'\".format(\n                    n_new, n_mov, capa_orig))\n                n_total_conv += n_new\n            tiempos.append((\"conversion\", time.perf_counter() - t0))\n\n            if APLICAR:\n                tr.Commit()\n        finally:\n            tr.Dispose()\n    except Exception:\n        w(\"\")\n        w(\"!!!!!! EXCEPCION NO CONTROLADA\")\n        for linea in traceback.format_exc().split(\"\\n\"):\n            w(\"  \" + linea)\n    finally:\n        dlock.Dispose()\n\n    w(\"\")\n    w(\"RESULTADO: {} LWPOLYLINE {}\".format(\n        n_total_conv, \"creadas\" if APLICAR else \"se crearian (dry-run)\"))\n    w(\"\")\n    w(\"==== RESUMEN DE TIEMPOS ====\")\n    for et, sg in tiempos:\n        w(\"{:<27}{:>7.2f} s\".format(et, sg))\n    w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n\n    return [\"\\n\".join(L), n_total_conv]\n\n\nOUT = run()\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "cfb765618de54a52b4fa5b62d8880fec",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "d2ffe16002a5467c9b08968ee577f635",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "892fc25efbdf4d74b43f5e9a4432a849",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "f9607a4a5e334b5c9ecdca7b57699401",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# Extrae el log (indice 0) de la salida del normalizador para el Watch\nOUT = IN[0][0] if IN[0] is not None else \"(sin salida)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "fcf91a07a9d643a58baa098e56b82630",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "d64c205ebe414b65a6edcbfa3b97203a",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "50cb0051d5a948df87aa55881d7512c8",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "1d699da9155a4a798c5e708d083b0e63",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "8db6d5496cc340a2b3997b954b3eca10",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "13dfc14db4664e4e9a6af3b8340cc213",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "f40f42e2b07f4a00bcab8992d2431be7",
+      "End": "d2e576b755c84aabb9aa414a5e7c8d72",
+      "Id": "b3afc132bc194c97bb5f4292149924f6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3ca2f62ae1a74a34860e48be337fa6b4",
+      "End": "9dd68b9cfd754f33812986bfd7a058c9",
+      "Id": "13287ba6137d4a92af61cdaa0da2f224",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "f4c81d9935e6466dad0cf95703b72d58",
+      "Id": "1cccbbde058842cfba9446e37c97e767",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "72c82eb3331a4abe96c1bf7df17bb951",
+      "End": "0e2b740dde424a29b7ac268518092dc3",
+      "Id": "599e929fb0714ae48d8a4034ee4786d8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3ca2f62ae1a74a34860e48be337fa6b4",
+      "End": "1463fd39c9bf4246a7d0b909ec1fd7a2",
+      "Id": "c31702ca14b34dd29545ef9dda5291d8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f40f42e2b07f4a00bcab8992d2431be7",
+      "End": "52f46d6ffd954d8ebb3e531379ba7abe",
+      "Id": "65c65ca900a1423ea3c225b5ba180b3c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ea1551641e354557a9d2f8e783dfe1b4",
+      "End": "b386cb4e819c4813997a674aedc28bd0",
+      "Id": "283a974ad070447d9c78693535ee75d9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b21075523c5741cc9b27c0623e7146ed",
+      "End": "6463253dbc62409c8d86462c9c2fdb94",
+      "Id": "ff955e70f45442efa93bd2218682ebcf",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b21075523c5741cc9b27c0623e7146ed",
+      "End": "7f9126d945c34c9381c8f92f5e247d1e",
+      "Id": "93920825cc4b481ea66a9d94ca1f689e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fe45ed75d6d74f57acff419ffe757dd5",
+      "End": "1fcf1cc43c2e4e09b11608a2534582a6",
+      "Id": "409da94c373f4ac2b3772f06234840d7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f40f42e2b07f4a00bcab8992d2431be7",
+      "End": "079001a0d3ea4f0d84ad386afde9948d",
+      "Id": "4e23a28fb9b4452d8ccac41f2154152f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c2721ba7113949da9a50647531cd8256",
+      "End": "b32133f820cb4d45ab20179e6ce72a1c",
+      "Id": "2007699bac894a7d9cc853474a7bab61",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "98cb41a7a82b4b4c840e847707084ee2",
+      "End": "47068dec1df1438db4038e7eab553334",
+      "Id": "6be70a729f5a45288ed0305f8b2fc19a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "3ecfe2e855dd4838af6f445f1a1da179",
+      "Id": "ed25eed094a34effac653214516b0f18",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4514d4a811e448ef9e0a4326de2f712a",
+      "End": "127bbed7148449f591764a10de073a27",
+      "Id": "2a914721c6e44f5580bccffec332a6a3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "5485012394044a8dae390cd515e4ab49",
+      "Id": "7acc714bd6a44d22900c850e9f2b2183",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b8bdc2f6f4b04d34a4f90b4f0bb61323",
+      "End": "271d439f729a4c5bb08569cb4a29e311",
+      "Id": "0ffa752f89014fb09190a7a8e4cc4901",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "afb6dd47f9d74a7f977f8da291841b75",
+      "Id": "b38f3cbd09f04c1baf5424c9fbe246e3",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fad459814d1b4ad080b4dfa480c3e7cd",
+      "End": "7f7535741c994db19c4c2fc19eeef4d2",
+      "Id": "a7fb3f7b7d5c4cbd879ba92634a14d41",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "f5aa4aa9928643969d3c515a44122dca",
+      "Id": "ed12170f3ab24393949ce5583f925467",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4e3db43d5f3648429514a187351974fd",
+      "End": "857408c46ccd41f3ad57c17b90b17b64",
+      "Id": "050265fc776244ab9ba211653adcb126",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "d8754208d9144132a6da02cb30432bad",
+      "Id": "dbad07ac26884a33b6d219c68869281f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "437a3d0706c9447a951a8f50aa6aac1d",
+      "End": "adbc844047154d45948a5607260b91f0",
+      "Id": "8303f3bfcd66487ba4def354d7f6e84b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "e8dcc01399cf4f6b8be4bae9c9bf379d",
+      "Id": "274a12ced0c945eaa6eaf718d401575b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fe58230a6cdd46169e17b0725764ea18",
+      "End": "22815dcae0ae4f6dbdc892eebb2a72b2",
+      "Id": "8e83771f009c457e9b24658f0183f6a7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "55c84211d8764d62a8a46bc3cae262b2",
+      "Id": "d9a57b6045204fd0834ee4833ec7b376",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "8544d0ed002941f0952dc04f3a224442",
+      "End": "ba046156f45440fd91f5b9ba253c61e5",
+      "Id": "4f4036f25a3a42429a294975cc328773",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "3b75823d2048483983a80d6e77794b9c",
+      "Id": "29fe744da1d04085804b614d2180202e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "81cf4a1f053e4a508d676e95c1f2a203",
+      "End": "e01865bd02b54f1e8a41a158a2ee17d0",
+      "Id": "ab4ba25e1e9b459e8c16dd6b78313f5f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c6fcbbd3c0c54c87bc31d31a6bc0c2df",
+      "End": "57b2af89305349d19a18f6aed6e6e952",
+      "Id": "f178bfedd78143de9696dfb1c58da401",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4bcf89369be346f29c6a10815c53b7e5",
+      "End": "8a93d663f0cc4ecf82981b0ca10237f4",
+      "Id": "1616df5a2e184d5e876d4357c053db42",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fad459814d1b4ad080b4dfa480c3e7cd",
+      "End": "d2ffe16002a5467c9b08968ee577f635",
+      "Id": "c9ab7304fbeb422fb3fd84babb172676",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3f3df1ce168a4b9786551cde69a37adc",
+      "End": "892fc25efbdf4d74b43f5e9a4432a849",
+      "Id": "1942f6d144ab403ba4014eed458f975c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f9607a4a5e334b5c9ecdca7b57699401",
+      "End": "d64c205ebe414b65a6edcbfa3b97203a",
+      "Id": "fff007a9f3324e25bc1a59b3fb90e24f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "50cb0051d5a948df87aa55881d7512c8",
+      "End": "8db6d5496cc340a2b3997b954b3eca10",
+      "Id": "5aea25136eaa42b79ab6e8a411334d9d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f9607a4a5e334b5c9ecdca7b57699401",
+      "End": "4c5a7c5b17ff4a77974763d8bed339dc",
+      "Id": "c242a7090dbc4e75b23773868ff0ad56",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "None provided",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "cc496d5721ba45da8a5c17dc7a3196d2",
+        "Name": "Superficie trackers general",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": -240.0
+      },
+      {
+        "Id": "e91dfbbfa6ad4c74934a505f22253c6a",
+        "Name": "Superficie MDT original",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": -120.0
+      },
+      {
+        "Id": "589912fcd1bf41ae8a52e786778f681c",
+        "Name": "Capa de contornos",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.7602392413546,
+        "Y": 4.452409287995579
+      },
+      {
+        "Id": "8eecb91cdbb24b11bcc7a6ea0f8cf333",
+        "Name": "Superficies_Zonas",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -400.0,
+        "Y": -120.0
+      },
+      {
+        "Id": "591667e7298141e898a779313fba2089",
+        "Name": "Watch",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 200.0,
+        "Y": -120.0
+      },
+      {
+        "Id": "09b9192e14f34602bedb907a54cae81d",
+        "Name": "Superficie combinada ",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": 293.10976350412267
+      },
+      {
+        "Id": "6bbeee9a001a46cf8dfe8be27f4dd8ca",
+        "Name": "Offset manchas (m)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -445.3996643336718,
+        "Y": 422.03076602421584
+      },
+      {
+        "Id": "cd7816c93c564a0b8ccfe6bd72178ec2",
+        "Name": "Filtro manchas (% area media)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -800.0,
+        "Y": 420.0
+      },
+      {
+        "Id": "424dbd34af444c97b6d5d64745ba38a7",
+        "Name": "Pegar MDT base en combinada (S/N)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -522.8014246518682,
+        "Y": 294.6633298642972
+      },
+      {
+        "Id": "0d8a8a80893f41f8bf0bdc2bf0db2076",
+        "Name": "Intentos offset (0=off)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -804.7792857818644,
+        "Y": 561.2280938414702
+      },
+      {
+        "Id": "a2cb5ea62afc4fa5965032cff6ce0050",
+        "Name": "Paso offset (m)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -481.3809478757106,
+        "Y": 560.1528540342404
+      },
+      {
+        "Id": "c528b47ec0dd42ada6e1824cd5e003dd",
+        "Name": "CFG fase",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -804.7792857818644,
+        "Y": -560.0
+      },
+      {
+        "Id": "3e24d91bb92146b5a9baf20a98ffdc83",
+        "Name": "CONFIG (sombra)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -474.77928578186436,
+        "Y": -560.0
+      },
+      {
+        "Id": "8314218d95454527b2a249ded9be6cb2",
+        "Name": "extraer log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -124.77928578186436,
+        "Y": -560.0
+      },
+      {
+        "Id": "28c7bba5abbd4c6e930a9c8c59408f19",
+        "Name": "CONFIG_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 195.22071421813564,
+        "Y": -560.0
+      },
+      {
+        "Id": "06fcb1ee8ac44ba4bf9e1c40befad38a",
+        "Name": "CFG resultados (vacio)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 620.0,
+        "Y": -79.38595307926488
+      },
+      {
+        "Id": "56ba464c864548d98355b82b7e345e21",
+        "Name": "CFG ok",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 620.0,
+        "Y": 40.61404692073512
+      },
+      {
+        "Id": "40cf1ebefaa44d4fbe37c40a9e72bbf2",
+        "Name": "CFG auditoria Z",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 620.0,
+        "Y": 160.61404692073512
+      },
+      {
+        "Id": "e4b4d2967b614647b81a6cadee774421",
+        "Name": "CIERRE",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 960.0,
+        "Y": 40.61404692073512
+      },
+      {
+        "Id": "e2bd399f492944829392c9032d1e12ff",
+        "Name": "extraer log cierre",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1310.0,
+        "Y": 40.61404692073512
+      },
+      {
+        "Id": "0c4435739bdd4c33b7c93f6bfa550246",
+        "Name": "CIERRE_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1630.0,
+        "Y": 40.61404692073512
+      },
+      {
+        "Id": "19ad911aa71441c59a796d8660cdd940",
+        "Name": "CFG superficie_trackers",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": -180.0
+      },
+      {
+        "Id": "0939350fc57f4d3d8f4488612e6e5b11",
+        "Name": "CFG superficie_mdt",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": -85.0
+      },
+      {
+        "Id": "12a2daa39d6146ba911b69156a82fc3d",
+        "Name": "CFG capa_contornos",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 10.0
+      },
+      {
+        "Id": "1da5b7d5a71f4e71aeeb3009c4c66179",
+        "Name": "CFG superficie_combinada",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 105.0
+      },
+      {
+        "Id": "9d027c780bac4cadbd9b59d24b1bd582",
+        "Name": "CFG offset_manchas_m",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 200.0
+      },
+      {
+        "Id": "728f0545c4af4addbb8104af1057de9b",
+        "Name": "CFG filtro_manchas_pct",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 295.0
+      },
+      {
+        "Id": "d656bd9101ef47a0937713623771726d",
+        "Name": "CFG pegar_mdt_base",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 390.0
+      },
+      {
+        "Id": "f3dc6aa4216344768f15c5fcb9fc79e6",
+        "Name": "CFG intentos_offset",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 485.0
+      },
+      {
+        "Id": "02afae2124ea49d788cb2653829e180f",
+        "Name": "CFG paso_offset_m",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -760.0,
+        "Y": 580.0
+      },
+      {
+        "Id": "e900bb08ddb84de19284366f649bbf69",
+        "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -920.0,
+        "Y": -440.0
+      },
+      {
+        "Id": "cfb765618de54a52b4fa5b62d8880fec",
+        "Name": "NORMALIZAR geometria (LINE/PL2D/PL3D -> LWPOLYLINE)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -540.0,
+        "Y": -540.0
+      },
+      {
+        "Id": "fcf91a07a9d643a58baa098e56b82630",
+        "Name": "extraer log normalizar",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -540.0,
+        "Y": -320.0
+      },
+      {
+        "Id": "1d699da9155a4a798c5e708d083b0e63",
+        "Name": "NORMALIZAR_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -540.0,
+        "Y": -220.0
+      }
+    ],
+    "Annotations": [],
+    "X": 529.4990432845774,
+    "Y": -36.172597329367704,
+    "Zoom": 0.6277088537755817
+  }
+}

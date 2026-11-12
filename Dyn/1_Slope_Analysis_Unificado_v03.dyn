@@ -1,0 +1,1005 @@
+{
+  "Uuid": "f5f91d6d-b4e5-45d7-bca4-26be1d345833",
+  "IsCustomNode": false,
+  "Description": "Analisis de pendientes UNIFICADO (Trackers/Mesas x NS/EO). AXIAL para Trackers+NS y Mesas+EO; CROSS (entre filas) para Trackers+EO y Mesas+NS. Incluye contador de tiempo.",
+  "Name": "1_Slope_Analysis_Unificado_v03",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "ec4666a40ff743f28702f47cd4cd6694",
+      "Name": "MDT (nombre de la superficie)",
+      "Type": "string",
+      "Value": "Trackers_Proyecto",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "29cc327ac75647f0a236ff07ff38fc95",
+      "Name": "Capa de contorno",
+      "Type": "string",
+      "Value": "_contornos offset",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "b3fa2195c88c4fa1ba0931dea1a4820b",
+      "Name": "Capa de ejes (trackers/mesas)",
+      "Type": "string",
+      "Value": "_Lineas rotura",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "05d187423cbe4052b7e4720c1229eb57",
+      "Name": "Tipo (Trackers/Mesas)",
+      "Type": "string",
+      "Value": "Trackers",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "b4f4f43aa68c440a99d7b9fb2aaa896a",
+      "Name": "Orientacion (NS/EO)",
+      "Type": "string",
+      "Value": "NS",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "4958e29716de4c7a9df9cb6ca7e650f6",
+      "Name": "Pendiente maxima admisible (%)",
+      "Type": "number",
+      "Value": "4",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "404b3767a00c4028b61c43b57cb24f76",
+      "Name": "Pendiente de aviso (%)",
+      "Type": "number",
+      "Value": "3",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "a8c6ac7d908d44b58ee1b4bebcb19632",
+      "Name": "Nombre de la nueva superficie",
+      "Type": "string",
+      "Value": "Slope_Analysis_Trackers_NS",
+      "Description": "Creates a string"
+    },
+    {
+      "Id": "92c0b248159b41b5bd4f37ed9ad8a786",
+      "Name": "Opcion puntos (1=centroide, 2=extremos) [solo axial]",
+      "Type": "number",
+      "Value": "2",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "ecee2735b66647a4b9f71aab8b416d98",
+      "Name": "Pitch minimo (m) [solo entre-filas]",
+      "Type": "number",
+      "Value": "4",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "295e129489324854b4cd4df110bc3836",
+      "Name": "Pitch maximo (m) [solo entre-filas]",
+      "Type": "number",
+      "Value": "15",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "64d86d9e183d483fb5a7495b12a2555f",
+      "Name": "Iteraciones de subdivision [solo entre-filas]",
+      "Type": "number",
+      "Value": "2",
+      "Description": "Creates a number"
+    },
+    {
+      "Id": "9b190e8ec91949d892f7d970bfcd44a0",
+      "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+      "Type": "boolean",
+      "Type2": "boolean",
+      "Value": "true",
+      "Description": "Enables selection between True and False",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "ec4666a40ff743f28702f47cd4cd6694",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ae04b80006b34423b05cef96d5042bfa",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers_Proyecto"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "29cc327ac75647f0a236ff07ff38fc95",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "583c003a929e4795b4ecc64d8255399d",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos offset"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "b3fa2195c88c4fa1ba0931dea1a4820b",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cdf5a346b98d485b96f41f5ba9fd9c01",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_Lineas rotura"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "05d187423cbe4052b7e4720c1229eb57",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "35b32ef16ac84405ae3aca34bee36517",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Trackers"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "b4f4f43aa68c440a99d7b9fb2aaa896a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0df3ece470464dfdace5f78ddba26a99",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "NS"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "4958e29716de4c7a9df9cb6ca7e650f6",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0a1bc920c6934dbd956643ef7938b80f",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 4.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "404b3767a00c4028b61c43b57cb24f76",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f5c6af0cd7744793a40b34b3e6936799",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 3.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a8c6ac7d908d44b58ee1b4bebcb19632",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ef2839b2e0fb4224b301426efff7537a",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Slope_Analysis_Trackers_NS"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "92c0b248159b41b5bd4f37ed9ad8a786",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "73326e291b3d4294bed0c4ca9198d03b",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 2.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "ecee2735b66647a4b9f71aab8b416d98",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "342a7f5452d040228aa09a6bdacc31b8",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 4.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "295e129489324854b4cd4df110bc3836",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0cffae9008eb410bb7f894d02c38f293",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 15.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "64d86d9e183d483fb5a7495b12a2555f",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "cac8ccfdb7cf4d698b2442eddc4d3068",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 2.0
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# IN[12]: BARRERA de sincronizacion del nodo NORMALIZAR (contenido ignorado).\n# -*- coding: utf-8 -*-\n# =============================================================================\n# 1_Slope_Analysis_Unificado.dyn  -  Nodo Python principal  (v1)\n# Civil 3D 2024 / Dynamo 2.19 / CPython3\n#\n# Unifica los dos analisis de pendientes (NS y EO) y los generaliza a\n# Trackers y Mesas. Hay 2 algoritmos y 4 casos:\n#\n#   AXIAL (a lo largo del eje)  -> Trackers+NS  y  Mesas+EO\n#   CROSS (entre filas/vecino)  -> Trackers+EO  y  Mesas+NS\n#\n# Regla: eje_estructura = \"NS\" si Trackers, \"EO\" si Mesas.\n#        mode = \"axial\" si Orientacion == eje_estructura, si no \"cross\".\n#\n# Normalizacion de extremos: Trackers A=Norte (mayor Y); Mesas A=Oeste (menor X).\n# CROSS:  Trackers -> vecino al ESTE (+X), solape en Y, proyeccion horizontal.\n#         Mesas    -> vecino al SUR  (-Y), solape en X, proyeccion vertical.\n#\n# AXIAL replica el script NS actual (estilo+rangos en la misma transaccion,\n#   sin max triangle length, usa Opcion puntos 1/2).\n# CROSS replica el script EO actual (2a transaccion aislada para estilo+rangos,\n#   MaximumTriangleLength = pitch_max*1.5, usa pitch_min/max e iteraciones).\n#\n# Entradas (puertos IN[0..11]):\n#   IN[0]  : str    nombre de la superficie a muestrear (MDT / definitiva)\n#   IN[1]  : str    capa del contorno (polilineas cerradas)\n#   IN[2]  : str    capa de los ejes (trackers o mesas, polilineas de 2 vert.)\n#   IN[3]  : str    Tipo: \"Trackers\" o \"Mesas\"\n#   IN[4]  : str    Orientacion medida: \"NS\" o \"EO\"\n#   IN[5]  : float  pendiente maxima admisible (%)  -> umbral rojo\n#   IN[6]  : float  pendiente de aviso (%)          -> umbral amarillo\n#   IN[7]  : str    nombre de la nueva superficie TIN de resultado\n#   IN[8]  : int    [solo AXIAL] opcion puntos (1=centroide, 2=extremos)\n#   IN[9]  : float  [solo CROSS] pitch minimo (m)\n#   IN[10] : float  [solo CROSS] pitch maximo (m)\n#   IN[11] : int    [solo CROSS] iteraciones de subdivision (n -> 2^n+1 puntos)\n#\n# Salida:\n#   OUT : str  log del analisis + desglose de tiempos\n# =============================================================================\n\nimport clr\nimport math\nimport time\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, Line, SymbolUtilityServices\n)\nfrom Autodesk.AutoCAD.Geometry import Point2d, Point3d, Point3dCollection\nfrom Autodesk.Civil import SurfaceBoundaryType\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    TinSurface, SurfaceAnalysisElevationData, SurfaceSlopeLabel\n)\n\nimport System\nfrom System import Array\nfrom Autodesk.AutoCAD.Colors import Color as AcadColor\n\n\ndef pip(px, py, poly):\n    \"\"\"Ray-casting point-in-polygon (poly = lista de (x,y), sin necesidad de cerrar).\"\"\"\n    inside = False\n    n = len(poly)\n    if n < 3:\n        return False\n    j = n - 1\n    for i in range(n):\n        xi, yi = poly[i]\n        xj, yj = poly[j]\n        if ((yi > py) != (yj > py)) and \\\n           (px < (xj - xi) * (py - yi) / ((yj - yi) if (yj - yi) != 0 else 1e-12) + xi):\n            inside = not inside\n        j = i\n    return inside\n\n\ndef build_color_ranges(z_min, z_max, warn, mx):\n    \"\"\"Rangos verde/amarillo/rojo dinamicos segun datos reales y umbrales.\n    El verde absorbe los extremos que caen dentro; solo se crean colas\n    amarillo/rojo si hay datos que las alcancen. Devuelve [(mn,mx,color),...].\"\"\"\n    green = AcadColor.FromRgb(80, 200, 80)\n    yellow = AcadColor.FromRgb(240, 220, 60)\n    red = AcadColor.FromRgb(220, 50, 50)\n\n    ranges = []\n    # lado negativo\n    if z_min < -mx:\n        ranges.append((z_min, -mx, red))\n        ranges.append((-mx, -warn, yellow))\n        green_lo = -warn\n    elif z_min < -warn:\n        ranges.append((z_min, -warn, yellow))\n        green_lo = -warn\n    else:\n        green_lo = z_min\n\n    # lado positivo\n    pos_tail = []\n    if z_max > mx:\n        green_hi = warn\n        pos_tail.append((warn, mx, yellow))\n        pos_tail.append((mx, z_max, red))\n    elif z_max > warn:\n        green_hi = warn\n        pos_tail.append((warn, z_max, yellow))\n    else:\n        green_hi = z_max\n\n    if green_lo >= green_hi:\n        green_hi = green_lo + 0.001\n    ranges.append((green_lo, green_hi, green))\n    ranges.extend(pos_tail)\n    return ranges\n\n\ndef assign_style_and_ranges(surf, cdoc, z_min, z_max, warn, mx, log):\n    \"\"\"Asigna estilo 'elevaciones' y aplica los rangos de color a una superficie\n    ya abierta ForWrite. Usado por AXIAL (en tr1) y por CROSS (en tr2).\"\"\"\n    # estilo\n    try:\n        ss = cdoc.Styles.SurfaceStyles\n        style_set = False\n        for name_try in [\"elevaciones\", \"Elevaciones\", \"ELEVACIONES\"]:\n            try:\n                surf.StyleId = ss.get_Item(name_try)\n                style_set = True\n                log.append(\"Estilo '{}' asignado.\".format(name_try))\n                break\n            except:\n                continue\n        if not style_set:\n            log.append(\"AVISO: estilo 'elevaciones' no encontrado. Asignalo a mano.\")\n    except Exception as ex_sty:\n        log.append(\"AVISO estilo: {}\".format(ex_sty))\n\n    # rangos de color\n    try:\n        ranges = build_color_ranges(z_min, z_max, warn, mx)\n        data_arr = [SurfaceAnalysisElevationData(mn, mxv, col)\n                    for (mn, mxv, col) in ranges]\n        surf.Analysis.SetElevationData(Array[SurfaceAnalysisElevationData](data_arr))\n        log.append(\"{} rangos de color aplicados ({:.2f} a {:.2f}).\".format(\n            len(ranges), z_min, z_max))\n    except Exception as ex_an:\n        log.append(\"AVISO analisis: {}\".format(ex_an))\n\n\ndef run():\n    log = []\n    T = {}\n    T[\"start\"] = time.perf_counter()\n\n    # --------------------------------------------------------------------- #\n    # Inputs (lectura tolerante)\n    # --------------------------------------------------------------------- #\n    def _s(i, default=\"\"):\n        try:\n            return str(IN[i]) if (len(IN) > i and IN[i] is not None) else default\n        except:\n            return default\n\n    def _f(i, default):\n        try:\n            return float(IN[i]) if (len(IN) > i and IN[i] is not None) else default\n        except:\n            return default\n\n    mdt_name = _s(0)\n    contour_layer = _s(1)\n    axis_layer = _s(2)\n    tipo_raw = _s(3, \"Trackers\")\n    orient_raw = _s(4, \"NS\")\n    max_slope_pct = _f(5, 4.0)\n    warn_slope_pct = _f(6, 3.0)\n    out_surf_name = _s(7, \"Slope_Analysis\")\n    opt_pts = int(_f(8, 2.0))\n    pitch_min = _f(9, 4.0)\n    pitch_max = _f(10, 15.0)\n    n_iter = int(_f(11, 2.0))\n\n    tipo = tipo_raw.strip().upper()\n    orient = orient_raw.strip().upper()\n\n    if tipo in (\"TRACKER\", \"TRACKERS\", \"SEGUIDOR\", \"SEGUIDORES\"):\n        tipo = \"TRACKERS\"\n    elif tipo in (\"MESA\", \"MESAS\", \"FIJA\", \"FIJAS\"):\n        tipo = \"MESAS\"\n    if tipo not in (\"TRACKERS\", \"MESAS\"):\n        raise Exception(\"Tipo invalido '{}'. Usa 'Trackers' o 'Mesas'.\".format(tipo_raw))\n    if orient not in (\"NS\", \"EO\"):\n        raise Exception(\"Orientacion invalida '{}'. Usa 'NS' o 'EO'.\".format(orient_raw))\n    if opt_pts not in (1, 2):\n        opt_pts = 1\n\n    axis_orient = \"NS\" if tipo == \"TRACKERS\" else \"EO\"   # eje de la estructura\n    axis_vertical = (axis_orient == \"NS\")                # Trackers vertical / Mesas horizontal\n    mode = \"axial\" if orient == axis_orient else \"cross\"\n\n    tipo_lbl = \"Trackers\" if tipo == \"TRACKERS\" else \"Mesas\"\n    log.append(\"=== SLOPE ANALYSIS UNIFICADO (v1) ===\")\n    log.append(\"Tipo: {}   Orientacion medida: {}   Eje estructura: {}\".format(\n        tipo_lbl, orient, axis_orient))\n    log.append(\"Caso: {} {}  ->  algoritmo '{}'\".format(\n        tipo_lbl, orient,\n        \"a lo largo del eje\" if mode == \"axial\" else \"entre filas\"))\n    log.append(\"Superficie muestreada: {}\".format(mdt_name))\n    if mode == \"axial\":\n        log.append(\"(Opcion puntos = {}  |  pitch/iteraciones IGNORADOS en este caso)\".format(opt_pts))\n    else:\n        log.append(\"(pitch=[{}, {}] m, iteraciones={}  |  Opcion puntos IGNORADA en este caso)\".format(\n            pitch_min, pitch_max, n_iter))\n\n    doc = AcadApp.DocumentManager.MdiActiveDocument\n    db = doc.Database\n    cdoc = CivilApplication.ActiveDocument\n\n    surf_points = []     # Point3d con Z = pendiente(%)\n    label_pairs = []     # [(Point2d_A, Point2d_B), ...]\n    z_min_surf = 0.0\n    z_max_surf = 0.0\n    n_ok = n_warn = n_ko = 0\n    n_err = 0\n\n    # --------------------------------------------------------------------- #\n    # FASE 1: lectura, calculo, superficie, (axial: estilo+rangos), etiquetas\n    # --------------------------------------------------------------------- #\n    dlock = doc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n\n            # 1. Localizar la superficie por nombre\n            mdt_surf = None\n            mdt_surf_id = None\n            for sid in cdoc.GetSurfaceIds():\n                s = tr.GetObject(sid, OpenMode.ForRead)\n                if s.Name == mdt_name:\n                    mdt_surf = s\n                    mdt_surf_id = sid\n                    break\n            if mdt_surf is None:\n                raise Exception(\"No se ha encontrado la superficie '{}'. \"\n                                \"Comprueba el nombre / data shortcut.\".format(mdt_name))\n\n            # 2. Recorrer ModelSpace -> contornos + ejes normalizados\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            btr = tr.GetObject(ms_id, OpenMode.ForRead)\n\n            contours = []\n            axes = []\n            # v02: los ejes pueden ser LWPOLYLINE (primer y ultimo vertice) o\n            # LINE (StartPoint/EndPoint). Los contornos siguen siendo solo\n            # polilineas cerradas. Se lleva censo por capa/tipo para que, si\n            # no aparece nada, el log diga que hay en realidad en esa capa.\n            censo = {}\n            n_ejes_pl = 0\n            n_ejes_ln = 0\n            for oid in btr:\n                obj = tr.GetObject(oid, OpenMode.ForRead)\n                es_pl = isinstance(obj, Polyline)\n                es_ln = isinstance(obj, Line)\n                lay = obj.Layer\n                if lay == contour_layer or lay == axis_layer:\n                    try:\n                        tipo_obj = obj.GetType().Name\n                    except Exception:\n                        tipo_obj = type(obj).__name__\n                    clave = (lay, tipo_obj)\n                    censo[clave] = censo.get(clave, 0) + 1\n                if not (es_pl or es_ln):\n                    continue\n                p1 = None\n                p2 = None\n                if es_pl:\n                    nv = obj.NumberOfVertices\n                    if lay == contour_layer and nv >= 3:\n                        pts = []\n                        for i in range(nv):\n                            p = obj.GetPoint2dAt(i)\n                            pts.append((p.X, p.Y))\n                        contours.append(pts)\n                        continue\n                    if lay == axis_layer and nv >= 2:\n                        p1 = obj.GetPoint2dAt(0)\n                        p2 = obj.GetPoint2dAt(nv - 1)\n                        n_ejes_pl += 1\n                elif lay == axis_layer:\n                    p1 = obj.StartPoint\n                    p2 = obj.EndPoint\n                    n_ejes_ln += 1\n                if p1 is not None and p2 is not None:\n                    if axis_vertical:\n                        # A = Norte (mayor Y)\n                        if p1.Y >= p2.Y:\n                            ax, ay, bx, by = p1.X, p1.Y, p2.X, p2.Y\n                        else:\n                            ax, ay, bx, by = p2.X, p2.Y, p1.X, p1.Y\n                    else:\n                        # A = Oeste (menor X)\n                        if p1.X <= p2.X:\n                            ax, ay, bx, by = p1.X, p1.Y, p2.X, p2.Y\n                        else:\n                            ax, ay, bx, by = p2.X, p2.Y, p1.X, p1.Y\n                    axes.append({\n                        \"ax\": ax, \"ay\": ay, \"bx\": bx, \"by\": by,\n                        \"xmid\": (ax + bx) / 2.0, \"ymid\": (ay + by) / 2.0,\n                        \"xmin\": min(ax, bx), \"xmax\": max(ax, bx),\n                        \"ymin\": min(ay, by), \"ymax\": max(ay, by),\n                    })\n\n            def _censo_txt(capa):\n                filas = [\"{} x {}\".format(v, k[1]) for k, v in censo.items()\n                         if k[0] == capa]\n                return \", \".join(sorted(filas)) if filas else \"ningun objeto\"\n\n            if not contours:\n                raise Exception(\n                    \"No hay polilineas (LWPOLYLINE, >=3 vertices) en la capa \"\n                    \"de contorno '{}'. En esa capa hay: {}.\"\n                    .format(contour_layer, _censo_txt(contour_layer)))\n            if not axes:\n                raise Exception(\n                    \"No hay ejes (LWPOLYLINE o LINE) en la capa de ejes '{}'. \"\n                    \"En esa capa hay: {}. Comprueba nombre exacto de capa, \"\n                    \"que no esten en un bloque/XREF, y el tipo de objeto.\"\n                    .format(axis_layer, _censo_txt(axis_layer)))\n\n            log.append(\"Contornos encontrados: {}\".format(len(contours)))\n            log.append(\"Ejes encontrados:      {}  (polilineas {}, lineas {})\"\n                       .format(len(axes), n_ejes_pl, n_ejes_ln))\n            T[\"read\"] = time.perf_counter()\n\n            # 3. Filtro: ambos extremos dentro de algun contorno\n            inside_axes = []\n            n_out = 0\n            for a in axes:\n                inA = any(pip(a[\"ax\"], a[\"ay\"], c) for c in contours)\n                inB = any(pip(a[\"bx\"], a[\"by\"], c) for c in contours)\n                if inA and inB:\n                    inside_axes.append(a)\n                else:\n                    n_out += 1\n            if not inside_axes:\n                raise Exception(\"Ningun eje con ambos extremos dentro del contorno.\")\n            log.append(\"Ejes dentro del contorno: {}\".format(len(inside_axes)))\n            log.append(\"Ejes fuera del contorno:  {}\".format(n_out))\n            T[\"filter\"] = time.perf_counter()\n\n            # 4. Calculo de pendientes segun modo\n            if mode == \"axial\":\n                # pendiente entre los dos extremos de cada eje\n                for a in inside_axes:\n                    xa, ya, xb, yb = a[\"ax\"], a[\"ay\"], a[\"bx\"], a[\"by\"]\n                    try:\n                        za = mdt_surf.FindElevationAtXY(xa, ya)\n                        zb = mdt_surf.FindElevationAtXY(xb, yb)\n                    except:\n                        n_err += 1\n                        continue\n                    dx = xb - xa\n                    dy = yb - ya\n                    L = math.sqrt(dx * dx + dy * dy)\n                    if L < 1e-6:\n                        n_err += 1\n                        continue\n                    slope_pct = (zb - za) / L * 100.0\n                    if abs(slope_pct) > max_slope_pct:\n                        n_ko += 1\n                    elif abs(slope_pct) > warn_slope_pct:\n                        n_warn += 1\n                    else:\n                        n_ok += 1\n                    if opt_pts == 2:\n                        surf_points.append(Point3d(xa, ya, slope_pct))\n                        surf_points.append(Point3d(xb, yb, slope_pct))\n                    else:\n                        xm = (xa + xb) / 2.0\n                        ym = (ya + yb) / 2.0\n                        surf_points.append(Point3d(xm, ym, slope_pct))\n                    label_pairs.append((Point2d(xa, ya), Point2d(xb, yb)))\n\n            else:\n                # entre filas: emparejar con vecino perpendicular y densificar\n                if pitch_max <= 0 or pitch_min < 0 or pitch_min >= pitch_max:\n                    raise Exception(\"Pitch invalido: min={}, max={}. Debe cumplir 0<=min<max.\".format(\n                        pitch_min, pitch_max))\n\n                neighbor_dir = \"Este\" if axis_vertical else \"Sur\"\n\n                def find_neighbor(Tn, pool):\n                    cands = []\n                    for U in pool:\n                        if U is Tn:\n                            continue\n                        if axis_vertical:\n                            d = U[\"xmid\"] - Tn[\"xmid\"]            # vecino al Este (+X)\n                            if d <= 1e-6 or d < pitch_min or d > pitch_max:\n                                continue\n                            if min(Tn[\"ymax\"], U[\"ymax\"]) <= max(Tn[\"ymin\"], U[\"ymin\"]):\n                                continue                          # sin solape en Y\n                        else:\n                            d = Tn[\"ymid\"] - U[\"ymid\"]            # vecino al Sur (-Y)\n                            if d <= 1e-6 or d < pitch_min or d > pitch_max:\n                                continue\n                            if min(Tn[\"xmax\"], U[\"xmax\"]) <= max(Tn[\"xmin\"], U[\"xmin\"]):\n                                continue                          # sin solape en X\n                        cands.append((d, U))\n                    if not cands:\n                        return None\n                    cands.sort(key=lambda c: c[0])                # mas cercano dentro del rango\n                    return cands[0][1]\n\n                n_pts = (1 << max(0, n_iter)) + 1                 # 2^n + 1\n                if n_pts < 2:\n                    n_pts = 2\n                denom = float(n_pts - 1)\n                t_params = [i / denom for i in range(n_pts)]\n\n                pairs = []\n                n_no_neighbor = 0\n                for Tn in inside_axes:\n                    Nn = find_neighbor(Tn, inside_axes)\n                    if Nn is None:\n                        n_no_neighbor += 1\n                        continue\n                    pairs.append((Tn, Nn))\n                if not pairs:\n                    raise Exception(\"Ningun eje tiene vecino al {}. Revisa pitch/geometria.\".format(\n                        neighbor_dir))\n\n                for Tn, Nn in pairs:\n                    Tax, Tay, Tbx, Tby = Tn[\"ax\"], Tn[\"ay\"], Tn[\"bx\"], Tn[\"by\"]\n                    Nax, Nay, Nbx, Nby = Nn[\"ax\"], Nn[\"ay\"], Nn[\"bx\"], Nn[\"by\"]\n                    for tp in t_params:\n                        px = Tax + tp * (Tbx - Tax)\n                        py = Tay + tp * (Tby - Tay)\n                        if axis_vertical:\n                            # proyeccion horizontal: misma py, hallar nx sobre la recta de N\n                            if abs(Nay - Nby) < 1e-9:\n                                n_err += 1\n                                continue\n                            t_n = (Nay - py) / (Nay - Nby)\n                            nx = Nax + t_n * (Nbx - Nax)\n                            ny = py\n                        else:\n                            # proyeccion vertical: misma px, hallar ny sobre la recta de N\n                            if abs(Nax - Nbx) < 1e-9:\n                                n_err += 1\n                                continue\n                            t_n = (Nax - px) / (Nax - Nbx)\n                            ny = Nay + t_n * (Nby - Nay)\n                            nx = px\n                        dx = nx - px\n                        dy = ny - py\n                        L = math.sqrt(dx * dx + dy * dy)\n                        if L < 1e-6:\n                            n_err += 1\n                            continue\n                        try:\n                            zT = mdt_surf.FindElevationAtXY(px, py)\n                            zN = mdt_surf.FindElevationAtXY(nx, ny)\n                        except:\n                            n_err += 1\n                            continue\n                        slope_pct = (zN - zT) / L * 100.0\n                        if abs(slope_pct) > max_slope_pct:\n                            n_ko += 1\n                        elif abs(slope_pct) > warn_slope_pct:\n                            n_warn += 1\n                        else:\n                            n_ok += 1\n                        surf_points.append(Point3d(px, py, slope_pct))\n                        surf_points.append(Point3d(nx, ny, slope_pct))\n                        label_pairs.append((Point2d(px, py), Point2d(nx, ny)))\n\n                log.append(\"Parejas analizadas:     {}\".format(len(pairs)))\n                log.append(\"Ejes sin vecino al {}: {}\".format(neighbor_dir, n_no_neighbor))\n\n            if not surf_points:\n                raise Exception(\"No se han podido calcular pendientes (sin puntos validos).\")\n\n            z_min_surf = min(p.Z for p in surf_points)\n            z_max_surf = max(p.Z for p in surf_points)\n            T[\"calc\"] = time.perf_counter()\n\n            # 5. Crear superficie TIN (borrando la previa por nombre)\n            existing_id = None\n            for sid in cdoc.GetSurfaceIds():\n                s = tr.GetObject(sid, OpenMode.ForRead)\n                if s.Name == out_surf_name:\n                    existing_id = sid\n                    break\n            if existing_id is not None:\n                tr.GetObject(existing_id, OpenMode.ForWrite).Erase()\n                log.append(\"Superficie previa '{}' borrada.\".format(out_surf_name))\n\n            new_surf_id = TinSurface.Create(db, out_surf_name)\n            new_surf = tr.GetObject(new_surf_id, OpenMode.ForWrite)\n            for p in surf_points:\n                new_surf.AddVertex(p)\n\n            # 6. Contornos: el primero como Outer, los demas como Show\n            firstb = True\n            for c in contours:\n                pc = Point3dCollection()\n                for (x, y) in c:\n                    pc.Add(Point3d(x, y, 0.0))\n                if (c[0][0], c[0][1]) != (c[-1][0], c[-1][1]):\n                    pc.Add(Point3d(c[0][0], c[0][1], 0.0))\n                btype = SurfaceBoundaryType.Outer if firstb else SurfaceBoundaryType.Show\n                new_surf.BoundariesDefinition.AddBoundaries(pc, 1.0, btype, True)\n                firstb = False\n\n            # 6b. (solo CROSS) longitud maxima de triangulo -> corta puentes\n            if mode == \"cross\":\n                max_tri = pitch_max * 1.5\n                try:\n                    bops = new_surf.BuildOptions\n                    bops.UseMaximumTriangleLength = True\n                    bops.MaximumTriangleLength = max_tri\n                    log.append(\"Max triangle side aplicado: {:.2f} m\".format(max_tri))\n                except Exception as ex_bo:\n                    log.append(\"AVISO: max triangle side no aplicado por API ({}). \"\n                               \"Configuralo a mano (= {:.2f} m).\".format(ex_bo, max_tri))\n\n            # 7. (solo AXIAL) estilo + rangos en ESTA misma transaccion\n            if mode == \"axial\":\n                assign_style_and_ranges(new_surf, cdoc, z_min_surf, z_max_surf,\n                                        warn_slope_pct, max_slope_pct, log)\n            T[\"surface\"] = time.perf_counter()\n\n            # 8. Etiquetas de pendiente \"Two points\" sobre el MDT muestreado\n            #    Firma C3D 2024: SurfaceSlopeLabel.Create(surfaceId, P2d, P2d, styleId)\n            slope_style_id = None\n            try:\n                lss = cdoc.Styles.LabelStyles.SurfaceLabelStyles.SlopeLabelStyles\n                for stid in lss:\n                    slope_style_id = stid\n                    break\n            except Exception as ex_ss:\n                log.append(\"AVISO: no se pudo leer SlopeLabelStyles: {}\".format(ex_ss))\n\n            n_labels = 0\n            n_label_err = 0\n            first_err = None\n            for pA, pB in label_pairs:\n                try:\n                    if slope_style_id is not None:\n                        SurfaceSlopeLabel.Create(mdt_surf_id, pA, pB, slope_style_id)\n                    else:\n                        SurfaceSlopeLabel.Create(mdt_surf_id, pA, pB)\n                    n_labels += 1\n                except Exception as ex_lb:\n                    n_label_err += 1\n                    if first_err is None:\n                        first_err = str(ex_lb)\n            log.append(\"Etiquetas de pendiente creadas: {}\".format(n_labels))\n            if n_label_err > 0:\n                log.append(\"Etiquetas con error: {} (primer error: {})\".format(n_label_err, first_err))\n            T[\"labels\"] = time.perf_counter()\n\n            tr.Commit()\n        finally:\n            tr.Dispose()\n    finally:\n        dlock.Dispose()\n\n    # --------------------------------------------------------------------- #\n    # FASE 2 (solo CROSS): estilo + rangos en transaccion aislada.\n    # Si falla, la superficie/contornos/etiquetas siguen intactos.\n    # --------------------------------------------------------------------- #\n    if mode == \"cross\":\n        dlock2 = doc.LockDocument()\n        try:\n            tr2 = db.TransactionManager.StartTransaction()\n            try:\n                target = None\n                for sid in cdoc.GetSurfaceIds():\n                    s = tr2.GetObject(sid, OpenMode.ForRead)\n                    if s.Name == out_surf_name:\n                        target = tr2.GetObject(sid, OpenMode.ForWrite)\n                        break\n                if target is None:\n                    log.append(\"AVISO: superficie no localizada para estilo/analisis (fase 2).\")\n                else:\n                    assign_style_and_ranges(target, cdoc, z_min_surf, z_max_surf,\n                                            warn_slope_pct, max_slope_pct, log)\n                tr2.Commit()\n            finally:\n                tr2.Dispose()\n        finally:\n            dlock2.Dispose()\n        T[\"style2\"] = time.perf_counter()\n\n    # --------------------------------------------------------------------- #\n    # Resumen\n    # --------------------------------------------------------------------- #\n    log.append(\"\")\n    log.append(\"=== RESUMEN ===\")\n    log.append(\"Puntos clasificados (dentro):    {}\".format(n_ok + n_warn + n_ko))\n    log.append(\"  Verde   (|p| <= {} %):         {}\".format(warn_slope_pct, n_ok))\n    log.append(\"  Amarillo({} - {} %):           {}\".format(warn_slope_pct, max_slope_pct, n_warn))\n    log.append(\"  Rojo    (|p| > {} %):          {}\".format(max_slope_pct, n_ko))\n    log.append(\"Puntos con error de muestreo:    {}\".format(n_err))\n    log.append(\"Rango pendiente:                 {:.2f} % a {:.2f} %\".format(z_min_surf, z_max_surf))\n    log.append(\"Superficie creada:               {}\".format(out_surf_name))\n\n    # --------------------------------------------------------------------- #\n    # Tiempos\n    # --------------------------------------------------------------------- #\n    T[\"end\"] = time.perf_counter()\n\n    def tl(lbl, k1, k2):\n        if k1 in T and k2 in T:\n            log.append(\"  {:<27}{:>7.2f} s\".format(lbl, T[k2] - T[k1]))\n\n    log.append(\"\")\n    log.append(\"=== TIEMPOS ===\")\n    tl(\"Lectura geometria:\", \"start\", \"read\")\n    tl(\"Filtrado contorno:\", \"read\", \"filter\")\n    tl(\"Calculo pendientes:\", \"filter\", \"calc\")\n    tl(\"Creacion superficie:\", \"calc\", \"surface\")\n    if mode == \"axial\":\n        tl(\"Etiquetas:\", \"surface\", \"labels\")\n    else:\n        tl(\"Etiquetas:\", \"surface\", \"labels\")\n        tl(\"Estilo + rangos (fase 2):\", \"labels\", \"style2\")\n    log.append(\"  \" + \"-\" * 34)\n    log.append(\"  {:<27}{:>7.2f} s\".format(\"TOTAL:\", T[\"end\"] - T[\"start\"]))\n\n    return \"\\n\".join(log)\n\n\ntry:\n    OUT = run()\nexcept Exception as ex:\n    OUT = \"ERROR:\\n\" + str(ex) + \"\\n\\n\" + traceback.format_exc()\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "f6e75bdf2e4a4c27a2d70b6c9f53e8c9",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "536e2d6720ac40dfa9c46e0013c0f34d",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "24c99b03551140bea9fc08b1c0fb57b0",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "572a69f439c946d9a1551aa2702d8de5",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "836bf79f58c74f1aaf3b8faf958d3c0c",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "397edf4e512e402fb6f9773445e4cd68",
+          "Name": "IN[4]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "da9a302004734601a1c427b7a49fc7b0",
+          "Name": "IN[5]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a8b7198868f9465592b8407c5a04d61b",
+          "Name": "IN[6]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "80b21390a6b74a849b695e0b7ece1d9b",
+          "Name": "IN[7]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a0725e344b204f129939cc1780ff13ec",
+          "Name": "IN[8]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "491fc8e7aadb462d8c8f13daaf7850b5",
+          "Name": "IN[9]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "cfd2d1adfd78448aaa9899c929f6de09",
+          "Name": "IN[10]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2bb45135cf52467998a5b6ee37711119",
+          "Name": "IN[11]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d5c858b90fb74f52a5cb5b4ea10b87ec",
+          "Name": "IN[12]",
+          "Description": "barrera NORMALIZAR (ignorada)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "68c6ab6dcb224df48449628194db9657",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 600.0,
+      "WatchHeight": 200.0,
+      "Id": "b623512d184742608e6892e0fbae2e73",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "c11acfeeab77418f81d8cc482fae9217",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "51cf84ed4d5c403a830e8560a0281deb",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "9b190e8ec91949d892f7d970bfcd44a0",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "87f2d577edec43838a9e312c5e1a6c13",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# NORMALIZAR GEOMETRIA v01  -  nodo previo comun a los scripts del pipeline\n# =============================================================================\n# Los scripts leen contornos, ejes y trackers como LWPOLYLINE. En la practica\n# esas capas llegan con LINE sueltas (layouts, DXF), POLYLINE 2D antiguas o\n# POLYLINE 3D. Este nodo las normaliza ANTES de que corra el script:\n#\n#   - LINE      : se encadenan por extremos (tolerancia de empalme TOL_EMPALME)\n#                 y cada cadena pasa a ser UNA LWPOLYLINE. Si la cadena cierra\n#                 sobre si misma (hueco <= TOL_CIERRE) se marca Closed.\n#                 Una LINE aislada -> LWPOLYLINE de 2 vertices.\n#   - POLYLINE2D / POLYLINE3D : se reescriben como LWPOLYLINE plana (Z ignorada),\n#                 conservando el flag Closed.\n#   - LWPOLYLINE: no se toca.\n#\n# Los originales NO se borran: se mueven a la capa '<capa>_ORIG' (se crea si\n# no existe y se deja apagada). Es reversible: mover de vuelta y borrar las\n# LWPOLYLINE nuevas.\n#\n# ENTRADAS (numero variable): IN[0..n-2] nombres de capa (str; vacios se\n#   ignoran; tambien acepta listas de str). El ULTIMO input IN[n-1] es\n#   APLICAR: True convierte; False solo informa (dry-run).\n# SALIDA: OUT = [log_str, n_convertidas]. Conectar OUT como barrera al primer\n#   nodo de trabajo del script para forzar que esto corra antes.\n# =============================================================================\nimport math\nimport time\nimport traceback\n\nimport clr\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, Polyline2d, Polyline3d, Line,\n    SymbolUtilityServices, LayerTableRecord, ObjectId)\nfrom Autodesk.AutoCAD.Geometry import Point2d\n\nTOL_EMPALME = 0.05   # m: dos extremos a menos de esto se consideran unidos\nTOL_CIERRE = 0.50    # m: regla del proyecto para contornos visualmente cerrados\n\n# [DYNAMO-DAG] todo dentro de run(): nunca SystemExit a nivel de modulo\ndef run():\n    # ------------------------------ entradas -----------------------------------\n    _ins = list(IN)\n    if not _ins:\n        return [\"NORMALIZAR: sin entradas\", 0]\n    _ap = _ins[-1]\n    if isinstance(_ap, str):\n        APLICAR = _ap.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n    else:\n        APLICAR = bool(_ap)\n    capas = []\n    for v in _ins[:-1]:\n        if v is None:\n            continue\n        if isinstance(v, (list, tuple)):\n            for x in v:\n                if x is not None and str(x).strip():\n                    capas.append(str(x).strip())\n        elif str(v).strip():\n            capas.append(str(v).strip())\n    # dedup conservando orden\n    _vist = set()\n    capas = [c for c in capas if not (c in _vist or _vist.add(c))]\n\n    L = []\n\n\n    def w(s=\"\"):\n        L.append(str(s))\n\n\n    t_ini = time.perf_counter()\n    w(\"=\" * 72)\n    w(\" NORMALIZAR GEOMETRIA v01  -  {}\".format(\n        \"APLICAR (convierte)\" if APLICAR else \"DRY-RUN (solo informa)\"))\n    w(\"=\" * 72)\n    w(\"capas: {}\".format(\", \".join(capas) if capas else \"(ninguna)\"))\n    w(\"tolerancias: empalme {:.2f} m, cierre {:.2f} m\".format(TOL_EMPALME, TOL_CIERRE))\n\n    if not capas:\n        w(\"Nada que hacer.\")\n        w(\"\")\n        w(\"==== RESUMEN DE TIEMPOS ====\")\n        w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n        return [\"\\n\".join(L), 0]\n\n\n    def _key(p):\n        \"\"\"Celda de rejilla para agrupar extremos con tolerancia.\"\"\"\n        return (int(math.floor(p[0] / TOL_EMPALME)),\n                int(math.floor(p[1] / TOL_EMPALME)))\n\n\n    def _cerca(a, b):\n        return math.hypot(a[0] - b[0], a[1] - b[1]) <= TOL_EMPALME\n\n\n    def encadenar(segs):\n        \"\"\"segs: lista de (p_ini, p_fin) 2D. Devuelve lista de (pts, cerrada).\n        Recorre cada segmento una sola vez; en bifurcaciones toma el primer\n        vecino libre (suficiente para contornos y ejes; los nudos raros se\n        reportan como cadenas abiertas y el usuario los ve en el log).\"\"\"\n        n = len(segs)\n        usado = [False] * n\n        idx = {}\n        for i, (a, b) in enumerate(segs):\n            for p in (a, b):\n                k = _key(p)\n                for dx in (-1, 0, 1):\n                    for dy in (-1, 0, 1):\n                        idx.setdefault((k[0] + dx, k[1] + dy), []).append(i)\n        # dedup listas\n        for k in idx:\n            vist = set()\n            idx[k] = [i for i in idx[k] if not (i in vist or vist.add(i))]\n\n        def vecino_libre(p, excluir):\n            for j in idx.get(_key(p), []):\n                if usado[j] or j == excluir:\n                    continue\n                a, b = segs[j]\n                if _cerca(p, a):\n                    return j, b\n                if _cerca(p, b):\n                    return j, a\n            return None, None\n\n        cadenas = []\n        for i in range(n):\n            if usado[i]:\n                continue\n            usado[i] = True\n            a, b = segs[i]\n            pts = [a, b]\n            # extender por el final\n            cur = b\n            last = i\n            while True:\n                j, nxt = vecino_libre(cur, last)\n                if j is None:\n                    break\n                usado[j] = True\n                pts.append(nxt)\n                cur = nxt\n                last = j\n                if _cerca(cur, pts[0]) and len(pts) > 3:\n                    break\n            # extender por el principio (si no cerro)\n            if not _cerca(pts[-1], pts[0]):\n                cur = pts[0]\n                last = i\n                while True:\n                    j, nxt = vecino_libre(cur, last)\n                    if j is None:\n                        break\n                    usado[j] = True\n                    pts.insert(0, nxt)\n                    cur = nxt\n                    last = j\n                    if _cerca(pts[0], pts[-1]) and len(pts) > 3:\n                        break\n            cerrada = False\n            if len(pts) >= 4 and math.hypot(pts[0][0] - pts[-1][0],\n                                            pts[0][1] - pts[-1][1]) <= TOL_CIERRE:\n                cerrada = True\n                # si el ultimo punto duplica al primero, quitarlo\n                if _cerca(pts[0], pts[-1]):\n                    pts = pts[:-1]\n            cadenas.append((pts, cerrada))\n        return cadenas\n\n\n    def pts_polyline2d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    def pts_polyline3d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    adoc = Application.DocumentManager.MdiActiveDocument\n    db = adoc.Database\n    n_total_conv = 0\n    tiempos = []\n\n    dlock = adoc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            ms = tr.GetObject(ms_id, OpenMode.ForWrite if APLICAR else OpenMode.ForRead)\n            lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n\n            # ---- inventario por capa -----------------------------------------\n            t0 = time.perf_counter()\n            por_capa = {c: {\"lw\": 0, \"line\": [], \"p2d\": [], \"p3d\": [], \"otros\": {}}\n                        for c in capas}\n            for oid in ms:\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                except Exception:\n                    continue\n                lay = ent.Layer\n                if lay not in por_capa:\n                    continue\n                d = por_capa[lay]\n                if isinstance(ent, Polyline):\n                    d[\"lw\"] += 1\n                elif isinstance(ent, Line):\n                    d[\"line\"].append(oid)\n                elif isinstance(ent, Polyline2d):\n                    d[\"p2d\"].append(oid)\n                elif isinstance(ent, Polyline3d):\n                    d[\"p3d\"].append(oid)\n                else:\n                    try:\n                        tn = ent.GetType().Name\n                    except Exception:\n                        tn = type(ent).__name__\n                    d[\"otros\"][tn] = d[\"otros\"].get(tn, 0) + 1\n            tiempos.append((\"inventario\", time.perf_counter() - t0))\n\n            w(\"\")\n            w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  otros\".format(\n                \"capa\", \"LWPL\", \"LINE\", \"PL2D\", \"PL3D\"))\n            w(\"-\" * 72)\n            for c in capas:\n                d = por_capa[c]\n                otros = \", \".join(\"{} x {}\".format(v, k) for k, v in\n                                  sorted(d[\"otros\"].items())) or \"-\"\n                existe = lt.Has(c)\n                w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  {}{}\".format(\n                    c[:28], d[\"lw\"], len(d[\"line\"]), len(d[\"p2d\"]),\n                    len(d[\"p3d\"]), otros, \"\" if existe else \"   !! CAPA NO EXISTE\"))\n\n            # ---- conversion ---------------------------------------------------\n            t0 = time.perf_counter()\n            for c in capas:\n                d = por_capa[c]\n                pendientes = len(d[\"line\"]) + len(d[\"p2d\"]) + len(d[\"p3d\"])\n                if pendientes == 0:\n                    continue\n                w(\"\")\n                w(\"[{}]\".format(c))\n\n                nuevas = []   # (pts, cerrada, origen)\n                # LINE -> cadenas\n                if d[\"line\"]:\n                    segs = []\n                    for oid in d[\"line\"]:\n                        ent = tr.GetObject(oid, OpenMode.ForRead)\n                        a = ent.StartPoint\n                        b = ent.EndPoint\n                        segs.append(((a.X, a.Y), (b.X, b.Y)))\n                    cadenas = encadenar(segs)\n                    n_cer = sum(1 for _, z in cadenas if z)\n                    w(\"  LINE: {} segmentos -> {} cadenas ({} cerradas, {} abiertas)\"\n                      .format(len(segs), len(cadenas), n_cer, len(cadenas) - n_cer))\n                    for pts, cerrada in cadenas:\n                        nuevas.append((pts, cerrada, \"LINE\"))\n                for oid in d[\"p2d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline2d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL2D\"))\n                    else:\n                        w(\"  PL2D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n                for oid in d[\"p3d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline3d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL3D\"))\n                    else:\n                        w(\"  PL3D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n\n                for pts, cerrada, origen in nuevas:\n                    w(\"  {} -> LWPOLYLINE {} vertices{}\".format(\n                        origen, len(pts), \" (cerrada)\" if cerrada else \"\"))\n\n                if not APLICAR:\n                    w(\"  dry-run: {} LWPOLYLINE se crearian; {} originales irian a '{}_ORIG'\"\n                      .format(len(nuevas), pendientes, c))\n                    continue\n\n                # capa destino de la geometria original\n                capa_orig = c + \"_ORIG\"\n                if lt.Has(capa_orig):\n                    id_orig = lt.get_Item(capa_orig)\n                else:\n                    lt.UpgradeOpen()\n                    ltr = LayerTableRecord()\n                    ltr.Name = capa_orig\n                    ltr.IsOff = True\n                    id_orig = lt.Add(ltr)\n                    tr.AddNewlyCreatedDBObject(ltr, True)\n                    lt.DowngradeOpen()\n                    w(\"  capa '{}' creada (apagada)\".format(capa_orig))\n                id_capa = lt.get_Item(c)\n\n                n_new = 0\n                for pts, cerrada, origen in nuevas:\n                    pl = Polyline()\n                    for i, (x, y) in enumerate(pts):\n                        pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n                    pl.Closed = cerrada\n                    pl.LayerId = id_capa\n                    ms.AppendEntity(pl)\n                    tr.AddNewlyCreatedDBObject(pl, True)\n                    n_new += 1\n                n_mov = 0\n                for oid in d[\"line\"] + d[\"p2d\"] + d[\"p3d\"]:\n                    try:\n                        ent = tr.GetObject(oid, OpenMode.ForWrite)\n                        ent.LayerId = id_orig\n                        n_mov += 1\n                    except Exception as ex:\n                        w(\"  KO moviendo handle: {}\".format(str(ex)[:80]))\n                w(\"  creadas {} LWPOLYLINE; {} originales movidas a '{}'\".format(\n                    n_new, n_mov, capa_orig))\n                n_total_conv += n_new\n            tiempos.append((\"conversion\", time.perf_counter() - t0))\n\n            if APLICAR:\n                tr.Commit()\n        finally:\n            tr.Dispose()\n    except Exception:\n        w(\"\")\n        w(\"!!!!!! EXCEPCION NO CONTROLADA\")\n        for linea in traceback.format_exc().split(\"\\n\"):\n            w(\"  \" + linea)\n    finally:\n        dlock.Dispose()\n\n    w(\"\")\n    w(\"RESULTADO: {} LWPOLYLINE {}\".format(\n        n_total_conv, \"creadas\" if APLICAR else \"se crearian (dry-run)\"))\n    w(\"\")\n    w(\"==== RESUMEN DE TIEMPOS ====\")\n    for et, sg in tiempos:\n        w(\"{:<27}{:>7.2f} s\".format(et, sg))\n    w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n\n    return [\"\\n\".join(L), n_total_conv]\n\n\nOUT = run()\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "4290b8f94ab74279a3b7a50483bc4583",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "e80fbda6fec940aaa859cc38ef89fc3c",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "af531ca9226543b2acd9b951c9b4a239",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2211bfd706e246bcaf301b0db8d6fb9a",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "ca9d725f8eb540cea8f70344cb7a5e35",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# Extrae el log (indice 0) de la salida del normalizador para el Watch\nOUT = IN[0][0] if IN[0] is not None else \"(sin salida)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "d2ece24c65534e27be7ddf61d3dd046d",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "71086ee5de0d407d8ec8dd6cc4377e4d",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a0637299e6ff460f98b45bf9e756ca42",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "a590fe588daa46399e472f4752ef3f31",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "f78f021554e849c19c87de9de004bfaf",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0d8297e096554fe8b58b4b3ab2f1dae0",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "ae04b80006b34423b05cef96d5042bfa",
+      "End": "536e2d6720ac40dfa9c46e0013c0f34d",
+      "Id": "d915f83e3a39443ab61f534b7d7c0ac2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "583c003a929e4795b4ecc64d8255399d",
+      "End": "24c99b03551140bea9fc08b1c0fb57b0",
+      "Id": "265d52f93e3e46a7b093caec8e8d8375",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cdf5a346b98d485b96f41f5ba9fd9c01",
+      "End": "572a69f439c946d9a1551aa2702d8de5",
+      "Id": "b842818d308145378a1e7fd26749b0ab",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "35b32ef16ac84405ae3aca34bee36517",
+      "End": "836bf79f58c74f1aaf3b8faf958d3c0c",
+      "Id": "c81a6dca389b4de48b511a7162e6941f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0df3ece470464dfdace5f78ddba26a99",
+      "End": "397edf4e512e402fb6f9773445e4cd68",
+      "Id": "1daa1bd0509c4315a947c4400545c977",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0a1bc920c6934dbd956643ef7938b80f",
+      "End": "da9a302004734601a1c427b7a49fc7b0",
+      "Id": "efcb2c5944934368b3bd30f1e109b5d2",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "f5c6af0cd7744793a40b34b3e6936799",
+      "End": "a8b7198868f9465592b8407c5a04d61b",
+      "Id": "1a1b34ef34af44519cb89258187ddcc5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ef2839b2e0fb4224b301426efff7537a",
+      "End": "80b21390a6b74a849b695e0b7ece1d9b",
+      "Id": "c5b2619fcf0e40c0ad9a28ae267ba4d8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "73326e291b3d4294bed0c4ca9198d03b",
+      "End": "a0725e344b204f129939cc1780ff13ec",
+      "Id": "e2552b7f5ecb473d9d411e6d0da8800e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "342a7f5452d040228aa09a6bdacc31b8",
+      "End": "491fc8e7aadb462d8c8f13daaf7850b5",
+      "Id": "0da8209aca3c4306b517cfe807961c13",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0cffae9008eb410bb7f894d02c38f293",
+      "End": "cfd2d1adfd78448aaa9899c929f6de09",
+      "Id": "1ed1f24b89184b358a588ac2f1cb65f4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cac8ccfdb7cf4d698b2442eddc4d3068",
+      "End": "2bb45135cf52467998a5b6ee37711119",
+      "Id": "d7ae4ce067b7406bb1833f6237bef2e0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "68c6ab6dcb224df48449628194db9657",
+      "End": "c11acfeeab77418f81d8cc482fae9217",
+      "Id": "daba6630c1a64e7c8a2cb66ec9984cbe",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "583c003a929e4795b4ecc64d8255399d",
+      "End": "e80fbda6fec940aaa859cc38ef89fc3c",
+      "Id": "e7448ae48b1a44a9a4c48dd1e8febe3d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cdf5a346b98d485b96f41f5ba9fd9c01",
+      "End": "af531ca9226543b2acd9b951c9b4a239",
+      "Id": "68b2c484635e4b4c89e77f961842f5c6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "87f2d577edec43838a9e312c5e1a6c13",
+      "End": "2211bfd706e246bcaf301b0db8d6fb9a",
+      "Id": "4eb1f59dcc004524990f29a3b41c8a2b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ca9d725f8eb540cea8f70344cb7a5e35",
+      "End": "71086ee5de0d407d8ec8dd6cc4377e4d",
+      "Id": "1467ca86abbc45b982434050ccd6f937",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a0637299e6ff460f98b45bf9e756ca42",
+      "End": "f78f021554e849c19c87de9de004bfaf",
+      "Id": "7ed069f5f66c49cd9377990bb1c9ce0b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ca9d725f8eb540cea8f70344cb7a5e35",
+      "End": "d5c858b90fb74f52a5cb5b4ea10b87ec",
+      "Id": "6e781a494fd94b50be15e52f74818fb6",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "ec4666a40ff743f28702f47cd4cd6694",
+        "Name": "MDT (nombre de la superficie)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "29cc327ac75647f0a236ff07ff38fc95",
+        "Name": "Capa de contorno",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 90.0
+      },
+      {
+        "Id": "b3fa2195c88c4fa1ba0931dea1a4820b",
+        "Name": "Capa de ejes (trackers/mesas)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 180.0
+      },
+      {
+        "Id": "05d187423cbe4052b7e4720c1229eb57",
+        "Name": "Tipo (Trackers/Mesas)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 270.0
+      },
+      {
+        "Id": "b4f4f43aa68c440a99d7b9fb2aaa896a",
+        "Name": "Orientacion (NS/EO)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 360.0
+      },
+      {
+        "Id": "4958e29716de4c7a9df9cb6ca7e650f6",
+        "Name": "Pendiente maxima admisible (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "404b3767a00c4028b61c43b57cb24f76",
+        "Name": "Pendiente de aviso (%)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 540.0
+      },
+      {
+        "Id": "a8c6ac7d908d44b58ee1b4bebcb19632",
+        "Name": "Nombre de la nueva superficie",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 630.0
+      },
+      {
+        "Id": "92c0b248159b41b5bd4f37ed9ad8a786",
+        "Name": "Opcion puntos (1=centroide, 2=extremos) [solo axial]",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 720.0
+      },
+      {
+        "Id": "ecee2735b66647a4b9f71aab8b416d98",
+        "Name": "Pitch minimo (m) [solo entre-filas]",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 810.0
+      },
+      {
+        "Id": "295e129489324854b4cd4df110bc3836",
+        "Name": "Pitch maximo (m) [solo entre-filas]",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 900.0
+      },
+      {
+        "Id": "64d86d9e183d483fb5a7495b12a2555f",
+        "Name": "Iteraciones de subdivision [solo entre-filas]",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 990.0
+      },
+      {
+        "Id": "f6e75bdf2e4a4c27a2d70b6c9f53e8c9",
+        "Name": "Slope Analysis Unificado (Python)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 560.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "b623512d184742608e6892e0fbae2e73",
+        "Name": "LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1140.0,
+        "Y": 450.0
+      },
+      {
+        "Id": "9b190e8ec91949d892f7d970bfcd44a0",
+        "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 40.0,
+        "Y": 170.0
+      },
+      {
+        "Id": "4290b8f94ab74279a3b7a50483bc4583",
+        "Name": "NORMALIZAR geometria (LINE/PL2D/PL3D -> LWPOLYLINE)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 420.0,
+        "Y": 30.0
+      },
+      {
+        "Id": "d2ece24c65534e27be7ddf61d3dd046d",
+        "Name": "extraer log normalizar",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 420.0,
+        "Y": 250.0
+      },
+      {
+        "Id": "a590fe588daa46399e472f4752ef3f31",
+        "Name": "NORMALIZAR_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 420.0,
+        "Y": 350.0
+      }
+    ],
+    "Annotations": [],
+    "X": 30.0,
+    "Y": 60.0,
+    "Zoom": 0.55
+  }
+}

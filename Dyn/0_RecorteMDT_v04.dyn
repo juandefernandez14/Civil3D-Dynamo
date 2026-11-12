@@ -1,0 +1,806 @@
+{
+  "Uuid": "a1874ddd-dd6e-4ecd-8f8c-bbcd31e9ed34",
+  "IsCustomNode": false,
+  "Description": "Recorte del MDT por zonas v06: corte por el contorno desfasado hacia fuera (halo) con cotas reales y cierre virtual de contornos con mini-hueco (<=0.5 m)",
+  "Name": "0_RecorteMDT_v04",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "14a2ec3f78424edd87c41171de26ad14",
+      "Name": "MDT original (nombre)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_CASARES_III_CROPPED",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "0c86aad5f61546cfb879393d13600c3a",
+      "Name": "Capa de zonas (contornos)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_contornos",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "45fd052074c34e18bb849185460b1d86",
+      "Name": "Nombre nueva superficie",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_PruebaCaso",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "9494820739914dfdbb97c18fecde4b62",
+      "Name": "Margen extra filtrado (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "1",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "f56dd4192aea433abcf12ffa80715985",
+      "Name": "Aplicar cambios (N/S)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "S",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "14464fcd8e21453093eb0863934b49eb",
+      "Name": "Anclar contorno original (S/N)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "S",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "94124087c5e4418e827afcccb395c08c",
+      "Name": "Paso muestreo borde (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "1",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "2cac4dc02d2341beaeb5cddb00dac531",
+      "Name": "OFFSET borde hacia fuera (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "1",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "3122d4837fe244fba53a1690524fb614",
+      "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+      "Type": "boolean",
+      "Type2": "boolean",
+      "Value": "true",
+      "Description": "Enables selection between True and False",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "a6e8da78ebde4913a2e34675c40ead87",
+      "Name": "Log",
+      "Type": "string",
+      "InitialValue": "=== RECORTE MDT POR ZONAS v06 (halo = contorno + offset) ===\nMDT:          'MDT_CASARES_III_CROPPED'\nzonas:        capa '_contornos'\nnueva:        'MDT_PruebaCaso'\nOFFSET borde: 1.00 m (corte por el contorno desfasado hacia fuera)\nmargen filtrado total: 2.00 m (offset + margen extra 1.00)\nmodo:         APLICAR (escribe en el DWG)\n\nzonas cerradas: 10 | abiertas ignoradas: 0 | offsets KO: 0\n\nvertices MDT total:          4876678\ndentro de zonas (+2.00 m):   825149\ndescartados (ahorro):        4051529  (83.1%)\nanclaje contorno original (paso 1.0 m): 7509 puntos con cota, 0 sin cota\nboundaries preparados: 10 | puntos: 7586 (cota heredada en 0)\nvertices anyadidos (AddVertices): 832658\nboundaries: 1 Outer + 9 Show (0 KO)\n\nsuperficie 'MDT_PruebaCaso' creada. vertices: 841358\nHECHO. MDT del cliente intacto. La linea de contorno original queda\n1.00 m DENTRO de los datos: consultas sobre ella ya no pueden fallar.\n\n==== RESUMEN DE TIEMPOS ====\nZonas + offsets               0.05 s\nFiltrado vertices           109.31 s\nAnclaje contorno              0.20 s\nPreparar boundaries           0.05 s\nCrear superficie              4.11 s\nBoundaries + rebuild         17.61 s\nTOTAL                       132.49 s",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "14a2ec3f78424edd87c41171de26ad14",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "2fe00380ed1b42048ebbeac6ea6b9614",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_CASARES_III_CROPPED"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "0c86aad5f61546cfb879393d13600c3a",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "853aa1675b3f42e49dd6ffb59192ec0e",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "45fd052074c34e18bb849185460b1d86",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "426c413869054b778dfbcb710a03b1d0",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_PruebaCaso"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "9494820739914dfdbb97c18fecde4b62",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "460dfa1d75774271827ea119aa0f4884",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 1.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "f56dd4192aea433abcf12ffa80715985",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c878fad257214cfdbaf4ecaff6d8dd01",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "S"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "14464fcd8e21453093eb0863934b49eb",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "693918f3536449f1905c3ac287980d35",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "S"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "94124087c5e4418e827afcccb395c08c",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "fe051f316a8e43d78395dccfa76416ed",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 1.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "2cac4dc02d2341beaeb5cddb00dac531",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1829b0044ec84e52b59dfdd0a95ab730",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 1.0
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# IN[8]: BARRERA de sincronizacion del nodo NORMALIZAR (contenido ignorado).\n# -*- coding: utf-8 -*-\n# =============================================================================\n# 0_RecorteMDT_v07.dyn  -  Nodo Python\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# QUE CAMBIA EN v07 (respecto a v06): CIERRE VIRTUAL de contornos.\n#   En produccion aparecen contornos \"cerrados a la vista\" pero con\n#   Closed=No y un mini-hueco entre ultimo y primer vertice (caso real:\n#   5 de 10 zonas ignoradas en MDT_Recortado_Casares III). v07 los acepta\n#   si el hueco es <= TOL_CIERRE (0.5 m), cerrandolos virtualmente y\n#   avisando en el log (handle + hueco). El offset se calcula sobre un\n#   CLON CERRADO EN MEMORIA construido desde los vertices, uniforme para\n#   todas las zonas (y se hace Dispose del clon). Huecos mayores siguen\n#   ignorandose, ahora informando del tamanyo del hueco.\n#\n# QUE CAMBIA EN v06 (respecto a v05): RECORTE CON HALO (contorno + offset).\n#\n#   CAUSA RAIZ que corrige: en v05 la superficie recortada terminaba\n#   EXACTAMENTE en la linea de contorno. Consultar cota SOBRE el borde de un\n#   TIN es fragil: en tramos rectos cae dentro, pero en las esquinas convexas\n#   el punto queda fuera por micras y FindElevationAtXY /\n#   AssignElevationsFromSurface fallan EN SILENCIO -> puntos a Z=0 en las\n#   FLs de contorno del Script 2 -> vertices a cota 0 en la superficie de\n#   trackers -> \"embudos\" -> volumenes fantasma de hasta ~250 m en Script 4.\n#\n#   SOLUCION (propuesta de Juande): recortar por el contorno DESFASADO\n#   'OFFSET_BORDE' m HACIA FUERA (defecto 1.0). Asi la linea de contorno\n#   original queda 1 m DENTRO de los datos en todo su recorrido, y cualquier\n#   consulta sobre ella (esquinas incluidas) es una consulta interior que no\n#   puede fallar por redondeo. Arregla el problema en el productor para\n#   todos los consumidores (Script 2, replanteo, futuros).\n#\n#   Detalles v06:\n#   - Offset hacia fuera con GetOffsetCurves(+/-d) eligiendo el de MAYOR\n#     area (tecnica del Script 5, invertida). Curvas en memoria: se leen y\n#     se hace Dispose, NO se anyaden al dibujo.\n#   - El boundary se pasa como Point3dCollection del contorno DESFASADO con\n#     COTA REAL del MDT original en cada punto (leccion aprendida: el corte\n#     exacto inyecta la Z de esos puntos en el TIN; inyectamos verdad, no 0).\n#     Si un punto no tiene cota (borde del MDT del cliente), hereda la del\n#     vecino bueno mas cercano y se cuenta en el log.\n#   - Ancla ADEMAS la linea de contorno ORIGINAL (vertices + muestreo cada\n#     'paso' m) con cota real: es la linea que consultaran los scripts de\n#     aguas abajo y queda clavada a datos verdaderos.\n#   - El margen de filtrado de vertices se auto-ajusta a >= OFFSET + margen\n#     pedido, para que haya datos del MDT hasta la nueva linea de corte.\n#   - Volumenes del Script 4: SIN CAMBIO (cada volumen sigue recortado por\n#     el contorno ORIGINAL; el halo queda fuera de la interseccion).\n#\n# Entradas:\n#   IN[0] : str    nombre del MDT original (del cliente)\n#   IN[1] : str    capa de zonas (polilineas cerradas)\n#   IN[2] : str    nombre de la superficie nueva\n#   IN[3] : float  margen extra de filtrado en metros (defecto 1.0)\n#   IN[4] : str    aplicar cambios: \"N\" = dry-run (defecto), \"S\" = crear\n#   IN[5] : str    muestrear/anclar contorno original con cota real: \"S\"/\"N\"\n#   IN[6] : float  paso de muestreo del borde en metros (defecto 5.0)\n#   IN[7] : float  OFFSET_BORDE hacia fuera en metros (defecto 1.0)\n#\n# Salida:\n#   OUT   : str    log\n# =============================================================================\n\nimport clr\nimport math\nimport time\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, SymbolUtilityServices\n)\nfrom Autodesk.AutoCAD.Geometry import Point2d, Point3d, Point3dCollection\nfrom Autodesk.Civil import SurfaceBoundaryType\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import TinSurface\n\n# --------------------------------------------------------------------------- #\n# Inputs\n# --------------------------------------------------------------------------- #\nmdt_name    = str(IN[0])\nzones_layer = str(IN[1])\nout_name    = str(IN[2])\nmargin_in   = float(IN[3]) if (len(IN) > 3 and IN[3] is not None) else 1.0\napply_raw   = str(IN[4]).strip().upper() if (len(IN) > 4 and IN[4] is not None) else \"N\"\ndo_apply    = apply_raw in (\"S\", \"SI\", \"Y\", \"YES\", \"1\", \"TRUE\")\nsamp_raw    = str(IN[5]).strip().upper() if (len(IN) > 5 and IN[5] is not None) else \"S\"\ndo_sample   = samp_raw in (\"S\", \"SI\", \"Y\", \"YES\", \"1\", \"TRUE\")\nsamp_step   = float(IN[6]) if (len(IN) > 6 and IN[6] is not None) else 5.0\nif samp_step <= 0.1:\n    samp_step = 0.1\noffset_b    = float(IN[7]) if (len(IN) > 7 and IN[7] is not None) else 1.0\nif offset_b < 0.0:\n    offset_b = 0.0\n\n# margen total de filtrado: datos hasta la linea de corte (offset) + margen\nmargin = offset_b + max(margin_in, 1.0)\n\n# hueco maximo (m) entre ultimo y primer vertice para cerrar virtualmente\nTOL_CIERRE = 0.50\n\nlog = []\ndef w(s):\n    log.append(str(s))\n\n_t0 = time.perf_counter()\n_tiempos = []\ndef _fase(etq, t_ini):\n    _tiempos.append((etq, time.perf_counter() - t_ini))\n\n# --------------------------------------------------------------------------- #\n# Geometria pura\n# --------------------------------------------------------------------------- #\ndef pip(px, py, poly):\n    inside = False\n    n = len(poly)\n    if n < 3:\n        return False\n    j = n - 1\n    for i in range(n):\n        xi, yi = poly[i]\n        xj, yj = poly[j]\n        if ((yi > py) != (yj > py)) and (px < (xj - xi) * (py - yi) / (yj - yi) + xi):\n            inside = not inside\n        j = i\n    return inside\n\ndef dist_pt_seg(px, py, ax, ay, bx, by):\n    dx = bx - ax\n    dy = by - ay\n    if dx == 0.0 and dy == 0.0:\n        return math.hypot(px - ax, py - ay)\n    t = ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)\n    if t < 0.0:\n        t = 0.0\n    elif t > 1.0:\n        t = 1.0\n    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))\n\ndef min_dist_poly(px, py, poly):\n    n = len(poly)\n    best = 1e18\n    j = n - 1\n    for i in range(n):\n        d = dist_pt_seg(px, py, poly[j][0], poly[j][1], poly[i][0], poly[i][1])\n        if d < best:\n            best = d\n        j = i\n    return best\n\ndef in_zone(px, py, poly, bbox, marg):\n    if px < bbox[0] or px > bbox[2] or py < bbox[1] or py > bbox[3]:\n        return False\n    if pip(px, py, poly):\n        return True\n    return min_dist_poly(px, py, poly) <= marg\n\ndef ring_subdividido(pts_xy, paso):\n    \"\"\"Anillo ORDENADO: vertices originales + subdivisiones cada 'paso' m.\n    pts_xy abierto (sin repetir el primero). Incluye siempre cada vertice\n    (t=0 de cada segmento) -> las esquinas quedan exactas.\"\"\"\n    ring = []\n    n = len(pts_xy)\n    for i in range(n):\n        ax, ay = pts_xy[i]\n        bx, by = pts_xy[(i + 1) % n]\n        seg = math.hypot(bx - ax, by - ay)\n        nsub = max(1, int(seg / paso))\n        for s in range(nsub):\n            t = float(s) / float(nsub)\n            ring.append((ax + t * (bx - ax), ay + t * (by - ay)))\n    return ring\n\n# --------------------------------------------------------------------------- #\n# Offset hacia fuera (tecnica Script 5, invertida: MAYOR area)\n# --------------------------------------------------------------------------- #\ndef leer_polyline_xy(pl, paso):\n    \"\"\"Vertices XY de una Polyline en orden. Si tiene bulges, muestrea por\n    distancia (orden garantizado).\"\"\"\n    nv = pl.NumberOfVertices\n    tiene_bulge = False\n    for i in range(nv):\n        try:\n            if abs(pl.GetBulgeAt(i)) > 1e-9:\n                tiene_bulge = True\n                break\n        except Exception:\n            break\n    if not tiene_bulge:\n        pts = []\n        for i in range(nv):\n            p2 = pl.GetPoint2dAt(i)\n            pts.append((p2.X, p2.Y))\n        if len(pts) > 1 and abs(pts[0][0] - pts[-1][0]) < 1e-9 and abs(pts[0][1] - pts[-1][1]) < 1e-9:\n            pts.pop()\n        return pts\n    # con arcos: muestreo por distancia\n    pts = []\n    try:\n        L = float(pl.Length)\n        n = max(8, int(L / max(paso, 0.5)))\n        for k in range(n):\n            p = pl.GetPointAtDist(min(k * L / n, L - 1e-6))\n            pts.append((p.X, p.Y))\n    except Exception:\n        pass\n    return pts\n\ndef clon_cerrado(pts_xy):\n    \"\"\"Polyline CERRADA en memoria (no residente en BD) desde vertices XY.\n    Sirve para GetOffsetCurves con independencia del flag Closed y de los\n    mini-huecos de la polilinea original. El llamador debe hacer Dispose.\"\"\"\n    pl = Polyline()\n    for i, (x, y) in enumerate(pts_xy):\n        pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n    pl.Closed = True\n    return pl\n\n\ndef offset_hacia_fuera(pl, dist, paso, log, etiqueta):\n    \"\"\"Devuelve la lista XY (abierta) del contorno desfasado 'dist' m hacia\n    FUERA, o None si falla. Prueba +dist y -dist y elige la de MAYOR area.\n    Las curvas del offset son objetos en memoria: se leen y se Dispose.\"\"\"\n    if dist <= 0.0:\n        return None\n    try:\n        area_orig = abs(float(pl.Area))\n    except Exception:\n        area_orig = None\n    best_pts = None\n    best_area = -1.0\n    for sgn in (1.0, -1.0):\n        col = None\n        try:\n            col = pl.GetOffsetCurves(sgn * dist)\n        except Exception as ex_of:\n            w(\"  {} offset {}{:.2f} fallo: {}\".format(\n                etiqueta, \"+\" if sgn > 0 else \"-\", dist, str(ex_of)[:90]))\n            continue\n        try:\n            for obj in col:\n                try:\n                    if isinstance(obj, Polyline):\n                        a = None\n                        try:\n                            a = abs(float(obj.Area))\n                        except Exception:\n                            a = None\n                        pts = leer_polyline_xy(obj, paso)\n                        if a is None and len(pts) >= 3:\n                            s = 0.0\n                            m = len(pts)\n                            for i in range(m):\n                                x1, y1 = pts[i]\n                                x2, y2 = pts[(i + 1) % m]\n                                s += x1 * y2 - x2 * y1\n                            a = abs(s) * 0.5\n                        if a is not None and a > best_area and len(pts) >= 3:\n                            best_area = a\n                            best_pts = pts\n                finally:\n                    try:\n                        obj.Dispose()\n                    except Exception:\n                        pass\n        finally:\n            try:\n                col.Dispose()\n            except Exception:\n                pass\n    if best_pts is None:\n        return None\n    if area_orig is not None and best_area <= area_orig:\n        w(\"  {} AVISO: ningun offset AUMENTA el area (orig {:.1f}, mejor {:.1f})\".format(\n            etiqueta, area_orig, best_area))\n        return None\n    return best_pts\n\n# --------------------------------------------------------------------------- #\n# Documento\n# --------------------------------------------------------------------------- #\nadoc = AcadApp.DocumentManager.MdiActiveDocument\ndb = adoc.Database\ncivdoc = CivilApplication.ActiveDocument\n\nw(\"=== RECORTE MDT POR ZONAS v06 (halo = contorno + offset) ===\")\nw(\"MDT:          '\" + mdt_name + \"'\")\nw(\"zonas:        capa '\" + zones_layer + \"'\")\nw(\"nueva:        '\" + out_name + \"'\")\nw(\"OFFSET borde: %.2f m (corte por el contorno desfasado hacia fuera)\" % offset_b)\nw(\"margen filtrado total: %.2f m (offset + margen extra %.2f)\" % (margin, max(margin_in, 1.0)))\nw(\"modo:         \" + (\"APLICAR (escribe en el DWG)\" if do_apply else \"DRY-RUN (solo lectura)\"))\nw(\"\")\n\ndlock = adoc.LockDocument() if do_apply else None\ntr = db.TransactionManager.StartTransaction()\ntry:\n    # ---- 1) localizar el MDT ------------------------------------------------\n    t = time.perf_counter()\n    sids = civdoc.GetSurfaceIds()\n    src = None\n    available = []\n    for i in range(sids.Count):\n        o = tr.GetObject(sids[i], OpenMode.ForRead)\n        available.append(o.Name)\n        if o.Name == mdt_name:\n            src = o\n\n    if src is None:\n        w(\"ERROR: no existe la superficie '\" + mdt_name + \"'. Superficies:\")\n        for nm in available:\n            w(\"   \" + nm)\n        raise Exception(\"Superficie MDT '{}' no encontrada (lista arriba).\".format(mdt_name))\n    if not isinstance(src, TinSurface):\n        w(\"AVISO: '\" + mdt_name + \"' no es TinSurface; continuo con cautela.\")\n\n    def cota_src(x, y):\n        try:\n            return float(src.FindElevationAtXY(x, y))\n        except Exception:\n            return None\n\n    # ---- 2) zonas: polilineas cerradas de la capa ---------------------------\n    ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n    ms = tr.GetObject(ms_id, OpenMode.ForRead)\n    zonas = []            # (pts_orig_xy, bbox_ampliada, pts_offset_xy)\n    n_abiertas = 0\n    n_offset_ko = 0\n    zi = 0\n    for oid in ms:\n        ent = tr.GetObject(oid, OpenMode.ForRead)\n        if not isinstance(ent, Polyline):\n            continue\n        if ent.Layer != zones_layer:\n            continue\n        if ent.NumberOfVertices < 3:\n            continue\n        pts = leer_polyline_xy(ent, samp_step)\n        if len(pts) < 3:\n            continue\n        # clasificacion de cierre sobre los EXTREMOS CRUDOS de la entidad\n        p0 = ent.GetPoint2dAt(0)\n        pn = ent.GetPoint2dAt(ent.NumberOfVertices - 1)\n        hueco = math.hypot(pn.X - p0.X, pn.Y - p0.Y)\n        if ent.Closed or hueco <= 1e-6:\n            pass  # cerrada de verdad\n        elif hueco <= TOL_CIERRE:\n            w(\"  aviso: handle {} cerrada VIRTUALMENTE (hueco {:.3f} m)\".format(\n                ent.Handle, hueco))\n        else:\n            n_abiertas += 1\n            w(\"  aviso: polilinea ABIERTA ignorada (handle {}, hueco {:.3f} m > {:.2f})\".format(\n                ent.Handle, hueco, TOL_CIERRE))\n            continue\n        zi += 1\n        etiqueta = \"zona {:02d}\".format(zi)\n        pts_off = None\n        if offset_b > 0:\n            clon = None\n            try:\n                clon = clon_cerrado(pts)\n                pts_off = offset_hacia_fuera(clon, offset_b, samp_step, w, etiqueta)\n            except Exception as ex_cl:\n                w(\"  {} clon/offset fallo: {}\".format(etiqueta, str(ex_cl)[:90]))\n            finally:\n                if clon is not None:\n                    try:\n                        clon.Dispose()\n                    except Exception:\n                        pass\n        if offset_b > 0 and pts_off is None:\n            n_offset_ko += 1\n            w(\"  {} SIN offset valido -> usara el contorno ORIGINAL como corte\".format(etiqueta))\n        xs = [p[0] for p in pts]\n        ys = [p[1] for p in pts]\n        bbox = (min(xs) - margin, min(ys) - margin, max(xs) + margin, max(ys) + margin)\n        zonas.append((pts, bbox, pts_off))\n\n    w(\"zonas cerradas: {} | abiertas ignoradas: {} | offsets KO: {}\".format(\n        len(zonas), n_abiertas, n_offset_ko))\n    if not zonas:\n        raise Exception(\"La capa '{}' no tiene polilineas cerradas validas.\".format(zones_layer))\n    _fase(\"Zonas + offsets\", t)\n\n    # ---- 3) filtrar vertices del MDT (buffer = offset + margen) -------------\n    t = time.perf_counter()\n    verts = src.Vertices\n    total = 0\n    kept = 0\n    kept_pts = Point3dCollection()\n    for v in verts:\n        total += 1\n        loc = v.Location\n        x = loc.X\n        y = loc.Y\n        for (poly, bbox, _off) in zonas:\n            if in_zone(x, y, poly, bbox, margin):\n                kept += 1\n                if do_apply:\n                    kept_pts.Add(Point3d(x, y, loc.Z))\n                break\n    dropped = total - kept\n    pct = (100.0 * dropped / total) if total else 0.0\n    w(\"\")\n    w(\"vertices MDT total:          \" + str(total))\n    w(\"dentro de zonas (+%.2f m):   %d\" % (margin, kept))\n    w(\"descartados (ahorro):        %d  (%.1f%%)\" % (dropped, pct))\n    _fase(\"Filtrado vertices\", t)\n\n    # ---- 4) anclar el contorno ORIGINAL con cota real -----------------------\n    # (la linea que consultaran los scripts de aguas abajo)\n    t = time.perf_counter()\n    n_anc = 0\n    n_anc_ko = 0\n    if do_sample:\n        for (poly, _bb, _off) in zonas:\n            for (px, py) in ring_subdividido(poly, samp_step):\n                z = cota_src(px, py)\n                if z is None:\n                    n_anc_ko += 1\n                    continue\n                n_anc += 1\n                if do_apply:\n                    kept_pts.Add(Point3d(px, py, z))\n        w(\"anclaje contorno original (paso %.1f m): %d puntos con cota, %d sin cota\"\n          % (samp_step, n_anc, n_anc_ko))\n    else:\n        w(\"anclaje contorno original: NO solicitado (IN[5]='N').\")\n    _fase(\"Anclaje contorno\", t)\n\n    # ---- 5) preparar boundaries (linea offset con cota real) ----------------\n    t = time.perf_counter()\n    boundaries_pc = []     # (etiqueta, lista [(x,y,z)])\n    tot_b = 0\n    tot_b_heredada = 0\n    for k, (poly, _bb, poff) in enumerate(zonas):\n        linea = poff if poff is not None else poly\n        ring = ring_subdividido(linea, samp_step)\n        vals = []\n        for (px, py) in ring:\n            vals.append((px, py, cota_src(px, py)))\n        # rellenar huecos heredando el vecino bueno mas cercano (anillo)\n        buenos = [i for i in range(len(vals)) if vals[i][2] is not None]\n        if not buenos:\n            w(\"  zona {:02d}: SIN COTA en toda la linea de corte -> boundary OMITIDO\".format(k + 1))\n            continue\n        m = len(vals)\n        fill = []\n        for i in range(m):\n            x, y, z = vals[i]\n            if z is None:\n                dmin = None\n                for j in buenos:\n                    dd = min(abs(i - j), m - abs(i - j))\n                    if dmin is None or dd < dmin:\n                        dmin = dd\n                        z = vals[j][2]\n                tot_b_heredada += 1\n            fill.append((x, y, z))\n        tot_b += m\n        boundaries_pc.append((\"zona {:02d}\".format(k + 1), fill))\n    w(\"boundaries preparados: {} | puntos: {} (cota heredada en {})\".format(\n        len(boundaries_pc), tot_b, tot_b_heredada))\n    _fase(\"Preparar boundaries\", t)\n\n    if not do_apply:\n        w(\"\")\n        w(\"DRY-RUN: no se ha creado nada. Plan al aplicar:\")\n        w(\"  1) borrar '{}' previa si existe\".format(out_name))\n        w(\"  2) crear TIN con {} vertices MDT + {} anclas de contorno\".format(kept, n_anc))\n        w(\"  3) {} boundaries por la LINEA OFFSET (+{:.2f} m) con cota real\".format(\n            len(boundaries_pc), offset_b))\n        w(\"Si el recuento encaja, pon IN[4]='S' y re-ejecuta.\")\n        tr.Commit()\n    else:\n        # ---- 6) borrar previa + crear ---------------------------------------\n        t = time.perf_counter()\n        for i in range(sids.Count):\n            o = tr.GetObject(sids[i], OpenMode.ForRead)\n            if o.Name == out_name:\n                o.UpgradeOpen()\n                o.Erase()\n                w(\"superficie previa '{}' borrada (re-ejecucion).\".format(out_name))\n                break\n        new_id = None\n        try:\n            new_id = TinSurface.Create(db, out_name)\n        except Exception as e1:\n            try:\n                new_id = TinSurface.Create(out_name, src.StyleId)\n            except Exception as e2:\n                w(\"ERROR creando TinSurface: \" + str(e1)[:90] + \" | \" + str(e2)[:90])\n                raise\n        new_surf = tr.GetObject(new_id, OpenMode.ForWrite)\n\n        try:\n            new_surf.AddVertices(kept_pts)\n            w(\"vertices anyadidos (AddVertices): \" + str(kept_pts.Count))\n        except Exception as ex:\n            w(\"ERROR AddVertices: \" + str(ex)[:160])\n            raise\n        _fase(\"Crear superficie\", t)\n\n        # ---- 7) boundaries: linea OFFSET, 1 Outer + resto Show, cota real ---\n        t = time.perf_counter()\n        bdef = new_surf.BoundariesDefinition\n        n_out = 0\n        n_show = 0\n        n_bko = 0\n        first = True\n        for (etq, fill) in boundaries_pc:\n            pc = Point3dCollection()\n            for (x, y, z) in fill:\n                pc.Add(Point3d(x, y, z))\n            if (fill[0][0], fill[0][1]) != (fill[-1][0], fill[-1][1]):\n                pc.Add(Point3d(fill[0][0], fill[0][1], fill[0][2]))\n            btype = SurfaceBoundaryType.Outer if first else SurfaceBoundaryType.Show\n            try:\n                bdef.AddBoundaries(pc, 1.0, btype, True)\n                if first:\n                    n_out += 1\n                else:\n                    n_show += 1\n            except Exception as ex_bn:\n                n_bko += 1\n                w(\"  boundary {} fallo: {}\".format(etq, str(ex_bn)[:120]))\n            first = False\n        w(\"boundaries: {} Outer + {} Show ({} KO)\".format(n_out, n_show, n_bko))\n\n        try:\n            new_surf.Rebuild()\n        except Exception as ex_rb:\n            w(\"AVISO Rebuild final: \" + str(ex_rb)[:100])\n        try:\n            w(\"\")\n            w(\"superficie '{}' creada. vertices: {}\".format(out_name, new_surf.Vertices.Count))\n        except Exception as ex:\n            w(\"superficie creada; recuento final ilegible: \" + str(ex)[:80])\n        _fase(\"Boundaries + rebuild\", t)\n\n        tr.Commit()\n        w(\"HECHO. MDT del cliente intacto. La linea de contorno original queda\")\n        w(\"%.2f m DENTRO de los datos: consultas sobre ella ya no pueden fallar.\" % offset_b)\n\nexcept Exception as ex:\n    w(\"\")\n    w(\"ERROR general: \" + str(ex)[:200])\n    w(traceback.format_exc()[:800])\n    try:\n        tr.Abort()\n    except Exception:\n        pass\nfinally:\n    try:\n        tr.Dispose()\n    except Exception:\n        pass\n    if dlock is not None:\n        try:\n            dlock.Dispose()\n        except Exception:\n            pass\n\nw(\"\")\nw(\"==== RESUMEN DE TIEMPOS ====\")\nfor (etq, seg) in _tiempos:\n    w(\"{:<27}{:>7.2f} s\".format(etq, seg))\nw(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - _t0))\n\nOUT = \"\\n\".join(log)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "32191459cdff4904b1daa0964b4f9ab6",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "a5089ce0ed3f4be7bb12874823c48b93",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3c47b970565348c19dba7b5592eb5687",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c803a8ac0cd64f53afc1cc9e31be06cb",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "0eb682f969db4733aabd7efe7c4f5207",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1173e86956514c378ce4e0bbae23a633",
+          "Name": "IN[4]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "68c122c304394c1d84fa74f6234d682e",
+          "Name": "IN[5]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8030b35111124be6a29a567eb7896b74",
+          "Name": "IN[6]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dba3c26eaa9c442cbef6ddc191d0e821",
+          "Name": "IN[7]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f93cccb89a6949e6b0e35a5219927ca5",
+          "Name": "IN[8]",
+          "Description": "barrera NORMALIZAR (ignorada)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bd037778228d4df8972383e0e830a0f5",
+          "Name": "OUT",
+          "Description": "Value of the last line of the Python block",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "a6e8da78ebde4913a2e34675c40ead87",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "45a83400ca4945faa2caf93e4dff724d",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "be7e1030a3a9449bbcbfef59a18b92a7",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "3122d4837fe244fba53a1690524fb614",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "03301ed15b604420b66a8ec3ed5b55c1",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# NORMALIZAR GEOMETRIA v01  -  nodo previo comun a los scripts del pipeline\n# =============================================================================\n# Los scripts leen contornos, ejes y trackers como LWPOLYLINE. En la practica\n# esas capas llegan con LINE sueltas (layouts, DXF), POLYLINE 2D antiguas o\n# POLYLINE 3D. Este nodo las normaliza ANTES de que corra el script:\n#\n#   - LINE      : se encadenan por extremos (tolerancia de empalme TOL_EMPALME)\n#                 y cada cadena pasa a ser UNA LWPOLYLINE. Si la cadena cierra\n#                 sobre si misma (hueco <= TOL_CIERRE) se marca Closed.\n#                 Una LINE aislada -> LWPOLYLINE de 2 vertices.\n#   - POLYLINE2D / POLYLINE3D : se reescriben como LWPOLYLINE plana (Z ignorada),\n#                 conservando el flag Closed.\n#   - LWPOLYLINE: no se toca.\n#\n# Los originales NO se borran: se mueven a la capa '<capa>_ORIG' (se crea si\n# no existe y se deja apagada). Es reversible: mover de vuelta y borrar las\n# LWPOLYLINE nuevas.\n#\n# ENTRADAS (numero variable): IN[0..n-2] nombres de capa (str; vacios se\n#   ignoran; tambien acepta listas de str). El ULTIMO input IN[n-1] es\n#   APLICAR: True convierte; False solo informa (dry-run).\n# SALIDA: OUT = [log_str, n_convertidas]. Conectar OUT como barrera al primer\n#   nodo de trabajo del script para forzar que esto corra antes.\n# =============================================================================\nimport math\nimport time\nimport traceback\n\nimport clr\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, Polyline2d, Polyline3d, Line,\n    SymbolUtilityServices, LayerTableRecord, ObjectId)\nfrom Autodesk.AutoCAD.Geometry import Point2d\n\nTOL_EMPALME = 0.05   # m: dos extremos a menos de esto se consideran unidos\nTOL_CIERRE = 0.50    # m: regla del proyecto para contornos visualmente cerrados\n\n# [DYNAMO-DAG] todo dentro de run(): nunca SystemExit a nivel de modulo\ndef run():\n    # ------------------------------ entradas -----------------------------------\n    _ins = list(IN)\n    if not _ins:\n        return [\"NORMALIZAR: sin entradas\", 0]\n    _ap = _ins[-1]\n    if isinstance(_ap, str):\n        APLICAR = _ap.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n    else:\n        APLICAR = bool(_ap)\n    capas = []\n    for v in _ins[:-1]:\n        if v is None:\n            continue\n        if isinstance(v, (list, tuple)):\n            for x in v:\n                if x is not None and str(x).strip():\n                    capas.append(str(x).strip())\n        elif str(v).strip():\n            capas.append(str(v).strip())\n    # dedup conservando orden\n    _vist = set()\n    capas = [c for c in capas if not (c in _vist or _vist.add(c))]\n\n    L = []\n\n\n    def w(s=\"\"):\n        L.append(str(s))\n\n\n    t_ini = time.perf_counter()\n    w(\"=\" * 72)\n    w(\" NORMALIZAR GEOMETRIA v01  -  {}\".format(\n        \"APLICAR (convierte)\" if APLICAR else \"DRY-RUN (solo informa)\"))\n    w(\"=\" * 72)\n    w(\"capas: {}\".format(\", \".join(capas) if capas else \"(ninguna)\"))\n    w(\"tolerancias: empalme {:.2f} m, cierre {:.2f} m\".format(TOL_EMPALME, TOL_CIERRE))\n\n    if not capas:\n        w(\"Nada que hacer.\")\n        w(\"\")\n        w(\"==== RESUMEN DE TIEMPOS ====\")\n        w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n        return [\"\\n\".join(L), 0]\n\n\n    def _key(p):\n        \"\"\"Celda de rejilla para agrupar extremos con tolerancia.\"\"\"\n        return (int(math.floor(p[0] / TOL_EMPALME)),\n                int(math.floor(p[1] / TOL_EMPALME)))\n\n\n    def _cerca(a, b):\n        return math.hypot(a[0] - b[0], a[1] - b[1]) <= TOL_EMPALME\n\n\n    def encadenar(segs):\n        \"\"\"segs: lista de (p_ini, p_fin) 2D. Devuelve lista de (pts, cerrada).\n        Recorre cada segmento una sola vez; en bifurcaciones toma el primer\n        vecino libre (suficiente para contornos y ejes; los nudos raros se\n        reportan como cadenas abiertas y el usuario los ve en el log).\"\"\"\n        n = len(segs)\n        usado = [False] * n\n        idx = {}\n        for i, (a, b) in enumerate(segs):\n            for p in (a, b):\n                k = _key(p)\n                for dx in (-1, 0, 1):\n                    for dy in (-1, 0, 1):\n                        idx.setdefault((k[0] + dx, k[1] + dy), []).append(i)\n        # dedup listas\n        for k in idx:\n            vist = set()\n            idx[k] = [i for i in idx[k] if not (i in vist or vist.add(i))]\n\n        def vecino_libre(p, excluir):\n            for j in idx.get(_key(p), []):\n                if usado[j] or j == excluir:\n                    continue\n                a, b = segs[j]\n                if _cerca(p, a):\n                    return j, b\n                if _cerca(p, b):\n                    return j, a\n            return None, None\n\n        cadenas = []\n        for i in range(n):\n            if usado[i]:\n                continue\n            usado[i] = True\n            a, b = segs[i]\n            pts = [a, b]\n            # extender por el final\n            cur = b\n            last = i\n            while True:\n                j, nxt = vecino_libre(cur, last)\n                if j is None:\n                    break\n                usado[j] = True\n                pts.append(nxt)\n                cur = nxt\n                last = j\n                if _cerca(cur, pts[0]) and len(pts) > 3:\n                    break\n            # extender por el principio (si no cerro)\n            if not _cerca(pts[-1], pts[0]):\n                cur = pts[0]\n                last = i\n                while True:\n                    j, nxt = vecino_libre(cur, last)\n                    if j is None:\n                        break\n                    usado[j] = True\n                    pts.insert(0, nxt)\n                    cur = nxt\n                    last = j\n                    if _cerca(pts[0], pts[-1]) and len(pts) > 3:\n                        break\n            cerrada = False\n            if len(pts) >= 4 and math.hypot(pts[0][0] - pts[-1][0],\n                                            pts[0][1] - pts[-1][1]) <= TOL_CIERRE:\n                cerrada = True\n                # si el ultimo punto duplica al primero, quitarlo\n                if _cerca(pts[0], pts[-1]):\n                    pts = pts[:-1]\n            cadenas.append((pts, cerrada))\n        return cadenas\n\n\n    def pts_polyline2d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    def pts_polyline3d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    adoc = Application.DocumentManager.MdiActiveDocument\n    db = adoc.Database\n    n_total_conv = 0\n    tiempos = []\n\n    dlock = adoc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            ms = tr.GetObject(ms_id, OpenMode.ForWrite if APLICAR else OpenMode.ForRead)\n            lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n\n            # ---- inventario por capa -----------------------------------------\n            t0 = time.perf_counter()\n            por_capa = {c: {\"lw\": 0, \"line\": [], \"p2d\": [], \"p3d\": [], \"otros\": {}}\n                        for c in capas}\n            for oid in ms:\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                except Exception:\n                    continue\n                lay = ent.Layer\n                if lay not in por_capa:\n                    continue\n                d = por_capa[lay]\n                if isinstance(ent, Polyline):\n                    d[\"lw\"] += 1\n                elif isinstance(ent, Line):\n                    d[\"line\"].append(oid)\n                elif isinstance(ent, Polyline2d):\n                    d[\"p2d\"].append(oid)\n                elif isinstance(ent, Polyline3d):\n                    d[\"p3d\"].append(oid)\n                else:\n                    try:\n                        tn = ent.GetType().Name\n                    except Exception:\n                        tn = type(ent).__name__\n                    d[\"otros\"][tn] = d[\"otros\"].get(tn, 0) + 1\n            tiempos.append((\"inventario\", time.perf_counter() - t0))\n\n            w(\"\")\n            w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  otros\".format(\n                \"capa\", \"LWPL\", \"LINE\", \"PL2D\", \"PL3D\"))\n            w(\"-\" * 72)\n            for c in capas:\n                d = por_capa[c]\n                otros = \", \".join(\"{} x {}\".format(v, k) for k, v in\n                                  sorted(d[\"otros\"].items())) or \"-\"\n                existe = lt.Has(c)\n                w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  {}{}\".format(\n                    c[:28], d[\"lw\"], len(d[\"line\"]), len(d[\"p2d\"]),\n                    len(d[\"p3d\"]), otros, \"\" if existe else \"   !! CAPA NO EXISTE\"))\n\n            # ---- conversion ---------------------------------------------------\n            t0 = time.perf_counter()\n            for c in capas:\n                d = por_capa[c]\n                pendientes = len(d[\"line\"]) + len(d[\"p2d\"]) + len(d[\"p3d\"])\n                if pendientes == 0:\n                    continue\n                w(\"\")\n                w(\"[{}]\".format(c))\n\n                nuevas = []   # (pts, cerrada, origen)\n                # LINE -> cadenas\n                if d[\"line\"]:\n                    segs = []\n                    for oid in d[\"line\"]:\n                        ent = tr.GetObject(oid, OpenMode.ForRead)\n                        a = ent.StartPoint\n                        b = ent.EndPoint\n                        segs.append(((a.X, a.Y), (b.X, b.Y)))\n                    cadenas = encadenar(segs)\n                    n_cer = sum(1 for _, z in cadenas if z)\n                    w(\"  LINE: {} segmentos -> {} cadenas ({} cerradas, {} abiertas)\"\n                      .format(len(segs), len(cadenas), n_cer, len(cadenas) - n_cer))\n                    for pts, cerrada in cadenas:\n                        nuevas.append((pts, cerrada, \"LINE\"))\n                for oid in d[\"p2d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline2d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL2D\"))\n                    else:\n                        w(\"  PL2D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n                for oid in d[\"p3d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline3d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL3D\"))\n                    else:\n                        w(\"  PL3D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n\n                for pts, cerrada, origen in nuevas:\n                    w(\"  {} -> LWPOLYLINE {} vertices{}\".format(\n                        origen, len(pts), \" (cerrada)\" if cerrada else \"\"))\n\n                if not APLICAR:\n                    w(\"  dry-run: {} LWPOLYLINE se crearian; {} originales irian a '{}_ORIG'\"\n                      .format(len(nuevas), pendientes, c))\n                    continue\n\n                # capa destino de la geometria original\n                capa_orig = c + \"_ORIG\"\n                if lt.Has(capa_orig):\n                    id_orig = lt.get_Item(capa_orig)\n                else:\n                    lt.UpgradeOpen()\n                    ltr = LayerTableRecord()\n                    ltr.Name = capa_orig\n                    ltr.IsOff = True\n                    id_orig = lt.Add(ltr)\n                    tr.AddNewlyCreatedDBObject(ltr, True)\n                    lt.DowngradeOpen()\n                    w(\"  capa '{}' creada (apagada)\".format(capa_orig))\n                id_capa = lt.get_Item(c)\n\n                n_new = 0\n                for pts, cerrada, origen in nuevas:\n                    pl = Polyline()\n                    for i, (x, y) in enumerate(pts):\n                        pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n                    pl.Closed = cerrada\n                    pl.LayerId = id_capa\n                    ms.AppendEntity(pl)\n                    tr.AddNewlyCreatedDBObject(pl, True)\n                    n_new += 1\n                n_mov = 0\n                for oid in d[\"line\"] + d[\"p2d\"] + d[\"p3d\"]:\n                    try:\n                        ent = tr.GetObject(oid, OpenMode.ForWrite)\n                        ent.LayerId = id_orig\n                        n_mov += 1\n                    except Exception as ex:\n                        w(\"  KO moviendo handle: {}\".format(str(ex)[:80]))\n                w(\"  creadas {} LWPOLYLINE; {} originales movidas a '{}'\".format(\n                    n_new, n_mov, capa_orig))\n                n_total_conv += n_new\n            tiempos.append((\"conversion\", time.perf_counter() - t0))\n\n            if APLICAR:\n                tr.Commit()\n        finally:\n            tr.Dispose()\n    except Exception:\n        w(\"\")\n        w(\"!!!!!! EXCEPCION NO CONTROLADA\")\n        for linea in traceback.format_exc().split(\"\\n\"):\n            w(\"  \" + linea)\n    finally:\n        dlock.Dispose()\n\n    w(\"\")\n    w(\"RESULTADO: {} LWPOLYLINE {}\".format(\n        n_total_conv, \"creadas\" if APLICAR else \"se crearian (dry-run)\"))\n    w(\"\")\n    w(\"==== RESUMEN DE TIEMPOS ====\")\n    for et, sg in tiempos:\n        w(\"{:<27}{:>7.2f} s\".format(et, sg))\n    w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n\n    return [\"\\n\".join(L), n_total_conv]\n\n\nOUT = run()\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "ed3e5239d696440d83e13125356e74c7",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "8ea23cc0fa294833ab8d43cb3d9d553b",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b0a677be466c4289a8b4c69816182a6d",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "eb50d05615fa4a0f8035d77940f36545",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# Extrae el log (indice 0) de la salida del normalizador para el Watch\nOUT = IN[0][0] if IN[0] is not None else \"(sin salida)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "22ce10da76414f94b42edf5316447a16",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "224a2c8b13134e44b7f4b4c3c87e587d",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4b9dbfa0c2f1429db86b9ba14b08b68b",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "3cd4f7da3e3141edb0aa1d8860d4aaa3",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "86d8a4ec0fab4ffbb956d77d7c9e097e",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "92620017ad1349ebb66cce77330f32fe",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "2fe00380ed1b42048ebbeac6ea6b9614",
+      "End": "a5089ce0ed3f4be7bb12874823c48b93",
+      "Id": "d08ec8222af748ec806fb12eb27e6ca5",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "853aa1675b3f42e49dd6ffb59192ec0e",
+      "End": "3c47b970565348c19dba7b5592eb5687",
+      "Id": "e1e82e9458cb4b8ca0444d482ef1080d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "426c413869054b778dfbcb710a03b1d0",
+      "End": "c803a8ac0cd64f53afc1cc9e31be06cb",
+      "Id": "fecd61cbe31e4d5b85d81b3848333a15",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "460dfa1d75774271827ea119aa0f4884",
+      "End": "0eb682f969db4733aabd7efe7c4f5207",
+      "Id": "d07276c1e69642929da49c6ee4c19bf8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c878fad257214cfdbaf4ecaff6d8dd01",
+      "End": "1173e86956514c378ce4e0bbae23a633",
+      "Id": "9495b101019c4716b99cd16e50274d03",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "693918f3536449f1905c3ac287980d35",
+      "End": "68c122c304394c1d84fa74f6234d682e",
+      "Id": "7c5cef5225324665918d446c83e6c560",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "fe051f316a8e43d78395dccfa76416ed",
+      "End": "8030b35111124be6a29a567eb7896b74",
+      "Id": "2164b298153f4b6aa4c15b751527fb5f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1829b0044ec84e52b59dfdd0a95ab730",
+      "End": "dba3c26eaa9c442cbef6ddc191d0e821",
+      "Id": "0bef3c2601814a55a383b8f7f7e23bf4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "bd037778228d4df8972383e0e830a0f5",
+      "End": "45a83400ca4945faa2caf93e4dff724d",
+      "Id": "26e6903bcff14595998a4868db289658",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "853aa1675b3f42e49dd6ffb59192ec0e",
+      "End": "8ea23cc0fa294833ab8d43cb3d9d553b",
+      "Id": "a39df4fa2a884b47a3789189080f3c4c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "03301ed15b604420b66a8ec3ed5b55c1",
+      "End": "b0a677be466c4289a8b4c69816182a6d",
+      "Id": "b8d9a25ef2834a878842d9aee23806e0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "eb50d05615fa4a0f8035d77940f36545",
+      "End": "224a2c8b13134e44b7f4b4c3c87e587d",
+      "Id": "e079eb07992f4e6bb96015e234734a4a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4b9dbfa0c2f1429db86b9ba14b08b68b",
+      "End": "86d8a4ec0fab4ffbb956d77d7c9e097e",
+      "Id": "2f4340c202d54750a487155aa7c12591",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "eb50d05615fa4a0f8035d77940f36545",
+      "End": "f93cccb89a6949e6b0e35a5219927ca5",
+      "Id": "73ca8bb2835a4b249a942a735cb1ee34",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 10000.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "14a2ec3f78424edd87c41171de26ad14",
+        "Name": "MDT original (nombre)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": -60.0
+      },
+      {
+        "Id": "0c86aad5f61546cfb879393d13600c3a",
+        "Name": "Capa de zonas (contornos)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 40.0
+      },
+      {
+        "Id": "45fd052074c34e18bb849185460b1d86",
+        "Name": "Nombre nueva superficie",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 140.0
+      },
+      {
+        "Id": "9494820739914dfdbb97c18fecde4b62",
+        "Name": "Margen extra filtrado (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 240.0
+      },
+      {
+        "Id": "f56dd4192aea433abcf12ffa80715985",
+        "Name": "Aplicar cambios (N/S)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 340.0
+      },
+      {
+        "Id": "14464fcd8e21453093eb0863934b49eb",
+        "Name": "Anclar contorno original (S/N)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 440.0
+      },
+      {
+        "Id": "94124087c5e4418e827afcccb395c08c",
+        "Name": "Paso muestreo borde (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 540.0
+      },
+      {
+        "Id": "2cac4dc02d2341beaeb5cddb00dac531",
+        "Name": "OFFSET borde hacia fuera (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 640.0
+      },
+      {
+        "Id": "32191459cdff4904b1daa0964b4f9ab6",
+        "Name": "Recorte MDT por zonas v07 (halo + cierre virtual)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 430.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "a6e8da78ebde4913a2e34675c40ead87",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 940.0,
+        "Y": 260.0
+      },
+      {
+        "Id": "3122d4837fe244fba53a1690524fb614",
+        "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -90.0,
+        "Y": -60.0
+      },
+      {
+        "Id": "ed3e5239d696440d83e13125356e74c7",
+        "Name": "NORMALIZAR geometria (LINE/PL2D/PL3D -> LWPOLYLINE)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 290.0,
+        "Y": -160.0
+      },
+      {
+        "Id": "22ce10da76414f94b42edf5316447a16",
+        "Name": "extraer log normalizar",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 290.0,
+        "Y": 60.0
+      },
+      {
+        "Id": "3cd4f7da3e3141edb0aa1d8860d4aaa3",
+        "Name": "NORMALIZAR_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 290.0,
+        "Y": 160.0
+      }
+    ],
+    "Annotations": [],
+    "X": 158.07729691258245,
+    "Y": 72.26081534215422,
+    "Zoom": 0.6855756201184808
+  }
+}

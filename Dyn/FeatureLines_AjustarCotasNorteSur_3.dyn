@@ -1,0 +1,342 @@
+{
+  "Uuid": "757aa995-b67f-52c9-af6c-a1d0a9c8ae28",
+  "IsCustomNode": false,
+  "Description": "Ajusta cotas Norte/Sur de feature lines (de 2 vertices) y reconstruye una TinSurface.",
+  "Name": "FeatureLines_AjustarCotasNorteSur_3",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "0348455748e452af97728094dc16e2df",
+      "Name": "delta_norte (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "0",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "4460973192535aa185daa1f74a0af6c3",
+      "Name": "delta_sur (m)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "0.5",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "726fc183f0ba51b0926dd141425c9b45",
+      "Name": "nombre superficie",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "0348455748e452af97728094dc16e2df",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "af1217f7114a5d56ad7be1703b623483",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 0.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "4460973192535aa185daa1f74a0af6c3",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "1a29776839675a269ec55c247040a392",
+          "Name": "",
+          "Description": "Double",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 0.5
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "726fc183f0ba51b0926dd141425c9b45",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d5d02733e1cc5e24b3b50cbf981011e8",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": ""
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# FeatureLines_AjustarCotasNorteSur.dyn   (v2)\n# Civil 3D 2024 / Dynamo 2.19.x / CPython3\n#\n# Para cada FeatureLine seleccionada:\n#   - Identifica el PI de coordenada Y mayor (Norte = \"Punto 1\")\n#   - Identifica el PI de coordenada Y menor (Sur   = \"Punto 2\")\n#   - Aplica deltas relativos de elevacion (positivos suben, negativos bajan)\n# Despues reconstruye la TinSurface indicada por nombre (solo si hubo cambios).\n#\n# Cambios v2:\n#   - API correcta: GetPoints(FeatureLinePointType.PIPoint) y\n#     SetPointElevation(int, double). En v1 use GetPointAtPI/GetElevationAtPI\n#     que NO existen en C3D 2024.\n#   - Introspeccion en la primera FL: el log lista los metodos relevantes,\n#     asi cualquier renombrado futuro se detecta de inmediato.\n#   - Rebuild solo si hubo al menos 1 OK.\n#   - Enumeracion segura de Point3dCollection (no se asume indexer).\n#\n# Reglas:\n#   - FL de 2 vertices; si hay mas, solo se mueven extremos (aviso en log).\n#   - Si |Y_norte - Y_sur| < EPS_Y_M (1 cm), FL horizontal E-W -> no se toca.\n#   - delta_norte y delta_sur son globales (mismos para todas).\n#   - Reconstruye solo la superficie cuyo nombre se pasa por IN[3].\n#\n# Inputs:\n#   IN[0] : list[FeatureLine wrappers]   OPCIONAL (vacio -> pickfirst).\n#   IN[1] : double   delta_norte  (m, +sube / -baja).\n#   IN[2] : double   delta_sur    (m, +sube / -baja).\n#   IN[3] : string   nombre_superficie   (vacio = no reconstruir).\n#\n# Output:\n#   OUT : string  log multilinea para conectar a un Watch.\n# =============================================================================\n\nimport clr\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import OpenMode, ObjectId\nfrom Autodesk.AutoCAD.EditorInput import PromptStatus\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import FeatureLine, TinSurface\n\n# FeatureLinePointType vive en Autodesk.Civil (namespace base), NO en\n# Autodesk.Civil.DatabaseServices. En v2 lo importe del sitio equivocado y\n# fallaba el modulo entero antes de procesar nada.\n# Importacion robusta con fallbacks por si Autodesk lo mueve de namespace\n# en futuras versiones.\nFeatureLinePointType = None\n_import_log = []\ntry:\n    from Autodesk.Civil import FeatureLinePointType as _FLPT  # ubicacion correcta C3D 2024\n    FeatureLinePointType = _FLPT\n    _import_log.append(\"FeatureLinePointType: Autodesk.Civil OK\")\nexcept ImportError as ex1:\n    _import_log.append(\"Autodesk.Civil: {}\".format(str(ex1)[:80]))\n    try:\n        from Autodesk.Civil.DatabaseServices import FeatureLinePointType as _FLPT2\n        FeatureLinePointType = _FLPT2\n        _import_log.append(\"FeatureLinePointType: Autodesk.Civil.DatabaseServices OK (fallback)\")\n    except ImportError as ex2:\n        _import_log.append(\"Autodesk.Civil.DatabaseServices: {}\".format(str(ex2)[:80]))\n\n\ndef resolve_pi_point_enum(log):\n    \"\"\"Devuelve el valor del enum 'PIPoint' aunque el namespace haya cambiado.\n    Estrategia:\n      1) Si FeatureLinePointType esta cargado, devuelve .PIPoint\n      2) Si no, escanea ensamblados de Autodesk.Civil* via reflection\n         buscando un Enum llamado 'FeatureLinePointType'.\n    Devuelve None si no encuentra nada (en ese caso, el script no puede\n    procesar y abortara con mensaje claro).\n    \"\"\"\n    if FeatureLinePointType is not None:\n        try:\n            return FeatureLinePointType.PIPoint\n        except AttributeError as ex:\n            log.append(\"WARN: FeatureLinePointType cargado pero sin .PIPoint: {}\".format(ex))\n\n    # Fallback por reflexion\n    try:\n        import System\n        for asm in System.AppDomain.CurrentDomain.GetAssemblies():\n            try:\n                aname = asm.GetName().Name\n            except Exception:\n                continue\n            if 'Civil' not in aname:\n                continue\n            try:\n                types = asm.GetTypes()\n            except Exception:\n                continue\n            for t in types:\n                if t.Name == 'FeatureLinePointType' and t.IsEnum:\n                    try:\n                        val = System.Enum.Parse(t, 'PIPoint')\n                        log.append(\"Reflection: FeatureLinePointType.PIPoint encontrado en {} ({})\".format(\n                            aname, t.FullName))\n                        return val\n                    except Exception as ex_p:\n                        log.append(\"Reflection: t={} pero Parse fallo: {}\".format(\n                            t.FullName, str(ex_p)[:80]))\n    except Exception as ex:\n        log.append(\"Reflection scan fallo: {}\".format(str(ex)[:120]))\n    return None\n\n\nEPS_Y_M = 0.01  # 1 cm: umbral para considerar FL \"horizontal Este-Oeste\"\n\n# Flag de modulo: True tras volcar la introspeccion una sola vez.\n_DIAG_DONE = False\n\n\ndef diag_featureline_api(fl, log):\n    \"\"\"Vuelca al log los metodos / propiedades relevantes de la primera FL,\n    para detectar de inmediato cambios de API entre versiones de C3D.\"\"\"\n    global _DIAG_DONE\n    if _DIAG_DONE:\n        return\n    _DIAG_DONE = True\n    try:\n        names = [m for m in dir(fl) if not m.startswith('_')]\n        kw = ('point', 'elev', 'pi', 'vertex')\n        rel = sorted({m for m in names if any(k in m.lower() for k in kw)})\n        log.append(\"DIAG API FeatureLine (relevante):\")\n        for i in range(0, len(rel), 4):\n            log.append(\"    \" + \" | \".join(rel[i:i+4]))\n    except Exception as ex:\n        log.append(\"DIAG FAIL: {}\".format(str(ex)[:120]))\n\n\ndef enum_to_list(col):\n    \"\"\"Convierte una coleccion .NET (Point3dCollection, etc.) en lista Python\n    usando GetEnumerator (los indexers no siempre funcionan en pythonnet).\"\"\"\n    out = []\n    en = col.GetEnumerator()\n    try:\n        while en.MoveNext():\n            out.append(en.Current)\n    finally:\n        disp = getattr(en, 'Dispose', None)\n        if disp is not None:\n            try:\n                disp()\n            except Exception:\n                pass\n    return out\n\n\ndef get_object_id(wrapper):\n    \"\"\"Devuelve ObjectId a partir de un wrapper Dynamo (Civil3DToolkit /\n    Civil DynamoNodes) o de un ObjectId puro.\n    Patron reutilizado de los .dyn anteriores del proyecto.\n    \"\"\"\n    if wrapper is None:\n        return None\n    if isinstance(wrapper, ObjectId):\n        return wrapper\n    # Civil 3D Toolkit / DynamoNodes: InternalDBObject expone .ObjectId\n    try:\n        dbo = getattr(wrapper, 'InternalDBObject', None)\n        if dbo is not None:\n            return dbo.ObjectId\n    except Exception:\n        pass\n    # Camber / otros wrappers: InternalObjectId directo\n    for attr in ('InternalObjectId', 'ObjectId', 'InternalObjectID'):\n        try:\n            oid = getattr(wrapper, attr, None)\n            if oid is not None:\n                return oid\n        except Exception:\n            pass\n    return None\n\n\ndef collect_feature_line_ids(in0, ed, log):\n    \"\"\"Construye lista de ObjectId a procesar.\n    Si in0 trae wrappers/ids, los traduce. Si esta vacio, usa pickfirst\n    (Editor.SelectImplied) para que el usuario haya seleccionado con el\n    raton en Civil 3D antes de pulsar Run.\n    \"\"\"\n    items = in0\n    if items is None:\n        items = []\n    if not isinstance(items, list):\n        items = [items]\n\n    ids = []\n    if items:\n        for i, w in enumerate(items):\n            oid = get_object_id(w)\n            if oid is None or oid.IsNull:\n                log.append(\"WARN: IN[0][{}] no se ha resuelto a ObjectId, se omite ({}).\".format(\n                    i, type(w).__name__))\n                continue\n            ids.append(oid)\n        return ids\n\n    # Fallback: pickfirst en Civil 3D\n    log.append(\"IN[0] vacio -> uso seleccion previa (pickfirst) en Civil 3D.\")\n    res = ed.SelectImplied()\n    if res.Status != PromptStatus.OK or res.Value is None:\n        log.append(\"ERROR: no hay seleccion previa. Antes de pulsar Run, \"\n                   \"selecciona las Feature Lines en Civil 3D (clic con el \"\n                   \"raton). Alternativa: cablea un nodo selector al puerto \"\n                   \"IN[0].\")\n        return []\n    for so in res.Value:\n        ids.append(so.ObjectId)\n    log.append(\"Pickfirst: {} objeto(s) seleccionado(s) en Civil 3D.\".format(len(ids)))\n    return ids\n\n\ndef find_tin_surface_id(cdoc, tr, name, log):\n    \"\"\"Busca una TinSurface por nombre exacto. Devuelve ObjectId o None.\n    Se enumera con GetEnumerator (las colecciones .NET no admiten indexer).\n    \"\"\"\n    if not name:\n        return None\n    surf_ids = cdoc.GetSurfaceIds()\n    en = surf_ids.GetEnumerator()\n    found = None\n    try:\n        while en.MoveNext():\n            sid = en.Current\n            try:\n                s_obj = tr.GetObject(sid, OpenMode.ForRead)\n                if isinstance(s_obj, TinSurface) and s_obj.Name == name:\n                    found = sid\n                    break\n            except Exception as ex_s:\n                log.append(\"WARN enumerando superficies: {}\".format(str(ex_s)[:120]))\n    finally:\n        try:\n            en.Dispose()\n        except Exception:\n            pass\n    return found\n\n\ndef run():\n    # ---- Inputs ----\n    in0       = IN[0] if len(IN) > 0 else None\n    delta_n_in = IN[1] if len(IN) > 1 else 0.0\n    delta_s_in = IN[2] if len(IN) > 2 else 0.0\n    surf_in    = IN[3] if len(IN) > 3 else \"\"\n\n    try:\n        delta_norte = float(delta_n_in)\n    except Exception:\n        return \"ERROR: IN[1] (delta_norte) no es numerico: {!r}\".format(delta_n_in)\n    try:\n        delta_sur = float(delta_s_in)\n    except Exception:\n        return \"ERROR: IN[2] (delta_sur) no es numerico: {!r}\".format(delta_s_in)\n    surf_name = (str(surf_in) if surf_in is not None else \"\").strip()\n\n    log = []\n    log.append(\"=\" * 74)\n    log.append(\"FeatureLines_AjustarCotasNorteSur (v3)\")\n    for line in _import_log:\n        log.append(\"  IMPORT: \" + line)\n    log.append(\"delta_norte    = {:+.4f} m\".format(delta_norte))\n    log.append(\"delta_sur      = {:+.4f} m\".format(delta_sur))\n    log.append(\"superficie     = '{}'\".format(surf_name))\n    log.append(\"eps_horizontal = {} m\".format(EPS_Y_M))\n    log.append(\"-\" * 74)\n\n    # Resolver enum (con fallback por reflexion)\n    pi_enum = resolve_pi_point_enum(log)\n    if pi_enum is None:\n        log.append(\"ERROR: no se pudo resolver FeatureLinePointType.PIPoint. \"\n                   \"Imposible leer los PIs. Aborto.\")\n        return \"\\n\".join(log)\n\n    doc = AcadApp.DocumentManager.MdiActiveDocument\n    if doc is None:\n        log.append(\"ERROR: no hay documento activo en Civil 3D.\")\n        return \"\\n\".join(log)\n    db = doc.Database\n    ed = doc.Editor\n\n    fl_ids = collect_feature_line_ids(in0, ed, log)\n    if not fl_ids:\n        log.append(\"Sin feature lines para procesar. Fin.\")\n        return \"\\n\".join(log)\n    log.append(\"Candidatas a procesar: {}\".format(len(fl_ids)))\n\n    n_ok = 0\n    n_skipped_horizontal = 0\n    n_errors = 0\n\n    dlock = doc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            # ---- 1) Modificar cada FL ----\n            for oid in fl_ids:\n                handle_str = \"<?>\"\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    if not isinstance(ent, FeatureLine):\n                        log.append(\"SKIP: handle={} no es FeatureLine (es {}).\".format(\n                            oid.Handle.ToString(), type(ent).__name__))\n                        # No incrementa errores: filtra ruido del pickfirst.\n                        continue\n\n                    fl = ent\n                    handle_str = oid.Handle.ToString()\n\n                    # Introspeccion una unica vez (en la primera FL valida).\n                    diag_featureline_api(fl, log)\n\n                    # PIs reales de la feature line (Point3d con X,Y,Z=elev)\n                    pi_col = fl.GetPoints(pi_enum)\n                    pis = enum_to_list(pi_col)\n                    n_pts = len(pis)\n\n                    if n_pts < 2:\n                        log.append(\"SKIP: FL handle={} tiene {} PIs (<2).\".format(\n                            handle_str, n_pts))\n                        n_errors += 1\n                        continue\n                    if n_pts > 2:\n                        log.append(\"WARN: FL handle={} tiene {} PIs (>2). \"\n                                   \"Solo se modifican idx 0 y idx {}.\".format(\n                                       handle_str, n_pts, n_pts - 1))\n\n                    idx_a = 0\n                    idx_b = n_pts - 1\n                    p_a = pis[idx_a]\n                    p_b = pis[idx_b]\n                    elev_a = p_a.Z\n                    elev_b = p_b.Z\n\n                    dy = abs(p_a.Y - p_b.Y)\n                    if dy < EPS_Y_M:\n                        log.append(\n                            \"SKIP horizontal: FL handle={} |dY|={:.4f}m < {}m  \"\n                            \"P0=({:.3f},{:.3f}) P{}=({:.3f},{:.3f})\".format(\n                                handle_str, dy, EPS_Y_M,\n                                p_a.X, p_a.Y, idx_b, p_b.X, p_b.Y))\n                        n_skipped_horizontal += 1\n                        continue\n\n                    # Norte = Y mayor; Sur = Y menor\n                    if p_a.Y > p_b.Y:\n                        idx_norte, coord_norte, elev_norte_old = idx_a, p_a, elev_a\n                        idx_sur,   coord_sur,   elev_sur_old   = idx_b, p_b, elev_b\n                    else:\n                        idx_norte, coord_norte, elev_norte_old = idx_b, p_b, elev_b\n                        idx_sur,   coord_sur,   elev_sur_old   = idx_a, p_a, elev_a\n\n                    elev_norte_new = elev_norte_old + delta_norte\n                    elev_sur_new   = elev_sur_old   + delta_sur\n\n                    fl_w = tr.GetObject(oid, OpenMode.ForWrite)\n                    fl_w.SetPointElevation(idx_norte, float(elev_norte_new))\n                    fl_w.SetPointElevation(idx_sur,   float(elev_sur_new))\n\n                    log.append(\n                        \"OK   handle={} | N idx={} XY=({:.3f},{:.3f}) \"\n                        \"Z {:.4f} -> {:.4f}  | S idx={} XY=({:.3f},{:.3f}) \"\n                        \"Z {:.4f} -> {:.4f}\".format(\n                            handle_str,\n                            idx_norte, coord_norte.X, coord_norte.Y,\n                            elev_norte_old, elev_norte_new,\n                            idx_sur, coord_sur.X, coord_sur.Y,\n                            elev_sur_old, elev_sur_new))\n                    n_ok += 1\n\n                except Exception as ex_item:\n                    log.append(\"ERROR FL handle={}: {}\".format(\n                        handle_str, str(ex_item)[:160]))\n                    n_errors += 1\n\n            # ---- 2) Reconstruir TinSurface indicada ----\n            log.append(\"-\" * 74)\n            if not surf_name:\n                log.append(\"Sin nombre de superficie -> no se reconstruye.\")\n            elif n_ok == 0:\n                log.append(\"0 feature lines modificadas -> no se reconstruye \"\n                           \"la superficie '{}'.\".format(surf_name))\n            else:\n                cdoc = CivilApplication.ActiveDocument\n                surf_id = find_tin_surface_id(cdoc, tr, surf_name, log)\n                if surf_id is None:\n                    log.append(\"ERROR: TinSurface '{}' no encontrada.\".format(surf_name))\n                else:\n                    try:\n                        s_w = tr.GetObject(surf_id, OpenMode.ForWrite)\n                        s_w.Rebuild()\n                        log.append(\"OK Rebuild de TinSurface '{}' (handle={}).\".format(\n                            surf_name, surf_id.Handle.ToString()))\n                    except Exception as ex_r:\n                        log.append(\"ERROR Rebuild '{}': {}\".format(\n                            surf_name, str(ex_r)[:160]))\n\n            tr.Commit()\n        finally:\n            tr.Dispose()\n    finally:\n        dlock.Dispose()\n\n    log.append(\"-\" * 74)\n    log.append(\"RESUMEN: ok={} | skip_horizontal={} | errores={}\".format(\n        n_ok, n_skipped_horizontal, n_errors))\n    log.append(\"=\" * 74)\n    return \"\\n\".join(log)\n\n\ntry:\n    OUT = run()\nexcept Exception as ex:\n    OUT = \"FATAL: {}\\n{}\".format(str(ex), traceback.format_exc())\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "017afde6d81b5f3090d729262a744a5f",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "92e4699b6f4759d3b1f1fa332cfa7c03",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "500281f66d6a58efa19a4d571587d854",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "85ca3809f79d550186c912b88b2d5e68",
+          "Name": "IN[2]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "056bd9c78eb652d08e51a2050e3c1413",
+          "Name": "IN[3]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2333cbb40fbd5264aa784b78fdc34863",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "e5f3c0551dc5598fbfa1742e353bf6cd",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "437bc81946375e08a8ecd8874408ed1a",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "35beac67a5e1524f8997c448e773c03e",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "af1217f7114a5d56ad7be1703b623483",
+      "End": "500281f66d6a58efa19a4d571587d854",
+      "Id": "b88a8927919553559415044155c26607",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1a29776839675a269ec55c247040a392",
+      "End": "85ca3809f79d550186c912b88b2d5e68",
+      "Id": "a42b220e0f8e51c4b27efd63d901151d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d5d02733e1cc5e24b3b50cbf981011e8",
+      "End": "056bd9c78eb652d08e51a2050e3c1413",
+      "Id": "5168d475f0b45d1585a78fc4a3a6c74f",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2333cbb40fbd5264aa784b78fdc34863",
+      "End": "437bc81946375e08a8ecd8874408ed1a",
+      "Id": "7d4f4e633d005479aa967631d8543560",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "Lynka / Juande",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 10000.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "0348455748e452af97728094dc16e2df",
+        "Name": "delta_norte (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "4460973192535aa185daa1f74a0af6c3",
+        "Name": "delta_sur (m)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 100.0
+      },
+      {
+        "Id": "726fc183f0ba51b0926dd141425c9b45",
+        "Name": "nombre superficie",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 200.0
+      },
+      {
+        "Id": "017afde6d81b5f3090d729262a744a5f",
+        "Name": "FeatureLines_AjustarCotasNorteSur",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 380.0,
+        "Y": 20.0
+      },
+      {
+        "Id": "e5f3c0551dc5598fbfa1742e353bf6cd",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 920.0,
+        "Y": 20.0
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "1d8879b89fc95476828ab7ec3dab0cd9",
+        "Title": "USO\n-----------------------------------------------------------------\n1) En Civil 3D, selecciona con el raton las Feature Lines que\n   quieras modificar (clic / ventana, antes de pulsar Run).\n2) En este grafico, ajusta:\n     delta_norte (m)    -> +sube / -baja el PI mas al Norte\n     delta_sur   (m)    -> +sube / -baja el PI mas al Sur\n     nombre superficie  -> TinSurface que se reconstruye al final\n                            (dejar vacio = no reconstruir).\n3) Pulsa Run. El log saldra en el Watch.\n\nNOTAS\n-----------------------------------------------------------------\n- FL horizontales E-W (|dY| < 1 cm) se omiten con aviso.\n- FL con mas de 2 PIs: solo se mueven los PIs extremos (idx 0\n  e idx N-1). Aviso en log.\n- Alternativa al pickfirst: cablea un selector (Civil 3D Toolkit,\n  Camber, etc.) al puerto IN[0] del nodo Python.",
+        "DescriptionText": null,
+        "IsExpanded": true,
+        "WidthAdjustment": 0.0,
+        "HeightAdjustment": 0.0,
+        "Nodes": [],
+        "HasNestedGroups": false,
+        "Left": -40.0,
+        "Top": -360.0,
+        "Width": 0.0,
+        "Height": 0.0,
+        "FontSize": 36.0,
+        "GroupStyleId": "00000000-0000-0000-0000-000000000000",
+        "InitialTop": 0.0,
+        "InitialHeight": 0.0,
+        "TextblockHeight": 0.0,
+        "Background": "#FFC1D676"
+      }
+    ],
+    "X": 100.0,
+    "Y": 400.0,
+    "Zoom": 0.85
+  }
+}

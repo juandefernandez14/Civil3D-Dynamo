@@ -1,0 +1,1434 @@
+{
+  "Uuid": "051ccf1c-a158-47cb-b494-efe7fb501be8",
+  "IsCustomNode": false,
+  "Description": "Tablas de volúmenes por contornos con su rugosidad. Inputs: Contornos, Trackers y MDT.",
+  "Name": "4_DP_SuperficiesVolumen_MdT_v03",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [
+    {
+      "Id": "a0c6067810fc4b5f9d259f783818de9d",
+      "Name": "Superficie base (trackers)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "TrackersCaso",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "8313d238960f41859720355ff7092c4f",
+      "Name": "Superficie comparacion (MDT original)",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "MDT_PruebaCaso",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+      "Name": "+-Rugosidad (mm)",
+      "Type": "number",
+      "Type2": "number",
+      "Value": "100",
+      "NumberType": "Double",
+      "Description": "Creates a number",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+      "Name": "Prefijo nombre volumen",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "Volumen_MDT",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+      "Name": "Capa de contornos",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "_contornos",
+      "Description": "Creates a string",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "631dae8ef10b4b63a1f0c1627cafb218",
+      "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+      "Type": "boolean",
+      "Type2": "boolean",
+      "Value": "true",
+      "Description": "Enables selection between True and False",
+      "SelectedIndex": 0
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "41dced036c45411fa9ad49fa5a2a1325",
+      "Name": "Log",
+      "Type": "string",
+      "InitialValue": "=== Volumen MDT v32 (split) - Crea volumenes ===\nMODO: APLICAR (escribe)\nBase: TrackersCaso | Comp: MDT_PruebaCaso | Capa: _contornos\n\nContornos encontrados: 10\nEstilo (full-coverage): 'analisis de pendientes'\nVolumenes previos borrados: 0\n  Volumen_MDT_Zona01: Corte 1045  Relleno 28290  ratio 0.04\n  Volumen_MDT_Zona02: Corte 207  Relleno 281  ratio 0.74\n  Volumen_MDT_Zona03: Corte 847  Relleno 775  ratio 1.09\n  Volumen_MDT_Zona04: Corte 3069  Relleno 2310  ratio 1.33\n  Volumen_MDT_Zona05: Corte 84  Relleno 26890  ratio 0.00\n  Volumen_MDT_Zona06: Corte 994  Relleno 933  ratio 1.07\n  Volumen_MDT_Zona07: Corte 2375  Relleno 2449  ratio 0.97\n  Volumen_MDT_Zona08: Corte 3747  Relleno 4363  ratio 0.86\n  Volumen_MDT_Zona09: Corte 2729  Relleno 84745  ratio 0.03\n  Volumen_MDT_Zona10: Corte 4281  Relleno 66715  ratio 0.06\n\n10 volumenes creados de 10 contornos.\n  tabla Volumen_MDT_Zona01 : pick interior (294067.57, 4028163.87) -> tabla (294832.4, 4028690.7)\n  tabla Volumen_MDT_Zona02 : pick interior (294200.49, 4028539.93) -> tabla (294832.4, 4028650.7)\n  tabla Volumen_MDT_Zona03 : pick interior (294258.13, 4028413.23) -> tabla (294832.4, 4028610.7)\n  tabla Volumen_MDT_Zona04 : pick interior (294348.78, 4028187.47) -> tabla (294832.4, 4028570.7)\n  tabla Volumen_MDT_Zona05 : pick interior (294312.68, 4028550.09) -> tabla (294832.4, 4028530.7)\n  tabla Volumen_MDT_Zona06 : pick interior (294369.77, 4028448.90) -> tabla (294832.4, 4028490.7)\n  tabla Volumen_MDT_Zona07 : pick interior (294476.04, 4028583.79) -> tabla (294832.4, 4028450.7)\n  tabla Volumen_MDT_Zona08 : pick interior (294462.19, 4027507.46) -> tabla (294832.4, 4028410.7)\n  tabla Volumen_MDT_Zona09 : pick interior (294506.13, 4027796.35) -> tabla (294832.4, 4028370.7)\n  tabla Volumen_MDT_Zona10 : pick interior (294550.07, 4028342.61) -> tabla (294832.4, 4028330.7)\n\n=== Volumenes OK, pasando al nodo de tablas ===\n\n=== Nodo 2: tablas de leyenda (picado directo, sin ssget) ===\n  Volumen_MDT_Zona01 : pick (294067.57, 4028163.87) -> tabla (294832.4, 4028690.7)\n  Volumen_MDT_Zona02 : pick (294200.49, 4028539.93) -> tabla (294832.4, 4028650.7)\n  Volumen_MDT_Zona03 : pick (294258.13, 4028413.23) -> tabla (294832.4, 4028610.7)\n  Volumen_MDT_Zona04 : pick (294348.78, 4028187.47) -> tabla (294832.4, 4028570.7)\n  Volumen_MDT_Zona05 : pick (294312.68, 4028550.09) -> tabla (294832.4, 4028530.7)\n  Volumen_MDT_Zona06 : pick (294369.77, 4028448.90) -> tabla (294832.4, 4028490.7)\n  Volumen_MDT_Zona07 : pick (294476.04, 4028583.79) -> tabla (294832.4, 4028450.7)\n  Volumen_MDT_Zona08 : pick (294462.19, 4027507.46) -> tabla (294832.4, 4028410.7)\n  Volumen_MDT_Zona09 : pick (294506.13, 4027796.35) -> tabla (294832.4, 4028370.7)\n  Volumen_MDT_Zona10 : pick (294550.07, 4028342.61) -> tabla (294832.4, 4028330.7)\n  (envios: 25 | mas largo: 233 chars)\n\n>>> 10 tablas enviadas por picado directo en 25 llamadas cortas.\n>>> Al terminar, AutoCAD hara ZOOM Extents: las tablas estaran a la derecha de las zonas.\n\nTiempo de ejecucion (grafo Dynamo): 283.0 s\n(NO incluye el dibujado de tablas: AutoCAD lo ejecuta despues, al quedar libre)",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "a0c6067810fc4b5f9d259f783818de9d",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9d3e579ffde3461bbdd177f59f8546ea",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "TrackersCaso"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "8313d238960f41859720355ff7092c4f",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "8058fd4646814ed088c0d49ba195a265",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "MDT_PruebaCaso"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.DoubleInput, CoreNodeModels",
+      "NumberType": "Double",
+      "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+      "NodeType": "NumberInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "f199140e7bfd4fba96618a47809986f0",
+          "Name": "",
+          "Description": "Number",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a number",
+      "InputValue": 100.0
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d11ca1b14e744d69be15ac71bbd85499",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "Volumen_MDT"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "5e64ffee31464228a528e185d01a37b8",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "_contornos"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# IN[5]: BARRERA de sincronizacion del nodo NORMALIZAR (contenido ignorado).\n# -*- coding: utf-8 -*-\n# =============================================================================\n# Volumen_MDT.dyn  -  Nodo 1: superficies de volumen por zona  (VERSION FINAL v2)\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# Por cada contorno cerrado en la capa indicada crea una TIN Volume Surface\n# (base = trackers, comparacion = MDT) con analisis de elevaciones, y deja la\n# informacion para que el nodo 2 genere su tabla de leyenda.\n#\n# Caracteristicas:\n#   - Re-ejecutable: borra los volumenes previos con el mismo prefijo.\n#   - Un unico barrido de superficies (base + comparacion + a-borrar).\n#   - Logging de avisos por zona (sin 'except: pass' silenciosos) [LOG-DISCIPLINA].\n#   - Modo APLICAR (dry-run): con False no escribe nada, solo informa.\n#   - Calcula un punto de PICADO interior GARANTIZADO por zona (no el\n#     centroide, que en zonas concavas se sale). El nodo 2 lo usa para\n#     seleccionar la superficie al crear la tabla. NOTA C3D 2024:\n#     ADDSURFACELEGENDTABLE NO respeta la preseleccion por nombre\n#     (sssetfirst/ssget) -> hay que seleccionar PICANDO.\n#\n# RENDIMIENTO: el coste dominante es TinVolumeSurface.Create contra el MDT.\n# Para acelerar con MDT grande, pasar en IN[1] el MDT recortado a la huella\n# (p.ej. '<MDT>_CROPPED'). No requiere tocar codigo.\n#\n# IN[0] : str    superficie base (trackers)\n# IN[1] : str    superficie comparacion (MDT; usar version recortada)\n# IN[2] : float  rugosidad en mm\n# IN[3] : str    prefijo del nombre volumen (ej: Volumen_MDT)\n# IN[4] : str    nombre de la capa de contornos\n#\n# OUT   : [log_lista, [(nombre, px, py, table_x, table_y), ...], APLICAR, t0, bbox]\n# =============================================================================\n\n# --- INTERRUPTOR DE SIMULACION ---------------------------------------------\n# True  = ejecuta de verdad (borra y crea superficies)\n# False = simulacion: NO escribe nada, solo informa zonas y tablas previstas\nAPLICAR = True\n# ---------------------------------------------------------------------------\n\nimport clr\nimport traceback\nimport time\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\nclr.AddReference('AecBaseMgd')\nclr.AddReference('AeccDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, ObjectId, Polyline, SymbolUtilityServices\n)\nfrom Autodesk.AutoCAD.Geometry import Point3d, Point3dCollection\nfrom Autodesk.Civil.ApplicationServices import CivilApplication\nfrom Autodesk.Civil.DatabaseServices import (\n    TinVolumeSurface, SurfaceAnalysisElevationData\n)\nfrom Autodesk.Civil import SurfaceBoundaryType\nfrom Autodesk.AutoCAD.Colors import Color as AcadColor\n\nimport System\nfrom System import Array\n\n\ndef interior_point(poly):\n    \"\"\"Punto garantizado DENTRO del poligono (poly = [(x,y),...], abierto).\n    Metodo scanline: a varias alturas, intersecta con los bordes, empareja\n    en tramos interiores y devuelve el punto medio del tramo MAS ancho\n    (bien adentro, lejos de bordes). Cae dentro incluso en zonas concavas\n    donde el centroide se saldria. Fallback: centroide.\"\"\"\n    n = len(poly)\n    if n < 3:\n        return (sum(p[0] for p in poly) / n, sum(p[1] for p in poly) / n)\n    ys = [p[1] for p in poly]\n    ymin = min(ys); ymax = max(ys); h = ymax - ymin\n    best = None  # (ancho, x, y)\n    for frac in (0.5, 0.45, 0.55, 0.4, 0.6, 0.35, 0.65):\n        yc = ymin + frac * h\n        xs = []\n        for i in range(n):\n            x1, y1 = poly[i]\n            x2, y2 = poly[(i + 1) % n]\n            if (y1 <= yc < y2) or (y2 <= yc < y1):\n                t = (yc - y1) / (y2 - y1)\n                xs.append(x1 + t * (x2 - x1))\n        xs.sort()\n        k = 0\n        while k + 1 < len(xs):\n            w = xs[k + 1] - xs[k]\n            if best is None or w > best[0]:\n                best = (w, 0.5 * (xs[k] + xs[k + 1]), yc)\n            k += 2\n    if best is not None:\n        return (best[1], best[2])\n    return (sum(p[0] for p in poly) / n, sum(p[1] for p in poly) / n)\n\nbase_surf_name = str(IN[0])\ncomp_surf_name = str(IN[1])\nrugosidad_mm   = float(IN[2])\nprefix         = str(IN[3])\ncontour_layer  = str(IN[4])\nrugosidad_m    = rugosidad_mm / 1000.0\n\n_t0  = time.time()\nbbox = None\n\nlog = []\nlog.append(\"=== Volumen MDT v32 (split) - Crea volumenes ===\")\nlog.append(\"MODO: {}\".format(\"APLICAR (escribe)\" if APLICAR else \"SIMULACION (no escribe)\"))\nlog.append(\"Base: {} | Comp: {} | Capa: {}\".format(\n    base_surf_name, comp_surf_name, contour_layer))\nlog.append(\"\")\n\ntable_rows = []   # [(zone_name, table_x, table_y), ...] para el nodo de tablas\n\ntry:\n    doc  = AcadApp.DocumentManager.MdiActiveDocument\n    db   = doc.Database\n    cdoc = CivilApplication.ActiveDocument\n\n    contours = []\n    created_info = []   # nombres de las zonas efectivamente creadas\n\n    green = AcadColor.FromRgb(80, 200, 80)\n    red   = AcadColor.FromRgb(220, 50, 50)\n\n    dlock = doc.LockDocument()\n    try:\n        base_id = None\n        comp_id = None\n        style_picking_id = None\n        vol_prefix = prefix + \"_Zona\"\n        to_erase = []\n\n        tr0 = db.TransactionManager.StartTransaction()\n        try:\n            # ---- UNA sola pasada: base, comp y volumenes previos ----\n            for sid in cdoc.GetSurfaceIds():\n                try:\n                    s = tr0.GetObject(sid, OpenMode.ForRead)\n                    sn = s.Name\n                except Exception as ex_n:\n                    log.append(\"  aviso: superficie ilegible: {}\".format(str(ex_n)[:80]))\n                    continue\n                if sn == base_surf_name:\n                    base_id = sid\n                elif sn == comp_surf_name:\n                    comp_id = sid\n                if sn.startswith(vol_prefix):\n                    to_erase.append(sid)\n\n            if base_id is None:\n                raise Exception(\"Base '{}' no encontrada.\".format(base_surf_name))\n            if comp_id is None:\n                raise Exception(\"Comp '{}' no encontrada.\".format(comp_surf_name))\n\n            # ---- Leer contornos ----\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            btr = tr0.GetObject(ms_id, OpenMode.ForRead)\n            for oid in btr:\n                obj = tr0.GetObject(oid, OpenMode.ForRead)\n                if not isinstance(obj, Polyline):\n                    continue\n                if obj.Layer != contour_layer:\n                    continue\n                n = obj.NumberOfVertices\n                if n < 3:\n                    continue\n                pts = []\n                for i in range(n):\n                    p = obj.GetPoint2dAt(i)\n                    pts.append((p.X, p.Y))\n                contours.append(pts)\n\n            if not contours:\n                raise Exception(\"Sin contornos en '{}'.\".format(contour_layer))\n            contours.sort(key=lambda c: min(p[0] for p in c))\n            log.append(\"Contornos encontrados: {}\".format(len(contours)))\n\n            # ---- Estilo full-coverage para que el comando de tabla seleccione ----\n            ss = cdoc.Styles.SurfaceStyles\n            for tv in [\"analisis de pendientes\",\n                       \"Analisis de pendientes\",\n                       \"Analisis de Pendientes\",\n                       \"ANALISIS DE PENDIENTES\",\n                       \"Contours 1m and 5m (Background)\",\n                       \"Standard\",\n                       \"Triangles\"]:\n                try:\n                    style_picking_id = ss.get_Item(tv)\n                    log.append(\"Estilo (full-coverage): '{}'\".format(tv))\n                    break\n                except:\n                    continue\n            if style_picking_id is None:\n                for sid_s in ss:\n                    try:\n                        s_obj = tr0.GetObject(sid_s, OpenMode.ForRead)\n                        nm = s_obj.Name\n                        if nm and not nm.startswith(\"_No\"):\n                            style_picking_id = sid_s\n                            log.append(\"Estilo (fallback): '{}'\".format(nm))\n                            break\n                    except:\n                        continue\n\n            # ---- Borrar volumenes previos (solo si APLICAR) ----\n            if APLICAR:\n                n_erased = 0\n                for sid in to_erase:\n                    try:\n                        tr0.GetObject(sid, OpenMode.ForWrite).Erase()\n                        n_erased += 1\n                    except Exception as ex_e:\n                        log.append(\"  aviso: no se pudo borrar previo: {}\".format(str(ex_e)[:80]))\n                log.append(\"Volumenes previos borrados: {}\".format(n_erased))\n            else:\n                log.append(\"SIMULACION: borraria {} volumenes previos.\".format(len(to_erase)))\n\n            tr0.Commit()\n        finally:\n            tr0.Dispose()\n\n        # ---- Geometria para colocar las tablas (igual layout que v31) ----\n        all_min_x = min(x for pts in contours for x, y in pts)\n        all_min_y = min(y for pts in contours for x, y in pts)\n        all_max_x = max(x for pts in contours for x, y in pts)\n        all_max_y = max(y for pts in contours for x, y in pts)\n        bbox = (all_min_x, all_min_y, all_max_x, all_max_y)\n        width = all_max_x - all_min_x\n        margin_x = max(width * 0.2, 100.0)\n        table_x = all_max_x + margin_x\n        table_spacing = 40.0\n\n        # ============================================================== #\n        # FASE 1: Crear volumenes (o simular)\n        # ============================================================== #\n        if APLICAR:\n            tr = db.TransactionManager.StartTransaction()\n            try:\n                for i, pts in enumerate(contours):\n                    zone_name = \"{}_Zona{:02d}\".format(prefix, i + 1)\n                    try:\n                        vol_id = TinVolumeSurface.Create(zone_name, base_id, comp_id)\n                        vol_surf = tr.GetObject(vol_id, OpenMode.ForWrite)\n\n                        if style_picking_id is not None:\n                            vol_surf.StyleId = style_picking_id\n\n                        pc = Point3dCollection()\n                        for (x, y) in pts:\n                            pc.Add(Point3d(x, y, 0.0))\n                        if (pts[0][0], pts[0][1]) != (pts[-1][0], pts[-1][1]):\n                            pc.Add(Point3d(pts[0][0], pts[0][1], 0.0))\n                        vol_surf.BoundariesDefinition.AddBoundaries(\n                            pc, 1.0, SurfaceBoundaryType.Outer, True)\n\n                        # min/max elevacion (diferencia) para las bandas de analisis\n                        min_e = -50.0; max_e = 50.0\n                        try:\n                            gp = vol_surf.GetGeneralProperties()\n                            gt = clr.GetClrType(type(gp))\n                            for p in gt.GetProperties():\n                                pn = p.Name.lower()\n                                if \"min\" in pn and \"elev\" in pn:\n                                    min_e = p.GetValue(gp)\n                                elif \"max\" in pn and \"elev\" in pn:\n                                    max_e = p.GetValue(gp)\n                        except Exception as ex_gp:\n                            log.append(\"    {} aviso props: {}\".format(zone_name, str(ex_gp)[:100]))\n\n                        try:\n                            d1 = SurfaceAnalysisElevationData(min_e, -rugosidad_m, green)\n                            d2 = SurfaceAnalysisElevationData(rugosidad_m, max_e, red)\n                            vol_surf.Analysis.SetElevationData(\n                                Array[SurfaceAnalysisElevationData]([d1, d2]))\n                        except Exception as ex_an:\n                            log.append(\"    {} aviso analisis: {}\".format(zone_name, str(ex_an)[:100]))\n\n                        try:\n                            vp = vol_surf.GetVolumeProperties()\n                            r = (vp.UnadjustedCutVolume / vp.UnadjustedFillVolume\n                                 if vp.UnadjustedFillVolume > 0 else 0)\n                            log.append(\"  {}: Corte {:.0f}  Relleno {:.0f}  ratio {:.2f}\".format(\n                                zone_name, vp.UnadjustedCutVolume, vp.UnadjustedFillVolume, r))\n                        except Exception as ex_vp:\n                            log.append(\"    {} aviso volumen: {}\".format(zone_name, str(ex_vp)[:100]))\n\n                        created_info.append(zone_name)\n                    except Exception as ex_v:\n                        log.append(\"  ERROR creando {}: {}\".format(zone_name, str(ex_v)[:160]))\n\n                tr.Commit()\n            finally:\n                tr.Dispose()\n            log.append(\"\")\n            log.append(\"{} volumenes creados de {} contornos.\".format(\n                len(created_info), len(contours)))\n        else:\n            for i, pts in enumerate(contours):\n                created_info.append(\"{}_Zona{:02d}\".format(prefix, i + 1))\n            log.append(\"\")\n            log.append(\"SIMULACION: crearia {} volumenes: {}\".format(\n                len(created_info), \", \".join(created_info)))\n\n        # ---- Tablas: solo para zonas REALMENTE creadas ----\n        # Punto de picado = interior garantizado de la zona (NO el centroide).\n        # zone_name \"..._Zona{n:02d}\" -> indice n-1 en contours (mismo orden).\n        for zone_name in created_info:\n            try:\n                zi = int(zone_name.split(\"Zona\")[-1]) - 1\n            except Exception:\n                zi = 0\n            pts = contours[zi]\n            px, py = interior_point(pts)\n            ty = all_max_y - zi * table_spacing\n            table_rows.append((zone_name, px, py, table_x, ty))\n            log.append(\"  tabla {} : pick interior ({:.2f}, {:.2f}) -> tabla ({:.1f}, {:.1f})\".format(\n                zone_name, px, py, table_x, ty))\n\n    finally:\n        dlock.Dispose()\n\n    log.append(\"\")\n    log.append(\"=== Volumenes OK, pasando al nodo de tablas ===\")\n    OUT = [log, table_rows, APLICAR, _t0, bbox]\n\nexcept Exception as ex:\n    log.append(\"ERROR: {}\".format(ex))\n    log.append(traceback.format_exc())\n    OUT = [log, [], APLICAR, _t0, bbox]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "1443590f895a48dc8c2a30075facc5b3",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "f91f1158bc644a85b421ed6b0a25a8bd",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "c8cccef982914db09d692ad68554819d",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "873e8be9da81413fabeecd580f0abb6c",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "b85e3580e4634a5696be1a3efe61d3a5",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "49993a9c6f784a62990a41d34ee04943",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e759f319cd7646cfa1276b78e6e876e7",
+          "Name": "IN[5]",
+          "Description": "barrera NORMALIZAR (ignorada)",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "80707d97c3d24973ace2b3c794b3dff7",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 420.0,
+      "WatchHeight": 38.0,
+      "Id": "41dced036c45411fa9ad49fa5a2a1325",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "f6b0003f01494cdb8530e607e9f63eb4",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "45b8c6e6f7af46a7830abaa44138de80",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# Volumen_MDT.dyn  -  Nodo 2: tablas de leyenda de volumen  (VERSION FINAL v4)\n# Civil 3D 2024 / Dynamo / CPython3\n#\n# Recibe del nodo 1:\n#   IN[0] = [log, [(nombre, px, py, table_x, table_y), ...], APLICAR, t0, bbox]\n#\n# POR QUE ESTA VERSION (corrige \"[SKIP] en todas las zonas\"):\n#   La version anterior comprobaba con ssget si habia superficie en el punto,\n#   filtrando por el tipo \"AECC_TIN_VOLUME_SURFACE\". Ese filtro NO casa con las\n#   superficies de volumen en este Civil 3D -> ssget devolvia nil siempre ->\n#   todas las zonas se saltaban -> 0 tablas.\n#\n#   Solucion: se ELIMINA la comprobacion ssget y se vuelve al PICADO DIRECTO\n#   por coordenada (el metodo que creo las 9 tablas en su dia), anadiendo lo\n#   que si ayuda y no depende de ssget:\n#     - ZOOM a la zona + REGEN antes de picar (superficies dibujadas y en vista;\n#       el picado por coordenada necesita el punto en pantalla).\n#     - Envios cortos (cada SendStringToExecute < ~120 chars) -> sin truncado.\n#     - ZOOM Extents al final para que se vean las tablas creadas.\n#   El punto de picado interior (calculado por el nodo 1) ya acierta en las 9\n#   zonas. Tras crear las tablas, restaura el estilo 'elevaciones'.\n#\n#   NOTA C3D 2024: ADDSURFACELEGENDTABLE no respeta la preseleccion -> se pica.\n#\n# Al final, anade al log el TIEMPO total de ejecucion del grafo.\n# APLICAR=False -> dry-run: NO envia nada; vuelca al log todas las lineas.\n# =============================================================================\n\nimport clr\nimport traceback\nimport time\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\n\n\ndef _get(seq, i, default):\n    try:\n        return seq[i]\n    except Exception:\n        return default\n\n\n_in = IN[0]\nif isinstance(_in, (list, tuple)):\n    log_prev   = _get(_in, 0, [])\n    table_info = _get(_in, 1, [])\n    aplicar    = _get(_in, 2, True)\n    t0         = _get(_in, 3, None)\n    bbox       = _get(_in, 4, None)\nelse:\n    log_prev, table_info, aplicar, t0, bbox = [\"(entrada inesperada al nodo de tablas)\"], [], True, None, None\n\nlog = list(log_prev)\nlog.append(\"\")\nlog.append(\"=== Nodo 2: tablas de leyenda (picado directo, sin ssget) ===\")\n\n\ndef lq(s):\n    return s.replace(\"\\\\\", \"\\\\\\\\\").replace('\"', '\\\\\"')\n\n\ndef fn(v):\n    return \"{:.4f}\".format(float(v))\n\n\n# Restaura el estilo 'elevaciones' de una superficie por nombre (definir 1 vez)\nDEF_VT = ('(defun _vt (nm / d) (setq d (vla-get-surfaces (vla-get-civildocument '\n          '(vla-get-application (vla-get-activedocument (vlax-get-acad-object)))))) '\n          '(vl-catch-all-apply (function (lambda () '\n          '(vla-put-style (vla-item d nm) \"elevaciones\")))))')\n\ntry:\n    if not table_info:\n        log.append(\"Sin tablas que crear.\")\n    else:\n        doc = AcadApp.DocumentManager.MdiActiveDocument\n\n        sends = []   # cada elemento = una cadena para un SendStringToExecute\n\n        # 1) Zoom a la zona de los contornos + regen (para que el picado acierte)\n        if bbox:\n            minx, miny, maxx, maxy = bbox\n            m = max((maxx - minx), (maxy - miny)) * 0.15 + 5.0\n            sends.append(\"_.ZOOM\\n_W\\n{},{}\\n{},{}\\n\".format(\n                fn(minx - m), fn(miny - m), fn(maxx + m), fn(maxy + m)))\n        sends.append(\"_.REGEN\\n\")\n\n        # 2) Una tabla por zona: PICADO directo (texto de comando, lo que funciona)\n        names = []\n        for row in table_info:\n            if len(row) < 5:\n                log.append(\"  AVISO: fila sin punto de picado, salto: {}\".format(row))\n                continue\n            name, px, py, tx, ty = row[0], row[1], row[2], row[3], row[4]\n            names.append(name)\n            sends.append(\n                \"_.ADDSURFACELEGENDTABLE\\n\"\n                \"{},{}\\n\"   # pick: selecciona la superficie de volumen\n                \"E\\n\"       # tipo Elevation\n                \"D\\n\"       # Dynamic\n                \"{},{}\\n\".format(fn(px), fn(py), fn(tx), fn(ty)))\n            log.append(\"  {} : pick ({:.2f}, {:.2f}) -> tabla ({:.1f}, {:.1f})\".format(\n                name, px, py, tx, ty))\n\n        # 3) Restaurar estilo 'elevaciones' (despues de crear todas las tablas)\n        sends.append(\"(vl-load-com)\\n\")\n        sends.append(DEF_VT + \"\\n\")\n        for name in names:\n            sends.append('(_vt \"{}\")\\n'.format(lq(name)))\n\n        # 4) Zoom extents al final para que se vean las tablas\n        sends.append(\"_.ZOOM\\n_E\\n\")\n\n        max_len = max(len(s) for s in sends)\n        log.append(\"  (envios: {} | mas largo: {} chars)\".format(len(sends), max_len))\n\n        if aplicar:\n            for s in sends:\n                doc.SendStringToExecute(s, True, False, False)\n            log.append(\"\")\n            log.append(\">>> {} tablas enviadas por picado directo en {} llamadas cortas.\".format(\n                len(names), len(sends)))\n            log.append(\">>> Al terminar, AutoCAD hara ZOOM Extents: las tablas estaran a la derecha de las zonas.\")\n        else:\n            log.append(\"\")\n            log.append(\"SIMULACION: NO se ha enviado nada. Lineas que se enviarian:\")\n            log.append(\"-\" * 60)\n            for s in sends:\n                log.append(repr(s))\n            log.append(\"-\" * 60)\n\n    if t0 is not None:\n        log.append(\"\")\n        log.append(\"Tiempo de ejecucion (grafo Dynamo): {:.1f} s\".format(time.time() - t0))\n        log.append(\"(NO incluye el dibujado de tablas: AutoCAD lo ejecuta despues, al quedar libre)\")\n\n    OUT = \"\\n\".join(log)\n\nexcept Exception as ex:\n    log.append(\"ERROR: {}\".format(ex))\n    log.append(traceback.format_exc())\n    if t0 is not None:\n        log.append(\"Tiempo de ejecucion (grafo Dynamo): {:.1f} s\".format(time.time() - t0))\n    OUT = \"\\n\".join(log)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "e36b1e7b32634b3fa669cbf9d22b406d",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "95d5ecf3e2174df9a83b6fc5ec8b3850",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "73deb70ba0a14c20aa99fb47858534d0",
+          "Name": "",
+          "Description": "Result of the python script",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "7c4c34e581834fe48700144fb0d371e9",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "c508366e7a574fd087ce0dca832b0394",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "4"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# NODO CONFIG (modo sombra: valida y muestra la config, pero\n# los parametros del script siguen viniendo de los inputs de siempre)\nimport os\nimport sys\nimport importlib\n\n# Localizador de pipeline.py sin rutas fijas. Orden:\n#   1) instalado con instalar.bat (site-packages del Python de Dynamo)\n#   2) variable de entorno PIPELINE_HOME\n#   3) carpeta del proyecto (hasta 3 niveles sobre el DWG activo)\ndef _cargar_pipeline():\n    probadas = []\n    try:\n        import pipeline as _m\n        importlib.reload(_m)\n        return _m, \"pipeline.py: importado desde \" + str(\n            getattr(_m, \"__file__\", \"?\"))\n    except ImportError:\n        probadas.append(\"import directo (site-packages de Dynamo)\")\n    candidatas = []\n    ph = os.environ.get(\"PIPELINE_HOME\", \"\")\n    if ph:\n        candidatas.append(ph)\n    try:\n        import clr\n        clr.AddReference(\"AcMgd\")\n        from Autodesk.AutoCAD.ApplicationServices import (\n            Application as _A)\n        _doc = _A.DocumentManager.MdiActiveDocument\n        if _doc is not None:\n            _c = os.path.dirname(os.path.abspath(str(_doc.Name)))\n            for _ in range(3):\n                candidatas.append(_c)\n                _p = os.path.dirname(_c)\n                if _p == _c:\n                    break\n                _c = _p\n    except Exception as ex:\n        probadas.append(\"DWG activo no disponible: \" + str(ex)[:80])\n    for _r in candidatas:\n        probadas.append(_r)\n        if _r and os.path.exists(os.path.join(_r, \"pipeline.py\")):\n            if _r not in sys.path:\n                sys.path.insert(0, _r)\n            import pipeline as _m\n            importlib.reload(_m)\n            return _m, \"pipeline.py: cargado desde \" + _r\n    log = [\"KO: no se encontro pipeline.py. Rutas probadas:\"]\n    log += [\"  - \" + p for p in probadas]\n    log.append(\"Solucion: doble clic en instalar.bat, o copia pipeline.py \"\n               \"a la carpeta del proyecto (junto a config_proyecto.xlsx), \"\n               \"o define la variable de entorno PIPELINE_HOME.\")\n    return None, \"\\n\".join(log)\n\n\npipeline, _msg_carga = _cargar_pipeline()\n\nif pipeline is None:\n    OUT = [False, _msg_carga, \"\", \"\"]\nelse:\n    OUT = pipeline.nodo_config(str(IN[0]))\n    try:\n        OUT[1] = _msg_carga + \"\\n\" + OUT[1]\n    except Exception:\n        pass\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "96dca3a5893d448fa1b38981c4a3360b",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "5a9d2d91a4d2486bb87b7b25992ec142",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a1841def02e54097a4bb3ba652026b23",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# Extrae el log (indice 1) de la salida CONFIG para el Watch\nOUT = IN[0][1] if IN[0] is not None else \"(sin salida CONFIG)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "883d9668a73641708a9944cf994aa6bc",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "ab9f2cb9947247dc89f7c5d79f848b98",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0c37d53881b04166b2023d76c810345c",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "61ea63deb13b4153bfa20909fd6cd77c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "9b405f204c60438497fd286252e2e9fc",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "6ad215168c124ece952b55b59670cba3",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "97607527135540daa1edf875c65e7b89",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9df52bd9cf954d839ebc516ebb1ba4c6",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": ""
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "149dbe3c30e440b395beb5afa2750485",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "176c0514d5cb4c42bca6cc3d419b9e31",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": true
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "240f8960956c4c8da6829f6bd2299bf4",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "923860f91bad4708b660f03462e46164",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string",
+      "InputValue": "N/A"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# NODO CIERRE: escribe estado_pipeline.json y el log en Logs/\nimport os\nimport sys\nimport importlib\n\n# Localizador de pipeline.py sin rutas fijas. Orden:\n#   1) instalado con instalar.bat (site-packages del Python de Dynamo)\n#   2) variable de entorno PIPELINE_HOME\n#   3) carpeta del proyecto (hasta 3 niveles sobre el DWG activo)\ndef _cargar_pipeline():\n    probadas = []\n    try:\n        import pipeline as _m\n        importlib.reload(_m)\n        return _m, \"pipeline.py: importado desde \" + str(\n            getattr(_m, \"__file__\", \"?\"))\n    except ImportError:\n        probadas.append(\"import directo (site-packages de Dynamo)\")\n    candidatas = []\n    ph = os.environ.get(\"PIPELINE_HOME\", \"\")\n    if ph:\n        candidatas.append(ph)\n    try:\n        import clr\n        clr.AddReference(\"AcMgd\")\n        from Autodesk.AutoCAD.ApplicationServices import (\n            Application as _A)\n        _doc = _A.DocumentManager.MdiActiveDocument\n        if _doc is not None:\n            _c = os.path.dirname(os.path.abspath(str(_doc.Name)))\n            for _ in range(3):\n                candidatas.append(_c)\n                _p = os.path.dirname(_c)\n                if _p == _c:\n                    break\n                _c = _p\n    except Exception as ex:\n        probadas.append(\"DWG activo no disponible: \" + str(ex)[:80])\n    for _r in candidatas:\n        probadas.append(_r)\n        if _r and os.path.exists(os.path.join(_r, \"pipeline.py\")):\n            if _r not in sys.path:\n                sys.path.insert(0, _r)\n            import pipeline as _m\n            importlib.reload(_m)\n            return _m, \"pipeline.py: cargado desde \" + _r\n    log = [\"KO: no se encontro pipeline.py. Rutas probadas:\"]\n    log += [\"  - \" + p for p in probadas]\n    log.append(\"Solucion: doble clic en instalar.bat, o copia pipeline.py \"\n               \"a la carpeta del proyecto (junto a config_proyecto.xlsx), \"\n               \"o define la variable de entorno PIPELINE_HOME.\")\n    return None, \"\\n\".join(log)\n\n\npipeline, _msg_carga = _cargar_pipeline()\n\nif pipeline is None:\n    OUT = [False, _msg_carga + \"\\n\"\n           + (str(IN[1]) if IN[1] is not None else \"\")]\nelse:\n    def _abool(v):\n        if isinstance(v, str):\n            return v.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n        return bool(v)\n\n    fase = str(IN[0])\n    log_script = IN[1] if IN[1] is not None else \"\"\n    resultados = IN[2]\n    aplicado = _abool(IN[3]) if IN[3] is not None else False\n    ok_script = _abool(IN[4]) if IN[4] is not None else True\n    auditoria = str(IN[5]) if IN[5] is not None else \"N/A\"\n    # IN[6]: barrera de sincronizacion (ignorada)\n\n    OUT = pipeline.nodo_cierre(fase, log_script,\n                               resultados=resultados,\n                               aplicado=aplicado,\n                               ok=ok_script,\n                               auditoria_z=auditoria)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "f4548ec34f294ed797378be27167e872",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "50fc061103c04de9b87526ca9f5a5fb4",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "51f713dc1b2848528f0bddae2b6f090b",
+          "Name": "IN[1]",
+          "Description": "Input #1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a37ba6728ef94525a795c385ca3d51c4",
+          "Name": "IN[2]",
+          "Description": "Input #2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e5ecde8ea0364653ad3b52ce676ebf16",
+          "Name": "IN[3]",
+          "Description": "Input #3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "71cadbe12b0f459d86cde2ccb907420e",
+          "Name": "IN[4]",
+          "Description": "Input #4",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ac4e46cb2c8947fb93e54ea5ca67e623",
+          "Name": "IN[5]",
+          "Description": "Input #5",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "336635e34aec477a9194b702fe84b450",
+          "Name": "IN[6]",
+          "Description": "Input #6",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cbcbb67a944b431e901d330d7e0513fb",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# Extrae el log (indice 1) de la salida CONFIG para el Watch\nOUT = IN[0][1] if IN[0] is not None else \"(sin salida CONFIG)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "77950e2700a546ee9f20ab9482318fb8",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "e23c5f470bd942b5aaab13213bb9619c",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "65265c7f6f604a21b736e862398533f8",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "6836c05cc4c843839be5db8f471cc086",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "b6f6b83793fe460aa46833e9a03980f8",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "46eb292301824024bda6cbdcb10b917c",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'superficie_trackers' desde config (indice 4).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 4\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[4]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "540e2d8f3efe46bbb25f58d818606535",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "168f6dc6106c4a92b5c6ace10ebaccb7",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "759f5e5717cc44159e32b48bf0cd6c7f",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'superficie_mdt' desde config (indice 5).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 5\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[5]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "97ab7fef57624485be325045a82dc594",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "cb92900a3eff483faf5bdbd0a3c76d26",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9f74f55b78a14e7e8eafa337b8cb98b7",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'rugosidad_mm' desde config (indice 6).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 6\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[6]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "64fa7bc51024454193e2e7e73b9f4acc",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "7e7e42c6d5864ed4ae375db4d840c50f",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "e9f5f9138a094c45956f74dc071eae93",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'prefijo_volumen' desde config (indice 7).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 7\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[7]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "a60acc5c188e4e99accf6db2da1d1708",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "182ab91b8df8476ead2e014077e02f10",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "33e283a8292e47ccbd9a628402582bff",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# CONFIG: parametro 'capa_contornos' desde config (indice 8).\n# Si la config es KO, BLOQUEA este parametro e incrusta la causa\n# (las lineas KO/AVISO del log de config) en el propio error.\nres = IN[0]\nif ((not isinstance(res, list)) or len(res) <= 8\n        or res[0] is not True):\n    detalle = \"el nodo de config no devolvio datos\"\n    try:\n        lineas = str(res[1]).splitlines()\n        malas = [l.strip() for l in lineas\n                 if \"KO\" in l or \"AVISO\" in l]\n        if malas:\n            detalle = \" | \".join(malas[-4:])\n        elif lineas:\n            detalle = \" | \".join(\n                l.strip() for l in lineas[-3:])\n    except Exception:\n        pass\n    raise Exception(\"CONFIG KO -> \" + detalle[:400])\nOUT = res[8]\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "ac030b5d24364a36b6ed93145c609e90",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "d83c89cf0af14a8f92624cb3b1ef74f1",
+          "Name": "IN[0]",
+          "Description": "Input #0",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "db186cc4faaf42839697d666e6956732",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "631dae8ef10b4b63a1f0c1627cafb218",
+      "NodeType": "BooleanInputNode",
+      "InputValue": true,
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "0db6352194a7439396f9ac96769e7a15",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# NORMALIZAR GEOMETRIA v01  -  nodo previo comun a los scripts del pipeline\n# =============================================================================\n# Los scripts leen contornos, ejes y trackers como LWPOLYLINE. En la practica\n# esas capas llegan con LINE sueltas (layouts, DXF), POLYLINE 2D antiguas o\n# POLYLINE 3D. Este nodo las normaliza ANTES de que corra el script:\n#\n#   - LINE      : se encadenan por extremos (tolerancia de empalme TOL_EMPALME)\n#                 y cada cadena pasa a ser UNA LWPOLYLINE. Si la cadena cierra\n#                 sobre si misma (hueco <= TOL_CIERRE) se marca Closed.\n#                 Una LINE aislada -> LWPOLYLINE de 2 vertices.\n#   - POLYLINE2D / POLYLINE3D : se reescriben como LWPOLYLINE plana (Z ignorada),\n#                 conservando el flag Closed.\n#   - LWPOLYLINE: no se toca.\n#\n# Los originales NO se borran: se mueven a la capa '<capa>_ORIG' (se crea si\n# no existe y se deja apagada). Es reversible: mover de vuelta y borrar las\n# LWPOLYLINE nuevas.\n#\n# ENTRADAS (numero variable): IN[0..n-2] nombres de capa (str; vacios se\n#   ignoran; tambien acepta listas de str). El ULTIMO input IN[n-1] es\n#   APLICAR: True convierte; False solo informa (dry-run).\n# SALIDA: OUT = [log_str, n_convertidas]. Conectar OUT como barrera al primer\n#   nodo de trabajo del script para forzar que esto corra antes.\n# =============================================================================\nimport math\nimport time\nimport traceback\n\nimport clr\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\n\nfrom Autodesk.AutoCAD.ApplicationServices import Application\nfrom Autodesk.AutoCAD.DatabaseServices import (\n    OpenMode, Polyline, Polyline2d, Polyline3d, Line,\n    SymbolUtilityServices, LayerTableRecord, ObjectId)\nfrom Autodesk.AutoCAD.Geometry import Point2d\n\nTOL_EMPALME = 0.05   # m: dos extremos a menos de esto se consideran unidos\nTOL_CIERRE = 0.50    # m: regla del proyecto para contornos visualmente cerrados\n\n# [DYNAMO-DAG] todo dentro de run(): nunca SystemExit a nivel de modulo\ndef run():\n    # ------------------------------ entradas -----------------------------------\n    _ins = list(IN)\n    if not _ins:\n        return [\"NORMALIZAR: sin entradas\", 0]\n    _ap = _ins[-1]\n    if isinstance(_ap, str):\n        APLICAR = _ap.strip().upper() in (\"S\", \"SI\", \"TRUE\", \"1\", \"V\")\n    else:\n        APLICAR = bool(_ap)\n    capas = []\n    for v in _ins[:-1]:\n        if v is None:\n            continue\n        if isinstance(v, (list, tuple)):\n            for x in v:\n                if x is not None and str(x).strip():\n                    capas.append(str(x).strip())\n        elif str(v).strip():\n            capas.append(str(v).strip())\n    # dedup conservando orden\n    _vist = set()\n    capas = [c for c in capas if not (c in _vist or _vist.add(c))]\n\n    L = []\n\n\n    def w(s=\"\"):\n        L.append(str(s))\n\n\n    t_ini = time.perf_counter()\n    w(\"=\" * 72)\n    w(\" NORMALIZAR GEOMETRIA v01  -  {}\".format(\n        \"APLICAR (convierte)\" if APLICAR else \"DRY-RUN (solo informa)\"))\n    w(\"=\" * 72)\n    w(\"capas: {}\".format(\", \".join(capas) if capas else \"(ninguna)\"))\n    w(\"tolerancias: empalme {:.2f} m, cierre {:.2f} m\".format(TOL_EMPALME, TOL_CIERRE))\n\n    if not capas:\n        w(\"Nada que hacer.\")\n        w(\"\")\n        w(\"==== RESUMEN DE TIEMPOS ====\")\n        w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n        return [\"\\n\".join(L), 0]\n\n\n    def _key(p):\n        \"\"\"Celda de rejilla para agrupar extremos con tolerancia.\"\"\"\n        return (int(math.floor(p[0] / TOL_EMPALME)),\n                int(math.floor(p[1] / TOL_EMPALME)))\n\n\n    def _cerca(a, b):\n        return math.hypot(a[0] - b[0], a[1] - b[1]) <= TOL_EMPALME\n\n\n    def encadenar(segs):\n        \"\"\"segs: lista de (p_ini, p_fin) 2D. Devuelve lista de (pts, cerrada).\n        Recorre cada segmento una sola vez; en bifurcaciones toma el primer\n        vecino libre (suficiente para contornos y ejes; los nudos raros se\n        reportan como cadenas abiertas y el usuario los ve en el log).\"\"\"\n        n = len(segs)\n        usado = [False] * n\n        idx = {}\n        for i, (a, b) in enumerate(segs):\n            for p in (a, b):\n                k = _key(p)\n                for dx in (-1, 0, 1):\n                    for dy in (-1, 0, 1):\n                        idx.setdefault((k[0] + dx, k[1] + dy), []).append(i)\n        # dedup listas\n        for k in idx:\n            vist = set()\n            idx[k] = [i for i in idx[k] if not (i in vist or vist.add(i))]\n\n        def vecino_libre(p, excluir):\n            for j in idx.get(_key(p), []):\n                if usado[j] or j == excluir:\n                    continue\n                a, b = segs[j]\n                if _cerca(p, a):\n                    return j, b\n                if _cerca(p, b):\n                    return j, a\n            return None, None\n\n        cadenas = []\n        for i in range(n):\n            if usado[i]:\n                continue\n            usado[i] = True\n            a, b = segs[i]\n            pts = [a, b]\n            # extender por el final\n            cur = b\n            last = i\n            while True:\n                j, nxt = vecino_libre(cur, last)\n                if j is None:\n                    break\n                usado[j] = True\n                pts.append(nxt)\n                cur = nxt\n                last = j\n                if _cerca(cur, pts[0]) and len(pts) > 3:\n                    break\n            # extender por el principio (si no cerro)\n            if not _cerca(pts[-1], pts[0]):\n                cur = pts[0]\n                last = i\n                while True:\n                    j, nxt = vecino_libre(cur, last)\n                    if j is None:\n                        break\n                    usado[j] = True\n                    pts.insert(0, nxt)\n                    cur = nxt\n                    last = j\n                    if _cerca(pts[0], pts[-1]) and len(pts) > 3:\n                        break\n            cerrada = False\n            if len(pts) >= 4 and math.hypot(pts[0][0] - pts[-1][0],\n                                            pts[0][1] - pts[-1][1]) <= TOL_CIERRE:\n                cerrada = True\n                # si el ultimo punto duplica al primero, quitarlo\n                if _cerca(pts[0], pts[-1]):\n                    pts = pts[:-1]\n            cadenas.append((pts, cerrada))\n        return cadenas\n\n\n    def pts_polyline2d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    def pts_polyline3d(ent, tr):\n        pts = []\n        try:\n            for vid in ent:\n                v = tr.GetObject(vid, OpenMode.ForRead)\n                p = v.Position\n                pts.append((p.X, p.Y))\n        except Exception:\n            pts = []\n        return pts\n\n\n    adoc = Application.DocumentManager.MdiActiveDocument\n    db = adoc.Database\n    n_total_conv = 0\n    tiempos = []\n\n    dlock = adoc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            ms_id = SymbolUtilityServices.GetBlockModelSpaceId(db)\n            ms = tr.GetObject(ms_id, OpenMode.ForWrite if APLICAR else OpenMode.ForRead)\n            lt = tr.GetObject(db.LayerTableId, OpenMode.ForRead)\n\n            # ---- inventario por capa -----------------------------------------\n            t0 = time.perf_counter()\n            por_capa = {c: {\"lw\": 0, \"line\": [], \"p2d\": [], \"p3d\": [], \"otros\": {}}\n                        for c in capas}\n            for oid in ms:\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                except Exception:\n                    continue\n                lay = ent.Layer\n                if lay not in por_capa:\n                    continue\n                d = por_capa[lay]\n                if isinstance(ent, Polyline):\n                    d[\"lw\"] += 1\n                elif isinstance(ent, Line):\n                    d[\"line\"].append(oid)\n                elif isinstance(ent, Polyline2d):\n                    d[\"p2d\"].append(oid)\n                elif isinstance(ent, Polyline3d):\n                    d[\"p3d\"].append(oid)\n                else:\n                    try:\n                        tn = ent.GetType().Name\n                    except Exception:\n                        tn = type(ent).__name__\n                    d[\"otros\"][tn] = d[\"otros\"].get(tn, 0) + 1\n            tiempos.append((\"inventario\", time.perf_counter() - t0))\n\n            w(\"\")\n            w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  otros\".format(\n                \"capa\", \"LWPL\", \"LINE\", \"PL2D\", \"PL3D\"))\n            w(\"-\" * 72)\n            for c in capas:\n                d = por_capa[c]\n                otros = \", \".join(\"{} x {}\".format(v, k) for k, v in\n                                  sorted(d[\"otros\"].items())) or \"-\"\n                existe = lt.Has(c)\n                w(\"{:<28}{:>6}{:>7}{:>7}{:>7}  {}{}\".format(\n                    c[:28], d[\"lw\"], len(d[\"line\"]), len(d[\"p2d\"]),\n                    len(d[\"p3d\"]), otros, \"\" if existe else \"   !! CAPA NO EXISTE\"))\n\n            # ---- conversion ---------------------------------------------------\n            t0 = time.perf_counter()\n            for c in capas:\n                d = por_capa[c]\n                pendientes = len(d[\"line\"]) + len(d[\"p2d\"]) + len(d[\"p3d\"])\n                if pendientes == 0:\n                    continue\n                w(\"\")\n                w(\"[{}]\".format(c))\n\n                nuevas = []   # (pts, cerrada, origen)\n                # LINE -> cadenas\n                if d[\"line\"]:\n                    segs = []\n                    for oid in d[\"line\"]:\n                        ent = tr.GetObject(oid, OpenMode.ForRead)\n                        a = ent.StartPoint\n                        b = ent.EndPoint\n                        segs.append(((a.X, a.Y), (b.X, b.Y)))\n                    cadenas = encadenar(segs)\n                    n_cer = sum(1 for _, z in cadenas if z)\n                    w(\"  LINE: {} segmentos -> {} cadenas ({} cerradas, {} abiertas)\"\n                      .format(len(segs), len(cadenas), n_cer, len(cadenas) - n_cer))\n                    for pts, cerrada in cadenas:\n                        nuevas.append((pts, cerrada, \"LINE\"))\n                for oid in d[\"p2d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline2d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL2D\"))\n                    else:\n                        w(\"  PL2D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n                for oid in d[\"p3d\"]:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                    pts = pts_polyline3d(ent, tr)\n                    if len(pts) >= 2:\n                        nuevas.append((pts, bool(ent.Closed), \"PL3D\"))\n                    else:\n                        w(\"  PL3D handle {}: sin vertices legibles, se deja\".format(ent.Handle))\n\n                for pts, cerrada, origen in nuevas:\n                    w(\"  {} -> LWPOLYLINE {} vertices{}\".format(\n                        origen, len(pts), \" (cerrada)\" if cerrada else \"\"))\n\n                if not APLICAR:\n                    w(\"  dry-run: {} LWPOLYLINE se crearian; {} originales irian a '{}_ORIG'\"\n                      .format(len(nuevas), pendientes, c))\n                    continue\n\n                # capa destino de la geometria original\n                capa_orig = c + \"_ORIG\"\n                if lt.Has(capa_orig):\n                    id_orig = lt.get_Item(capa_orig)\n                else:\n                    lt.UpgradeOpen()\n                    ltr = LayerTableRecord()\n                    ltr.Name = capa_orig\n                    ltr.IsOff = True\n                    id_orig = lt.Add(ltr)\n                    tr.AddNewlyCreatedDBObject(ltr, True)\n                    lt.DowngradeOpen()\n                    w(\"  capa '{}' creada (apagada)\".format(capa_orig))\n                id_capa = lt.get_Item(c)\n\n                n_new = 0\n                for pts, cerrada, origen in nuevas:\n                    pl = Polyline()\n                    for i, (x, y) in enumerate(pts):\n                        pl.AddVertexAt(i, Point2d(x, y), 0.0, 0.0, 0.0)\n                    pl.Closed = cerrada\n                    pl.LayerId = id_capa\n                    ms.AppendEntity(pl)\n                    tr.AddNewlyCreatedDBObject(pl, True)\n                    n_new += 1\n                n_mov = 0\n                for oid in d[\"line\"] + d[\"p2d\"] + d[\"p3d\"]:\n                    try:\n                        ent = tr.GetObject(oid, OpenMode.ForWrite)\n                        ent.LayerId = id_orig\n                        n_mov += 1\n                    except Exception as ex:\n                        w(\"  KO moviendo handle: {}\".format(str(ex)[:80]))\n                w(\"  creadas {} LWPOLYLINE; {} originales movidas a '{}'\".format(\n                    n_new, n_mov, capa_orig))\n                n_total_conv += n_new\n            tiempos.append((\"conversion\", time.perf_counter() - t0))\n\n            if APLICAR:\n                tr.Commit()\n        finally:\n            tr.Dispose()\n    except Exception:\n        w(\"\")\n        w(\"!!!!!! EXCEPCION NO CONTROLADA\")\n        for linea in traceback.format_exc().split(\"\\n\"):\n            w(\"  \" + linea)\n    finally:\n        dlock.Dispose()\n\n    w(\"\")\n    w(\"RESULTADO: {} LWPOLYLINE {}\".format(\n        n_total_conv, \"creadas\" if APLICAR else \"se crearian (dry-run)\"))\n    w(\"\")\n    w(\"==== RESUMEN DE TIEMPOS ====\")\n    for et, sg in tiempos:\n        w(\"{:<27}{:>7.2f} s\".format(et, sg))\n    w(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", time.perf_counter() - t_ini))\n\n    return [\"\\n\".join(L), n_total_conv]\n\n\nOUT = run()\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "5737e2459e394732859d7faf46ce1973",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "af6e3c51c1884b3d893b6a7cb05ba129",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9cc1ef26bc914e8489594c3fffa6b1d0",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1965ee8ab7d740f8bba4bec4f15b8938",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# Extrae el log (indice 0) de la salida del normalizador para el Watch\nOUT = IN[0][0] if IN[0] is not None else \"(sin salida)\"\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "83ed8ca844804b79be886d401895b5fc",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "3c22366966a547e68df8bc933818d9ae",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "87b88bc10276485da7bedf8611debb46",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "49e18adb9cf34579911a9375c3df357e",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "808c206cef574217a843b55bd620e6bf",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "0d3effd659be40a993ebd663c45dd6cc",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "80707d97c3d24973ace2b3c794b3dff7",
+      "End": "95d5ecf3e2174df9a83b6fc5ec8b3850",
+      "Id": "60b193fd83024d0a937f0a1b4e9de959",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "73deb70ba0a14c20aa99fb47858534d0",
+      "End": "f6b0003f01494cdb8530e607e9f63eb4",
+      "Id": "cd201e2188f144eba9d7d3f1554eeaea",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c508366e7a574fd087ce0dca832b0394",
+      "End": "5a9d2d91a4d2486bb87b7b25992ec142",
+      "Id": "a50f6d89f96247c9b640438712a54122",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "ab9f2cb9947247dc89f7c5d79f848b98",
+      "Id": "f1f4f8e2e0f642b694069d0c15ac5f84",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0c37d53881b04166b2023d76c810345c",
+      "End": "9b405f204c60438497fd286252e2e9fc",
+      "Id": "dde7f911fe6642a19b38ef54a676446b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "c508366e7a574fd087ce0dca832b0394",
+      "End": "50fc061103c04de9b87526ca9f5a5fb4",
+      "Id": "bc89cd54e7b6433a909b0c62c8c7e527",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "80707d97c3d24973ace2b3c794b3dff7",
+      "End": "51f713dc1b2848528f0bddae2b6f090b",
+      "Id": "307f3d23b854405e9fa52ae3946bd131",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9df52bd9cf954d839ebc516ebb1ba4c6",
+      "End": "a37ba6728ef94525a795c385ca3d51c4",
+      "Id": "07be3c9c63d9470abe63e1f3ea297f4d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "176c0514d5cb4c42bca6cc3d419b9e31",
+      "End": "e5ecde8ea0364653ad3b52ce676ebf16",
+      "Id": "0d6a4a07cd8849e7b6796f64030c67f9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "176c0514d5cb4c42bca6cc3d419b9e31",
+      "End": "71cadbe12b0f459d86cde2ccb907420e",
+      "Id": "f399a7ff29cb4a18b27b4eab6b7b4400",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "923860f91bad4708b660f03462e46164",
+      "End": "ac4e46cb2c8947fb93e54ea5ca67e623",
+      "Id": "c6b4d40311a6451abe756ab3fe9a5126",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "80707d97c3d24973ace2b3c794b3dff7",
+      "End": "336635e34aec477a9194b702fe84b450",
+      "Id": "0787766864974830b7e752a3bac09c2c",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cbcbb67a944b431e901d330d7e0513fb",
+      "End": "e23c5f470bd942b5aaab13213bb9619c",
+      "Id": "e43a1d5471334f8cbbf4dd7bbd0f52f4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "65265c7f6f604a21b736e862398533f8",
+      "End": "b6f6b83793fe460aa46833e9a03980f8",
+      "Id": "61e47a64358046f8954c8b897fba23e9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "168f6dc6106c4a92b5c6ace10ebaccb7",
+      "Id": "e9577c421cdb4742975507f3e3042847",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "759f5e5717cc44159e32b48bf0cd6c7f",
+      "End": "f91f1158bc644a85b421ed6b0a25a8bd",
+      "Id": "8a0bbddd024e4acd946414f94e6233ee",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "cb92900a3eff483faf5bdbd0a3c76d26",
+      "Id": "47b4c4ffd8b0412c896bd007c9e6fd6a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9f74f55b78a14e7e8eafa337b8cb98b7",
+      "End": "c8cccef982914db09d692ad68554819d",
+      "Id": "83f0b239398a486eaa3d4a59834ab767",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "7e7e42c6d5864ed4ae375db4d840c50f",
+      "Id": "81f991225e1f4f959fa1769ebbb8c3b7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "e9f5f9138a094c45956f74dc071eae93",
+      "End": "873e8be9da81413fabeecd580f0abb6c",
+      "Id": "9f06cdb7206648b7969bb77f6828ea47",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "182ab91b8df8476ead2e014077e02f10",
+      "Id": "0974a51a26444d3885f45cd61c3191b1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "33e283a8292e47ccbd9a628402582bff",
+      "End": "b85e3580e4634a5696be1a3efe61d3a5",
+      "Id": "7acc733d305344df989ae374fcfe11e0",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "a1841def02e54097a4bb3ba652026b23",
+      "End": "d83c89cf0af14a8f92624cb3b1ef74f1",
+      "Id": "f78dbc1a41a34f1b8a2baef1a29be3b6",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "db186cc4faaf42839697d666e6956732",
+      "End": "49993a9c6f784a62990a41d34ee04943",
+      "Id": "ea300dbf4e22480cb448d9b2de4dca30",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "db186cc4faaf42839697d666e6956732",
+      "End": "af6e3c51c1884b3d893b6a7cb05ba129",
+      "Id": "4056320b362d4a6d9a9d42cf97dde65d",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "0db6352194a7439396f9ac96769e7a15",
+      "End": "9cc1ef26bc914e8489594c3fffa6b1d0",
+      "Id": "5e81d7c7cbfa479f88f6ffe54d27de98",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1965ee8ab7d740f8bba4bec4f15b8938",
+      "End": "3c22366966a547e68df8bc933818d9ae",
+      "Id": "005aa65f54d2432e874d9c3b3f14422b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "87b88bc10276485da7bedf8611debb46",
+      "End": "808c206cef574217a843b55bd620e6bf",
+      "Id": "bed4707306554ef6be76789840b2a318",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1965ee8ab7d740f8bba4bec4f15b8938",
+      "End": "e759f319cd7646cfa1276b78e6e876e7",
+      "Id": "08f27dc368ce44a2845dacdd1f15cf33",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "2.19",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a0c6067810fc4b5f9d259f783818de9d",
+        "Name": "Superficie base (trackers)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "8313d238960f41859720355ff7092c4f",
+        "Name": "Superficie comparacion (MDT original)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 120.0
+      },
+      {
+        "Id": "be1f624c366c49bca2fcdc64aa42e7c3",
+        "Name": "+-Rugosidad (mm)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 5.0,
+        "Y": 380.0
+      },
+      {
+        "Id": "98ddc718746b4d6b8004abcdc46a1c69",
+        "Name": "Prefijo nombre volumen",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 11.0,
+        "Y": 501.0
+      },
+      {
+        "Id": "7baa58f391404e7dbf8e7eef353dbd37",
+        "Name": "Capa de contornos",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2.0,
+        "Y": 259.0
+      },
+      {
+        "Id": "1443590f895a48dc8c2a30075facc5b3",
+        "Name": "Volumen_MDT",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 450.0,
+        "Y": 150.0
+      },
+      {
+        "Id": "41dced036c45411fa9ad49fa5a2a1325",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1446.4036033678553,
+        "Y": 260.7915356669431
+      },
+      {
+        "Id": "e36b1e7b32634b3fa669cbf9d22b406d",
+        "Name": "Tablas de leyenda",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 900.0,
+        "Y": 250.0
+      },
+      {
+        "Id": "7c4c34e581834fe48700144fb0d371e9",
+        "Name": "CFG fase",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": -320.0
+      },
+      {
+        "Id": "96dca3a5893d448fa1b38981c4a3360b",
+        "Name": "CONFIG (sombra)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 330.0,
+        "Y": -320.0
+      },
+      {
+        "Id": "883d9668a73641708a9944cf994aa6bc",
+        "Name": "extraer log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 680.0,
+        "Y": -320.0
+      },
+      {
+        "Id": "61ea63deb13b4153bfa20909fd6cd77c",
+        "Name": "CONFIG_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1000.0,
+        "Y": -320.0
+      },
+      {
+        "Id": "97607527135540daa1edf875c65e7b89",
+        "Name": "CFG resultados (vacio)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1866.4036033678553,
+        "Y": 10.5
+      },
+      {
+        "Id": "149dbe3c30e440b395beb5afa2750485",
+        "Name": "CFG ok",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1866.4036033678553,
+        "Y": 130.5
+      },
+      {
+        "Id": "240f8960956c4c8da6829f6bd2299bf4",
+        "Name": "CFG auditoria Z",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1866.4036033678553,
+        "Y": 250.5
+      },
+      {
+        "Id": "f4548ec34f294ed797378be27167e872",
+        "Name": "CIERRE",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2206.4036033678553,
+        "Y": 130.5
+      },
+      {
+        "Id": "77950e2700a546ee9f20ab9482318fb8",
+        "Name": "extraer log cierre",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2556.4036033678553,
+        "Y": 130.5
+      },
+      {
+        "Id": "6836c05cc4c843839be5db8f471cc086",
+        "Name": "CIERRE_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2876.4036033678553,
+        "Y": 130.5
+      },
+      {
+        "Id": "540e2d8f3efe46bbb25f58d818606535",
+        "Name": "CFG superficie_trackers",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 90.0,
+        "Y": 90.0
+      },
+      {
+        "Id": "97ab7fef57624485be325045a82dc594",
+        "Name": "CFG superficie_mdt",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 90.0,
+        "Y": 185.0
+      },
+      {
+        "Id": "64fa7bc51024454193e2e7e73b9f4acc",
+        "Name": "CFG rugosidad_mm",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 90.0,
+        "Y": 280.0
+      },
+      {
+        "Id": "a60acc5c188e4e99accf6db2da1d1708",
+        "Name": "CFG prefijo_volumen",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 90.0,
+        "Y": 375.0
+      },
+      {
+        "Id": "ac030b5d24364a36b6ed93145c609e90",
+        "Name": "CFG capa_contornos",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 90.0,
+        "Y": 470.0
+      },
+      {
+        "Id": "631dae8ef10b4b63a1f0c1627cafb218",
+        "Name": "NORMALIZAR (True=convierte, False=solo informa)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": -70.0,
+        "Y": -170.0
+      },
+      {
+        "Id": "5737e2459e394732859d7faf46ce1973",
+        "Name": "NORMALIZAR geometria (LINE/PL2D/PL3D -> LWPOLYLINE)",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 310.0,
+        "Y": -270.0
+      },
+      {
+        "Id": "83ed8ca844804b79be886d401895b5fc",
+        "Name": "extraer log normalizar",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 310.0,
+        "Y": -50.0
+      },
+      {
+        "Id": "49e18adb9cf34579911a9375c3df357e",
+        "Name": "NORMALIZAR_LOG",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 310.0,
+        "Y": 50.0
+      }
+    ],
+    "Annotations": [],
+    "X": 84.17376222572813,
+    "Y": 100.17890140093054,
+    "Zoom": 0.7438347081605934
+  }
+}

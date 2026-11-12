@@ -1,0 +1,228 @@
+{
+  "Uuid": "a277d2f6-6675-4d1b-9f3f-744a9b2807cf",
+  "IsCustomNode": false,
+  "Description": "",
+  "Name": "6_TablasExcel_v06",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "9273c3991765462cb24c6e732932968c",
+      "NodeType": "StringInputNode",
+      "InputValue": "",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "97beaa903798445e9ed7e528c52d9112",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "Id": "dd2c2978b6ca470ca6ba88afc30bb482",
+      "NodeType": "StringInputNode",
+      "InputValue": "AECC_*TABLE*,ACAD_TABLE",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ccdb1c9ade594b57a89eded82e1d294f",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string"
+    },
+    {
+      "ConcreteType": "PythonNodeModels.PythonNode, PythonNodeModels",
+      "Code": "# -*- coding: utf-8 -*-\n# =============================================================================\n# 6_TablasExcel.dyn - Exporta tablas seleccionadas de Civil 3D a Excel (v06)\n# Civil 3D 2024 / Dynamo 2.19 / CPython3 (pythonnet 2.5)\n#\n# BASADO EN 0_DIAG_Tablas (2026-07): las AECC_LEGEND_TABLE no exponen API de\n# celdas ([API-KO] LegendTable sin Rows/Columns/Cells). Via verificada:\n# Explode EN MEMORIA (no destructivo) -> las Line forman la rejilla (bordes\n# de filas/columnas) y los MText son el contenido -> asignacion geometrica\n# de cada texto a su celda. Maneja columnas sin texto (p.ej. 'Color'=Hatch).\n#\n# ENTRADAS:\n#   IN[0] = nombres de hojas separados por coma (opcional, \"\" = automatico).\n#           Se asignan en ORDEN VISUAL: arriba->abajo, izquierda->derecha.\n#   IN[1] = filtro DXF de seleccion (defecto \"AECC_*TABLE*,ACAD_TABLE\")\n#\n# SALIDA: Tablas_<dwg>_<timestamp>.xlsx junto al DWG.\n#   - Una hoja por tabla (todo como TEXTO, decision de proyecto).\n#   - Hoja 'Resumen' al final con FORMULAS VIVAS:\n#       titulo  -> ='Hoja'!A1\n#       sumas   -> =IFERROR(SUM('Hoja'!D3:D9),\"\") con numeros reales\n#     (SUMPRODUCT(--()) convierte texto numerico a numero al recalcular)\n#\n# v06: motor Excel openpyxl embebido; sin dependencia de pipeline.py.\n# USO: Run -> clic en AutoCAD -> seleccionar tablas -> Enter.\n# =============================================================================\n\nimport clr\nimport os\nimport time\nimport traceback\n\nclr.AddReference('AcMgd')\nclr.AddReference('AcCoreMgd')\nclr.AddReference('AcDbMgd')\ntry:\n    clr.AddReference('AeccDbMgd')\nexcept Exception:\n    pass\n\nfrom System import Array\nfrom Autodesk.AutoCAD.ApplicationServices import Application as AcadApp\nfrom Autodesk.AutoCAD.EditorInput import (PromptSelectionOptions,\n                                          PromptStatus, SelectionFilter)\nfrom Autodesk.AutoCAD.DatabaseServices import (OpenMode, DBObjectCollection,\n                                               TypedValue)\n\nL = []\n\n\ndef log(s):\n    L.append(str(s))\n\n\nNOMBRES_IN = str(IN[0] or \"\").strip()\nFILTRO_IN  = str(IN[1] or \"\").strip() or \"AECC_*TABLE*,ACAD_TABLE\"\n\nTOL_LINEA  = 0.001   # para decidir si una Line es vertical u horizontal\nTOL_CLUST  = 0.05    # para fusionar bordes de rejilla casi identicos\n\n\n# ------------------------------ geometria -----------------------------------\n\ndef texto_de(o):\n    tn = type(o).__name__\n    try:\n        if tn == 'DBText':\n            return (o.Position.X, o.Position.Y, str(o.TextString))\n        if tn == 'MText':\n            try:\n                s = o.Text\n            except Exception:\n                s = o.Contents\n            return (o.Location.X, o.Location.Y, str(s))\n    except Exception:\n        return None\n    return None\n\n\ndef extraer_tabla(ent):\n    \"\"\"Explode en memoria 2 niveles. Devuelve (xs_col, ys_fila_desc,\n    textos[(x,y,s)], avisos[]).\"\"\"\n    avisos = []\n    creados = []\n    xs_v, ys_h, textos = [], [], []\n    try:\n        objs = DBObjectCollection()\n        ent.Explode(objs)\n        pool = []\n        en = objs.GetEnumerator()\n        while en.MoveNext():\n            pool.append(en.Current)\n        creados.extend(pool)\n        extra = []\n        for o in pool:\n            tn = type(o).__name__\n            if 'Block' in tn or 'Table' in tn:\n                try:\n                    o2 = DBObjectCollection()\n                    o.Explode(o2)\n                    e2 = o2.GetEnumerator()\n                    while e2.MoveNext():\n                        extra.append(e2.Current)\n                except Exception as ex:\n                    avisos.append(\"nivel2 KO en {}: {}\".format(\n                        tn, str(ex)[:60]))\n        creados.extend(extra)\n        for o in pool + extra:\n            tn = type(o).__name__\n            if tn == 'Line':\n                try:\n                    p1, p2 = o.StartPoint, o.EndPoint\n                    if abs(p1.X - p2.X) < TOL_LINEA:\n                        xs_v.append(p1.X)\n                    elif abs(p1.Y - p2.Y) < TOL_LINEA:\n                        ys_h.append(p1.Y)\n                except Exception as ex:\n                    avisos.append(\"Line KO: \" + str(ex)[:60])\n            else:\n                t = texto_de(o)\n                if t is not None:\n                    textos.append(t)\n    except Exception as ex:\n        avisos.append(\"[KO] Explode: \" + str(ex)[:150])\n    finally:\n        for o in creados:\n            try:\n                o.Dispose()\n            except Exception:\n                pass\n    return (agrupa(xs_v), agrupa(ys_h, desc=True), textos, avisos)\n\n\ndef agrupa(vals, desc=False):\n    \"\"\"Fusiona valores casi identicos (tolerancia TOL_CLUST) y ordena.\"\"\"\n    if not vals:\n        return []\n    vals = sorted(vals)\n    grupos = [[vals[0]]]\n    for v in vals[1:]:\n        if v - grupos[-1][-1] <= TOL_CLUST:\n            grupos[-1].append(v)\n        else:\n            grupos.append([v])\n    bordes = [sum(g) / len(g) for g in grupos]\n    return sorted(bordes, reverse=desc)\n\n\ndef idx_col(x, xs):\n    for j in range(len(xs) - 1):\n        if xs[j] <= x <= xs[j + 1]:\n            return j\n    return None\n\n\ndef idx_fila(y, ys_desc):\n    for i in range(len(ys_desc) - 1):\n        if ys_desc[i] >= y >= ys_desc[i + 1]:\n            return i\n    return None\n\n\ndef montar_matriz(xs, ys, textos, avisos):\n    \"\"\"Matriz filas x columnas por asignacion geometrica a la rejilla.\"\"\"\n    ncol = max(0, len(xs) - 1)\n    nfil = max(0, len(ys) - 1)\n    if ncol < 1 or nfil < 1:\n        avisos.append(\"rejilla insuficiente ({} col, {} fil): fallback\"\n                      \" por agrupamiento de textos\".format(ncol, nfil))\n        return montar_matriz_fallback(textos, avisos)\n    M = [[\"\" for _ in range(ncol)] for _ in range(nfil)]\n    fuera = 0\n    for x, y, s in textos:\n        i, j = idx_fila(y, ys), idx_col(x, xs)\n        if i is None or j is None:\n            fuera += 1\n            continue\n        M[i][j] = (M[i][j] + \" \" + s).strip() if M[i][j] else s\n    if fuera:\n        avisos.append(\"{} textos fuera de rejilla (ignorados)\".format(fuera))\n    return M\n\n\ndef montar_matriz_fallback(textos, avisos):\n    \"\"\"Sin rejilla: filas por Y agrupada, columnas por orden X. Menos fiable\n    (columnas vacias se pierden); se avisa en el log.\"\"\"\n    if not textos:\n        return []\n    ys = agrupa([t[1] for t in textos], desc=True)\n    filas = {}\n    for x, y, s in textos:\n        i = min(range(len(ys)), key=lambda k: abs(ys[k] - y))\n        filas.setdefault(i, []).append((x, s))\n    M = []\n    for i in sorted(filas):\n        M.append([s for x, s in sorted(filas[i])])\n    ancho = max(len(f) for f in M)\n    for f in M:\n        f.extend([\"\"] * (ancho - len(f)))\n    avisos.append(\"fallback aplicado: revisar alineacion de columnas\")\n    return M\n\n\ndef separa_titulo(M):\n    \"\"\"Si la 1a fila tiene un unico texto -> es el titulo.\"\"\"\n    if M and sum(1 for c in M[0] if c) == 1:\n        titulo = next(c for c in M[0] if c)\n        return titulo, M[1:]\n    return \"\", M\n\n\n# ------------------------------ excel ----------------------------------------\n\nINVALIDOS = set('[]:*?/\\\\')\n\n\ndef hoja_nombre(nm, usados):\n    s = \"\".join(c for c in nm if c not in INVALIDOS).strip() or \"TABLA\"\n    s = s[:31]\n    base, j = s, 2\n    while s.upper() in usados:\n        suf = \"_\" + str(j)\n        s = base[:31 - len(suf)] + suf\n        j += 1\n    usados.add(s.upper())\n    return s\n\n\ndef ref_hoja(nombre):\n    return \"'\" + nombre.replace(\"'\", \"''\") + \"'\"\n\n\ndef run():\n    t0 = time.perf_counter()\n    log(\"=== Script 6: Tablas de Civil 3D -> Excel (v01) ===\")\n    log(\"filtro DXF: \" + FILTRO_IN)\n    if NOMBRES_IN:\n        log(\"nombres de hoja manuales: \" + NOMBRES_IN)\n    log(\"\")\n\n    doc = AcadApp.DocumentManager.MdiActiveDocument\n    ed = doc.Editor\n    db = doc.Database\n\n    # ---- 1) seleccion con filtro, ANTES de LockDocument ----\n    log(\">> Cambia a AutoCAD y selecciona las tablas...\")\n    opts = PromptSelectionOptions()\n    opts.MessageForAdding = \"\\nSelecciona las tablas a exportar\"\n    try:\n        filtro = SelectionFilter(\n            Array[TypedValue]([TypedValue(0, FILTRO_IN)]))\n        psr = ed.GetSelection(opts, filtro)\n    except Exception as ex:\n        log(\"[KO] GetSelection: \" + str(ex)[:200])\n        return\n    t_sel = time.perf_counter()\n    if psr.Status != PromptStatus.OK:\n        log(\"Seleccion cancelada o sin tablas (status: {}).\".format(\n            psr.Status))\n        return\n    ids = list(psr.Value.GetObjectIds())\n    log(\"Tablas seleccionadas (tras filtro): {}\".format(len(ids)))\n    log(\"\")\n\n    # ---- 2) extraccion bajo lock + transaccion (solo lectura) ----\n    tablas = []   # dicts: titulo, M, anchor(x,y), display, handle\n    dlock = doc.LockDocument()\n    try:\n        tr = db.TransactionManager.StartTransaction()\n        try:\n            for k, oid in enumerate(ids):\n                try:\n                    ent = tr.GetObject(oid, OpenMode.ForRead)\n                except Exception as ex:\n                    log(\"[{}] [KO] GetObject: {}\".format(k, str(ex)[:120]))\n                    continue\n                disp = \"\"\n                try:\n                    disp = str(ent.DisplayName or \"\")\n                except Exception as ex:\n                    log(\"[{}] DisplayName no legible: {}\".format(\n                        k, str(ex)[:60]))\n                xs, ys, textos, avisos = extraer_tabla(ent)\n                M = montar_matriz(xs, ys, textos, avisos)\n                titulo, cuerpo = separa_titulo(M)\n                if not cuerpo:\n                    log(\"[{}] handle {}: SIN CONTENIDO legible, se salta\"\n                        .format(k, ent.Handle))\n                    for a in avisos:\n                        log(\"    aviso: \" + a)\n                    continue\n                ax = min((t[0] for t in textos), default=0.0)\n                ay = max((t[1] for t in textos), default=0.0)\n                tablas.append({\"titulo\": titulo, \"M\": cuerpo,\n                               \"x\": ax, \"y\": ay, \"disp\": disp,\n                               \"handle\": str(ent.Handle)})\n                log(\"[{}] handle {}: {} filas x {} col | titulo '{}'\"\n                    \" | DisplayName '{}'\".format(\n                        k, ent.Handle, len(cuerpo),\n                        len(cuerpo[0]) if cuerpo else 0,\n                        titulo[:30], disp[:30]))\n                for a in avisos:\n                    log(\"    aviso: \" + a)\n            tr.Commit()\n        finally:\n            tr.Dispose()\n    finally:\n        dlock.Dispose()\n    t_ext = time.perf_counter()\n\n    if not tablas:\n        log(\"\")\n        log(\"Sin tablas legibles: no se genera Excel.\")\n        return\n\n    # ---- 3) orden visual: arriba->abajo, izquierda->derecha ----\n    tablas.sort(key=lambda t: (-round(t[\"y\"], 2), round(t[\"x\"], 2)))\n\n    # ---- 4) nombres de hoja ----\n    manuales = [s.strip() for s in NOMBRES_IN.split(\",\") if s.strip()] \\\n        if NOMBRES_IN else []\n    if manuales and len(manuales) != len(tablas):\n        log(\"\")\n        log(\"AVISO: {} nombres para {} tablas; se asignan en orden y el\"\n            \" resto automatico.\".format(len(manuales), len(tablas)))\n    usados = set()\n    disps = [t[\"disp\"] for t in tablas]\n    disp_utiles = (all(disps) and len(set(disps)) == len(disps))\n    for i, t in enumerate(tablas):\n        if i < len(manuales):\n            base = manuales[i]\n        elif disp_utiles:\n            base = t[\"disp\"]\n        else:\n            base = (t[\"titulo\"] or \"Tabla\") + \"_\" + str(i + 1).zfill(2)\n        t[\"hoja\"] = hoja_nombre(base, usados)\n    if not manuales:\n        log(\"nombres de hoja automaticos ({}).\".format(\n            \"DisplayName\" if disp_utiles else \"titulo+correlativo\"))\n\n    # ---- 5) escribir excel ----\n    log(\"\")\n    try:\n        # Motor Excel embebido sobre openpyxl (v06). Misma interfaz que el\n        # antiguo XLibro/XHoja para no tocar el bloque de escritura.\n        # El Script 6 NO depende de pipeline.py.\n        import openpyxl as _ox\n        from openpyxl.styles import (Font as _Font, PatternFill as _Fill,\n                                     Border as _Border, Side as _Side,\n                                     Alignment as _Al)\n        from openpyxl.utils import get_column_letter as _gcl\n        log(\"motor Excel: openpyxl \" + str(getattr(_ox, \"__version__\", \"?\")))\n\n        class _XHoja(object):\n            def __init__(self, ws):\n                self.ws = ws\n\n            def escribir(self, fila, col, valor, fill=None, font=None,\n                         borde=False, centro=False, numfmt=None):\n                c = self.ws.cell(row=fila, column=col)\n                if valor is not None:\n                    c.value = valor\n                if fill:\n                    c.fill = _Fill(\"solid\", fgColor=fill)\n                if font:\n                    c.font = _Font(bold=bool(font.get(\"bold\", False)),\n                                   color=font.get(\"color\"))\n                if borde:\n                    s = _Side(style=\"thin\")\n                    c.border = _Border(left=s, right=s, top=s, bottom=s)\n                if centro:\n                    c.alignment = _Al(horizontal=\"center\",\n                                      vertical=\"center\", wrap_text=True)\n                if numfmt:\n                    c.number_format = numfmt\n\n            def combinar(self, r1, c1, r2, c2):\n                self.ws.merge_cells(start_row=r1, start_column=c1,\n                                    end_row=r2, end_column=c2)\n\n            def ancho(self, col, w):\n                self.ws.column_dimensions[_gcl(col)].width = w\n\n        class _XLibro(object):\n            def __init__(self):\n                self.wb = _ox.Workbook()\n                self.wb.remove(self.wb.active)\n\n            def nueva(self, nombre):\n                return _XHoja(self.wb.create_sheet(nombre))\n\n            def guardar(self, ruta):\n                self.wb.save(ruta)\n\n        class _lk(object):\n            XLibro = _XLibro\n            _x_col = staticmethod(_gcl)\n\n        F_NEGRITA = {\"bold\": True}\n        F_BLANCA = {\"bold\": True, \"color\": \"FFFFFF\"}\n        C_GRIS, C_VERDE, C_ROJO = \"D9D9D9\", \"00B050\", \"C00000\"\n        lb = _lk.XLibro()\n\n        def _num(x):\n            s = str(x).strip().replace(\" \", \"\")\n            if s.count(\",\") == 1 and s.count(\".\") == 0:\n                s = s.replace(\",\", \".\")\n            try:\n                f = float(s)\n            except Exception:\n                return None\n            if \".\" not in s and \"e\" not in s.lower():\n                return int(f)\n            return f\n\n        for t in tablas:\n            M = t[\"M\"]\n            ncol = len(M[0])\n            hx = lb.nueva(t[\"hoja\"])\n            hx.escribir(1, 1, (t[\"titulo\"] or t[\"hoja\"]), fill=C_GRIS,\n                        font=F_NEGRITA, borde=True, centro=True)\n            for ci in range(2, ncol + 1):\n                hx.escribir(1, ci, None, fill=C_GRIS, borde=True)\n            hx.combinar(1, 1, 1, ncol)\n            cabx = [str(x).strip().lower() for x in M[0]]\n            i_min = (cabx.index(\"minimum elevation\")\n                     if \"minimum elevation\" in cabx else None)\n            i_max = (cabx.index(\"maximum elevation\")\n                     if \"maximum elevation\" in cabx else None)\n            i_col = cabx.index(\"color\") if \"color\" in cabx else None\n            n_d = n_t = 0\n            for fi, fila in enumerate(M, start=2):\n                for ci, v in enumerate(fila, start=1):\n                    nv = _num(v) if fi > 2 else None\n                    hx.escribir(fi, ci,\n                                nv if nv is not None else str(v),\n                                borde=True, centro=True,\n                                numfmt=(\"0.00\" if isinstance(nv, float)\n                                        else None),\n                                fill=C_GRIS if fi == 2 else None,\n                                font=F_NEGRITA if fi == 2 else None)\n                if (fi > 2 and i_col is not None\n                        and i_min is not None and i_max is not None):\n                    try:\n                        vmin = float(str(fila[i_min])\n                                     .replace(\",\", \".\"))\n                        vmax = float(str(fila[i_max])\n                                     .replace(\",\", \".\"))\n                    except Exception:\n                        vmin = None\n                    if vmin is not None:\n                        if vmax <= 0:\n                            hx.escribir(fi, i_col + 1, \"Terraplen\",\n                                        fill=C_VERDE, font=F_BLANCA,\n                                        borde=True, centro=True)\n                            n_t += 1\n                        elif vmin >= 0:\n                            hx.escribir(fi, i_col + 1, \"Desmonte\",\n                                        fill=C_ROJO, font=F_BLANCA,\n                                        borde=True, centro=True)\n                            n_d += 1\n            for ci in range(1, ncol + 1):\n                ancho = max([len(str(f[ci - 1]))\n                             for f in M] + [8]) + 4\n                hx.ancho(ci, min(ancho, 28))\n            t[\"nfilas\"] = len(M) - 1      # filas de datos\n            t[\"cab\"] = [str(x).strip() for x in M[0]]\n            log(\"hoja '{}': {} filas de datos x {} col\".format(\n                t[\"hoja\"], t[\"nfilas\"], ncol))\n            if n_d or n_t:\n                log(\"  color: {} desmonte (rojo) / {} terraplen \"\n                    \"(verde)\".format(n_d, n_t))\n\n        # ---- hoja Resumen con formulas vivas ----\n        ref_cab = tablas[0][\"cab\"]\n        cab_low = [(x or \"\").strip().lower() for x in ref_cab]\n        es_elev = (\"minimum elevation\" in cab_low\n                   and \"maximum elevation\" in cab_low\n                   and \"volumen\" in cab_low)\n        hr = lb.nueva(\"Resumen\")\n        if es_elev:\n            CAB = [\"Hoja\", \"Titulo\", \"Suma Area\", \"Suma desmonte\",\n                   \"Suma terraplen\", \"Ratio D/T\"]\n            metas = [\"hoja\", \"titulo\", \"suma:area\", \"desm\", \"terr\",\n                     \"ratio\"]\n        else:\n            CAB = [\"Hoja\", \"Titulo\", \"Filas\"]\n            metas = [\"hoja\", \"titulo\", \"filas\"]\n            for j, x in enumerate(ref_cab):\n                hl = (x or \"\").strip().lower()\n                if hl == \"color\":\n                    continue\n                CAB.append(\"Suma \" + (x or \"Col\" + str(j + 1)))\n                metas.append(\"suma:\" + hl)\n        hr.escribir(1, 1, \"Resumen de tablas\", fill=C_GRIS,\n                    font=F_NEGRITA, borde=True, centro=True)\n        for ci in range(2, len(CAB) + 1):\n            hr.escribir(1, ci, None, fill=C_GRIS, borde=True)\n        hr.combinar(1, 1, 1, len(CAB))\n        for ci, txt in enumerate(CAB, start=1):\n            hr.escribir(2, ci, txt, fill=C_GRIS, font=F_NEGRITA,\n                        borde=True, centro=True)\n        for fi, t in enumerate(tablas, start=3):\n            rh = ref_hoja(t[\"hoja\"])\n            n = t[\"nfilas\"]\n            fin = 2 + n\n            cabt = [x.lower() for x in t[\"cab\"]]\n\n            def _col(nom):\n                return (_lk._x_col(cabt.index(nom) + 1)\n                        if nom in cabt else None)\n\n            vals = [t[\"hoja\"], \"={}!A1\".format(rh)]\n            for tag in metas[2:]:\n                if tag == \"filas\":\n                    vals.append(n)\n                elif tag in (\"desm\", \"terr\"):\n                    cmin = _col(\"minimum elevation\")\n                    cmax = _col(\"maximum elevation\")\n                    cvol = _col(\"volumen\")\n                    if n > 0 and cmin and cmax and cvol:\n                        cs, op = ((cmin, \">=\") if tag == \"desm\"\n                                  else (cmax, \"<=\"))\n                        vals.append(\n                            '=IFERROR(SUMPRODUCT(({0}!{1}3:{1}{3}'\n                            '{4}0)*({0}!{2}3:{2}{3})),\"\")'\n                            .format(rh, cs, cvol, fin, op))\n                    else:\n                        vals.append(\"\")\n                elif tag == \"ratio\":\n                    cd = _lk._x_col(len(vals) - 1)\n                    ct = _lk._x_col(len(vals))\n                    vals.append('=IFERROR({0}{2}/{1}{2},\"\")'\n                                .format(cd, ct, fi))\n                else:\n                    nom = tag.split(\":\", 1)[1]\n                    col = _col(nom)\n                    if n > 0 and col:\n                        vals.append(\n                            '=IFERROR(SUM({0}!{1}3:{1}{2}),\"\")'\n                            .format(rh, col, fin))\n                    else:\n                        vals.append(\"\")\n            for ci, v in enumerate(vals, start=1):\n                hr.escribir(fi, ci, v, borde=True, centro=True,\n                            numfmt=(\"0.00\" if isinstance(v, str)\n                                    and v.startswith(\"=IFERROR(SUM\")\n                                    else None))\n        fi_tot = 3 + len(tablas)\n        pos_desm = (metas.index(\"desm\") + 1 if \"desm\" in metas\n                    else None)\n        for ci, tag in enumerate(metas, start=1):\n            letra = _lk._x_col(ci)\n            v_tot = None\n            if tag == \"titulo\":\n                v_tot = \"TOTAL\"\n            elif tag in (\"desm\", \"terr\") or tag == \"suma:area\":\n                v_tot = \"=SUM({0}3:{0}{1})\".format(letra, fi_tot - 1)\n            elif tag == \"ratio\" and pos_desm:\n                v_tot = ('=IFERROR({0}{2}/{1}{2},\"\")'\n                         .format(_lk._x_col(pos_desm),\n                                 _lk._x_col(pos_desm + 1), fi_tot))\n            hr.escribir(fi_tot, ci, v_tot, fill=C_GRIS,\n                        font=F_NEGRITA, borde=True, centro=True,\n                        numfmt=(\"0.00\" if tag != \"titulo\" and v_tot\n                                else None))\n        for ci in range(1, len(CAB) + 1):\n            hr.ancho(ci, 16)\n        hr.ancho(1, 24)\n        hr.ancho(2, 24)\n        log(\"hoja 'Resumen': {} filas + TOTAL, formulas vivas\"\n            .format(len(tablas)))\n        if es_elev:\n            log(\"  desglose desmonte/terraplen + Ratio D/T por tabla \"\n                \"y global (numeros reales, sin coercion)\")\n\n        # ---- guardar junto al DWG ----\n        try:\n            ruta_dwg = str(db.Filename)\n        except Exception:\n            ruta_dwg = str(doc.Name)\n        dwg_dir = os.path.dirname(ruta_dwg)\n        dwg_base = os.path.splitext(os.path.basename(ruta_dwg))[0]\n        if not os.path.isdir(dwg_dir):\n            dwg_dir = os.environ.get(\"TEMP\", \".\")\n            log(\"AVISO: DWG sin ruta valida, se guarda en \" + dwg_dir)\n        ts = time.strftime(\"%Y%m%d_%H%M\")\n        ruta = os.path.join(dwg_dir,\n                            \"Tablas_\" + dwg_base + \"_\" + ts + \".xlsx\")\n        try:\n            lb.guardar(ruta)\n            log(\"\")\n            log(\"Excel generado: \" + ruta)\n        except Exception as ex:\n            log(\"\")\n            log(\"[KO] no se pudo guardar el Excel (abierto? OneDrive\"\n                \" bloqueado?): \" + str(ex)[:160])\n    except Exception as ex:\n        log(\"[KO] generacion Excel: \" + str(ex)[:160])\n        log(traceback.format_exc()[:600])\n    t_xls = time.perf_counter()\n\n    log(\"\")\n    log(\"==== RESUMEN DE TIEMPOS ====\")\n    log(\"{:<27}{:>7.2f} s\".format(\"seleccion\", t_sel - t0))\n    log(\"{:<27}{:>7.2f} s\".format(\"extraccion\", t_ext - t_sel))\n    log(\"{:<27}{:>7.2f} s\".format(\"excel\", t_xls - t_ext))\n    log(\"{:<27}{:>7.2f} s\".format(\"TOTAL\", t_xls - t0))\n    log(\"=== FIN ===\")\n\n\ntry:\n    run()\nexcept Exception:\n    log(\"[KO] excepcion no controlada:\")\n    log(traceback.format_exc()[:1200])\n\nOUT = \"\\n\".join(L)\n",
+      "Engine": "CPython3",
+      "EngineName": "CPython3",
+      "VariableInputPorts": true,
+      "Id": "ac9609db696b46b19dd4df8ed0ec2ac7",
+      "NodeType": "PythonScriptNode",
+      "Inputs": [
+        {
+          "Id": "ae395fdba7fa4f40a2f6f78d92eafa4e",
+          "Name": "IN[0]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a0883dddd2354601bc380c5115be0b11",
+          "Name": "IN[1]",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "1398393206ea480b872f2b0410666443",
+          "Name": "",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs an embedded Python script."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 950.0,
+      "WatchHeight": 600.0,
+      "Id": "85c67dd74cc9424b9f2a8576a1629f50",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "1cdff5b5c3a047b69bbffaf9febe9d25",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "bb34d0746f864b4aa177247efb688fe9",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Visualizes a node's output"
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "97beaa903798445e9ed7e528c52d9112",
+      "End": "ae395fdba7fa4f40a2f6f78d92eafa4e",
+      "Id": "b26d311a3b084a7ba685ecad5d3af034",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ccdb1c9ade594b57a89eded82e1d294f",
+      "End": "a0883dddd2354601bc380c5115be0b11",
+      "Id": "d2cd0c9e56d0409b94681c936a7c8cf8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1398393206ea480b872f2b0410666443",
+      "End": "1cdff5b5c3a047b69bbffaf9febe9d25",
+      "Id": "ce5a2ef61bdd477d9401db1a8f8ab115",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [],
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a132-e3b66de2bc4e",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "2.19.4.6671",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17.0,
+      "EyeY": 24.0,
+      "EyeZ": 50.0,
+      "LookX": 12.0,
+      "LookY": -13.0,
+      "LookZ": -58.0,
+      "UpX": 0.0,
+      "UpY": 1.0,
+      "UpZ": 0.0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "9273c3991765462cb24c6e732932968c",
+        "Name": "Nombres de hojas (coma, opcional)",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 0.0
+      },
+      {
+        "Id": "dd2c2978b6ca470ca6ba88afc30bb482",
+        "Name": "Filtro DXF de tablas",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0.0,
+        "Y": 130.0
+      },
+      {
+        "Id": "ac9609db696b46b19dd4df8ed0ec2ac7",
+        "Name": "Tablas -> Excel",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 360.0,
+        "Y": 50.0
+      },
+      {
+        "Id": "85c67dd74cc9424b9f2a8576a1629f50",
+        "Name": "Log",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 670.0,
+        "Y": 50.0
+      }
+    ],
+    "Annotations": [],
+    "X": 0.0,
+    "Y": 0.0,
+    "Zoom": 1.0
+  }
+}
